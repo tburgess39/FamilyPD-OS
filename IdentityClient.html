@@ -1,0 +1,1428 @@
+<style>
+  :root {
+    --fpf-bg: #f7f8fb;
+    --fpf-card: #ffffff;
+    --fpf-text: #1f2937;
+    --fpf-muted: #667085;
+    --fpf-border: #dfe3ea;
+    --fpf-accent: #355c7d;
+    --fpf-accent-soft: #eaf1f6;
+    --fpf-success: #027a48;
+    --fpf-warning: #b54708;
+    --fpf-danger: #b42318;
+  }
+
+  .fpf-launch {
+    appearance: none;
+    border: 0;
+    border-radius: 10px;
+    background: var(--fpf-accent);
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    margin: 6px;
+    padding: 10px 14px;
+  }
+
+
+  .fpf-shell[hidden], .fpf-view[hidden] { display: none !important; }
+  .fpf-shell {
+    position: fixed;
+    inset: 0;
+    z-index: 10020;
+    background: rgba(17, 24, 39, .62);
+    display: grid;
+    place-items: center;
+    padding: 16px;
+  }
+
+  .fpf-app {
+    width: min(1220px, 100%);
+    height: min(940px, 96vh);
+    overflow: hidden;
+    background: var(--fpf-bg);
+    color: var(--fpf-text);
+    border-radius: 18px;
+    box-shadow: 0 30px 80px rgba(17, 24, 39, .34);
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+  }
+
+  .fpf-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 22px;
+    background: var(--fpf-card);
+    border-bottom: 1px solid var(--fpf-border);
+  }
+
+  .fpf-header h2 { margin: 0; font-size: 1.4rem; }
+  .fpf-header p { margin: 4px 0 0; color: var(--fpf-muted); }
+  .fpf-header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .fpf-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 10px 16px;
+    background: var(--fpf-card);
+    border-bottom: 1px solid var(--fpf-border);
+  }
+
+  .fpf-tab, .fpf-btn, .fpf-select-button {
+    appearance: none;
+    border: 1px solid var(--fpf-border);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--fpf-text);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 650;
+    padding: 9px 12px;
+  }
+
+  .fpf-tab.active, .fpf-btn.primary {
+    border-color: var(--fpf-accent);
+    background: var(--fpf-accent);
+    color: #fff;
+  }
+
+  .fpf-btn.success { border-color: var(--fpf-success); color: var(--fpf-success); }
+  .fpf-btn.danger { color: var(--fpf-danger); }
+  .fpf-btn.small { padding: 6px 9px; font-size: .86rem; }
+  .fpf-tab:disabled, .fpf-btn:disabled {
+    cursor: not-allowed;
+    opacity: .48;
+  }
+
+  .fpf-content { overflow-y: auto; padding: 20px; }
+  .fpf-grid { display: grid; gap: 14px; }
+  .fpf-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fpf-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .fpf-grid.stats { grid-template-columns: repeat(4, minmax(130px, 1fr)); }
+
+  .fpf-card {
+    background: var(--fpf-card);
+    border: 1px solid var(--fpf-border);
+    border-radius: 14px;
+    padding: 16px;
+  }
+
+  .fpf-card h3, .fpf-card h4 { margin: 0 0 10px; }
+  .fpf-card p { margin: 7px 0; }
+  .fpf-card.path-card { display: flex; flex-direction: column; }
+  .fpf-card.path-card .fpf-actions { margin-top: auto; padding-top: 12px; }
+  .fpf-muted { color: var(--fpf-muted); }
+  .fpf-helper { color: var(--fpf-muted); font-size: .88rem; margin: 0; }
+  .fpf-stat strong { display: block; font-size: 1.65rem; margin-top: 6px; }
+
+  .fpf-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+  .fpf-field { display: grid; gap: 5px; }
+  .fpf-field.full { grid-column: 1 / -1; }
+  .fpf-field label { font-weight: 700; font-size: .93rem; }
+  .fpf-field input, .fpf-field select, .fpf-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--fpf-border);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--fpf-text);
+    font: inherit;
+    padding: 10px;
+  }
+  .fpf-field textarea { min-height: 96px; resize: vertical; }
+  .fpf-field textarea.tall { min-height: 145px; }
+
+  .fpf-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 18px 0 10px;
+  }
+  .fpf-section-head h3 { margin: 0; }
+
+  .fpf-notice { border-radius: 10px; background: #f2f4f7; padding: 12px; margin-bottom: 14px; }
+  .fpf-notice.info { background: var(--fpf-accent-soft); }
+  .fpf-notice.warn { background: #fffaeb; color: #7a2e0e; }
+  .fpf-notice.success { background: #ecfdf3; color: #05603a; }
+  .fpf-progress { height: 13px; border-radius: 999px; background: #e7ebf0; overflow: hidden; }
+  .fpf-progress span { display: block; height: 100%; background: var(--fpf-accent); border-radius: inherit; }
+
+  .fpf-list { display: grid; gap: 12px; }
+  .fpf-item { border: 1px solid var(--fpf-border); border-radius: 12px; background: #fff; padding: 14px; }
+  .fpf-item-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .fpf-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .fpf-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .fpf-chip {
+    border: 1px solid var(--fpf-border);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--fpf-accent);
+    cursor: pointer;
+    font: inherit;
+    font-size: .85rem;
+    font-weight: 700;
+    padding: 6px 9px;
+  }
+  .fpf-chip:hover { background: var(--fpf-accent-soft); }
+  .fpf-chip.selected { background: var(--fpf-accent); color: #fff; border-color: var(--fpf-accent); }
+
+  .fpf-bank {
+    border: 1px solid var(--fpf-border);
+    border-radius: 12px;
+    background: #fbfcfe;
+    padding: 13px;
+    margin-bottom: 12px;
+  }
+  .fpf-bank h4 { margin: 0 0 4px; }
+  .fpf-bank-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: end; }
+
+  .fpf-goal-bank { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fpf-goal-option { border: 1px solid var(--fpf-border); border-radius: 11px; background: #fff; padding: 12px; }
+  .fpf-goal-option h4 { margin: 0 0 6px; }
+  .fpf-pill { display: inline-block; border-radius: 999px; padding: 3px 8px; background: var(--fpf-accent-soft); color: var(--fpf-accent); font-size: .78rem; font-weight: 700; }
+  .fpf-empty { text-align: center; padding: 24px; color: var(--fpf-muted); border: 1px dashed var(--fpf-border); border-radius: 12px; }
+  .fpf-loading { display: grid; place-items: center; min-height: 300px; color: var(--fpf-muted); }
+  .fpf-link { color: var(--fpf-accent); font-weight: 700; text-decoration: none; }
+
+  .fpf-checklist { display: grid; gap: 8px; }
+  .fpf-check { display: flex; gap: 9px; align-items: flex-start; padding: 9px; border-radius: 9px; background: #f7f8fa; }
+  .fpf-check.ready { background: #ecfdf3; color: #05603a; }
+  .fpf-check strong { min-width: 20px; }
+
+  .fpf-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%) translateY(20px);
+    opacity: 0;
+    z-index: 10030;
+    background: #111827;
+    color: #fff;
+    border-radius: 10px;
+    padding: 11px 15px;
+    transition: .2s ease;
+    pointer-events: none;
+  }
+  .fpf-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .fpf-toast.error { background: var(--fpf-danger); }
+  .fpf-message {
+    margin: 0 0 14px;
+    border: 2px solid var(--fpf-danger);
+    border-radius: 10px;
+    background: #fff1f0;
+    color: #7a271a;
+    padding: 12px 14px;
+  }
+  .fpf-message.info { border-color: var(--fpf-accent); background: var(--fpf-accent-soft); color: var(--fpf-text); }
+  .fpf-launch:focus-visible, .fpf-tab:focus-visible, .fpf-btn:focus-visible,
+  .fpf-field input:focus-visible, .fpf-field select:focus-visible, .fpf-field textarea:focus-visible {
+    outline: 3px solid #f4b400;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 900px) {
+    .fpf-grid.stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fpf-grid.two, .fpf-grid.three, .fpf-form, .fpf-goal-bank { grid-template-columns: 1fr; }
+    .fpf-field.full { grid-column: auto; }
+    .fpf-bank-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 540px) {
+    .fpf-shell { padding: 0; }
+    .fpf-app { height: 100vh; border-radius: 0; }
+    .fpf-content { padding: 13px; }
+    .fpf-header { align-items: flex-start; }
+  }
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  const state = {
+    data: null,
+    profile: null,
+    activeTab: 'start',
+    busy: false,
+    goalFilter: 'All',
+    lastFocus: null,
+    menuObserver: null
+  };
+
+  const FALLBACK = {
+    missionOptions: [
+      { id: 'balanced', label: 'Balanced foundation', text: 'Our family works together to build a respectful, healthy, organized, and supportive home. We communicate honestly, keep learning, manage our responsibilities wisely, and help each person grow.' },
+      { id: 'connection', label: 'Connection and support', text: 'Our family creates a safe place where every person is heard, supported, and expected to contribute.' },
+      { id: 'custom', label: 'Write our own mission', text: '' }
+    ],
+    visionOptions: [
+      { id: 'prepared', label: 'Prepared for life', text: 'We see a family whose members are emotionally healthy, financially informed, educated, dependable, and prepared to make thoughtful decisions independently.' },
+      { id: 'stable', label: 'Stable and thriving', text: 'We see a stable family with healthy routines, strong relationships, growing opportunities, responsible finances, and a shared habit of setting and completing goals.' },
+      { id: 'custom', label: 'Write our own vision', text: '' }
+    ],
+    mottoOptions: [
+      { id: 'together', label: 'Together, we grow.', text: 'Together, we grow.' },
+      { id: 'progress', label: 'Progress over perfection.', text: 'Progress over perfection.' },
+      { id: 'custom', label: 'Write our own motto', text: '' }
+    ],
+    homeEnvironmentOptions: [
+      { id: 'balanced', label: 'Balanced foundation', text: 'We want our home to feel safe, respectful, organized, supportive, and focused on helping each person grow.' },
+      { id: 'peaceful', label: 'Peaceful and organized', text: 'We want our home to feel calm, reasonably organized, predictable, and prepared for the week ahead.' },
+      { id: 'custom', label: 'Describe our own home environment', text: '' }
+    ],
+    ageGroups: [
+      { value: 'adult', label: 'Adult' },
+      { value: 'young-adult', label: 'Young adult' },
+      { value: 'teen', label: 'Teen' },
+      { value: 'child', label: 'Child' },
+      { value: 'other', label: 'Other / prefer not to say' }
+    ],
+    pillars: ['Relationships', 'Health', 'Education', 'Finances', 'Goals'],
+    timeframes: [
+      { value: 'weekly', label: 'Weekly' },
+      { value: 'monthly', label: 'Monthly' },
+      { value: 'quarterly', label: 'Quarterly' },
+      { value: 'yearly', label: 'Yearly' }
+    ]
+  };
+
+  function start() {
+    if (document.getElementById('fpfShell')) return;
+    removeLegacyIdentityLaunchers_();
+    injectApp_();
+    bindEvents_();
+    installMenuLauncher_();
+  }
+
+  function removeLegacyIdentityLaunchers_() {
+    const legacyLabels = {
+      'household identity': true,
+      'household identity center': true,
+      'family identity': true,
+      'family identity & values': true,
+      'family identity and values': true,
+      'family identity & values center': true,
+      'family identity and values center': true
+    };
+    document.querySelectorAll('a, button, [role="button"]').forEach(function (element) {
+      if (element.closest('#fpfShell, #fpdrcShell')) return;
+      const label = String(element.textContent || '').trim().toLowerCase().replace(/\s+/g, ' ');
+      const view = String(element.dataset && (element.dataset.view || element.dataset.fpdView || element.dataset.page) || '').trim().toLowerCase();
+      if (legacyLabels[label] || /^(household-?identity|family-?identity)$/.test(view)) {
+        const menuItem = element.closest('li');
+        (menuItem || element).remove();
+      }
+    });
+  }
+
+  function installMenuLauncher_() {
+    removeLegacyIdentityLaunchers_();
+    if (document.getElementById('fpfLaunch')) return true;
+    const target = findMenuTarget_();
+    if (!target) {
+      if (!state.menuObserver) {
+        state.menuObserver = new MutationObserver(function () {
+          if (installMenuLauncher_()) {
+            state.menuObserver.disconnect();
+            state.menuObserver = null;
+          }
+        });
+        state.menuObserver.observe(document.documentElement, { childList: true, subtree: true });
+      }
+      return false;
+    }
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.id = 'fpfLaunch';
+    button.className = 'fpf-launch';
+    button.textContent = 'Family Profile';
+    button.setAttribute('aria-label', 'Open Family Profile');
+    button.addEventListener('click', open_);
+
+    if (target.matches('ul, ol')) {
+      const item = document.createElement('li');
+      item.className = 'fpf-menu-item';
+      item.appendChild(button);
+      target.appendChild(item);
+    } else {
+      target.appendChild(button);
+    }
+    return true;
+  }
+
+  function findMenuTarget_() {
+    const selectors = [
+      '[data-fpd-nav]', '[data-app-nav]', '#sidebarNav', '#appNav',
+      '.sidebar nav ul', 'aside nav ul', 'nav.sidebar ul',
+      '.app-nav', '.main-nav ul', '.main-nav', '.sidebar-menu', '.nav-menu'
+    ];
+    for (let i = 0; i < selectors.length; i += 1) {
+      const nodes = document.querySelectorAll(selectors[i]);
+      for (let j = 0; j < nodes.length; j += 1) {
+        if (!nodes[j].closest('#fpfShell, #fpdrcShell')) return nodes[j];
+      }
+    }
+    return null;
+  }
+
+  function injectApp_() {
+    const shell = document.createElement('div');
+    shell.id = 'fpfShell';
+    shell.className = 'fpf-shell';
+    shell.hidden = true;
+    shell.innerHTML = `
+      <section class="fpf-app" role="dialog" aria-modal="true" aria-labelledby="fpfTitle" aria-describedby="fpfDescription">
+        <header class="fpf-header">
+          <div>
+            <h2 id="fpfTitle">Family Profile</h2>
+            <p id="fpfDescription">Build a shared family foundation with guided choices or create a fully personalized profile.</p>
+          </div>
+          <div class="fpf-header-actions">
+            <button type="button" class="fpf-btn primary" id="fpfSave">Save progress</button>
+            <button type="button" class="fpf-btn" id="fpfClose">Close</button>
+          </div>
+        </header>
+        <nav class="fpf-tabs" aria-label="Family Profile sections">
+          <button type="button" class="fpf-tab active" data-fpf-tab="start">Start Here</button>
+          <button type="button" class="fpf-tab" data-fpf-tab="basics">Family Basics</button>
+          <button type="button" class="fpf-tab" data-fpf-tab="foundation">Foundation</button>
+          <button type="button" class="fpf-tab" data-fpf-tab="members">Members & Roles</button>
+          <button type="button" class="fpf-tab" data-fpf-tab="goals">Starter Goals</button>
+          <button type="button" class="fpf-tab" data-fpf-tab="culture">Strengths & Traditions</button>
+          <button type="button" class="fpf-tab" data-fpf-tab="document">Create Profile</button>
+        </nav>
+        <main class="fpf-content">
+          <div id="fpfMessage" class="fpf-message" role="alert" aria-live="assertive" tabindex="-1" hidden></div>
+          <div id="fpfLoading" class="fpf-loading" role="status" aria-live="polite">Loading Family Profile…</div>
+
+          <section id="fpfStart" class="fpf-view" hidden>
+            <div id="fpfStats" class="fpf-grid stats"></div>
+            <article class="fpf-card" style="margin-top:14px;">
+              <h3>Choose how your family wants to begin</h3>
+              <p>You do not need to already understand mission statements, vision statements, values, or family goals. The guided path supplies a strong starting foundation that your family can edit over time.</p>
+            </article>
+            <div class="fpf-grid two" style="margin-top:14px;">
+              <article class="fpf-card path-card">
+                <div>
+                  <span class="fpf-pill">Recommended for most families</span>
+                  <h3 style="margin-top:10px;">Guided Foundation</h3>
+                  <p>Select a ready-made foundation. FamilyPD will prefill a mission, vision, motto, core values, commitments, and one starter goal in each pillar.</p>
+                  <div class="fpf-field" style="margin-top:12px;">
+                    <label for="fpfPresetSelect">Choose a starting foundation</label>
+                    <select id="fpfPresetSelect"></select>
+                    <p id="fpfPresetDescription" class="fpf-helper"></p>
+                  </div>
+                </div>
+                <div class="fpf-actions">
+                  <button type="button" class="fpf-btn primary" id="fpfUseGuided">Use this guided foundation</button>
+                </div>
+              </article>
+              <article class="fpf-card path-card">
+                <div>
+                  <span class="fpf-pill">For families ready to customize</span>
+                  <h3 style="margin-top:10px;">Personalized Journey</h3>
+                  <p>Start with a blank profile and write your own responses. Mission, vision, value, role, and goal banks will still be available whenever you want support.</p>
+                </div>
+                <div class="fpf-actions">
+                  <button type="button" class="fpf-btn" id="fpfUseCustom">Start a personalized profile</button>
+                </div>
+              </article>
+            </div>
+            <article class="fpf-card" style="margin-top:14px;">
+              <h3>Your current path</h3>
+              <div id="fpfPathStatus" class="fpf-notice info"></div>
+              <div class="fpf-progress"><span id="fpfCompletionBar" style="width:0%"></span></div>
+              <p id="fpfCompletionText" class="fpf-muted"></p>
+            </article>
+            <article class="fpf-card" style="margin-top:14px;">
+              <h3>Privacy reminder</h3>
+              <p>Use first names or family roles when preferred. Do not enter passwords, account numbers, Social Security numbers, exact dates of birth, medical records, or other sensitive information.</p>
+            </article>
+          </section>
+
+          <section id="fpfBasics" class="fpf-view" hidden>
+            <div class="fpf-notice info"><strong>What this section means:</strong> This is the simple introduction to your family. There is no perfect answer. Use a name your family recognizes and describe the kind of home environment you are working to build.</div>
+            <div class="fpf-form">
+              <div class="fpf-field">
+                <label for="fpfFamilyName">Family profile name</label>
+                <input id="fpfFamilyName" maxlength="120" placeholder="Example: The Hall Family or Our Home Team">
+                <p class="fpf-helper">This can be a last name, blended-family name, household nickname, or any respectful name your family chooses.</p>
+              </div>
+              <div class="fpf-field">
+                <label for="fpfMottoBank">Choose a motto from the bank</label>
+                <select id="fpfMottoBank"></select>
+                <p class="fpf-helper">A motto is a short phrase your family can remember during decisions or difficult moments.</p>
+              </div>
+              <div class="fpf-field full">
+                <label for="fpfTagline">Family motto</label>
+                <input id="fpfTagline" maxlength="180" placeholder="Select an option above or write your own">
+              </div>
+              <div class="fpf-field full">
+                <label for="fpfStory">Our family story</label>
+                <textarea id="fpfStory" class="tall" placeholder="Example: We are a family that has adapted through change, values education, supports one another, and is working to become more organized and intentional."></textarea>
+                <p class="fpf-helper"><strong>What to enter:</strong> A few sentences about experiences, strengths, lessons, culture, or changes that have shaped your family. This can be completed later.</p>
+              </div>
+              <div class="fpf-field full">
+                <label for="fpfHomeBank">Choose a home environment from the bank</label>
+                <select id="fpfHomeBank"></select>
+              </div>
+              <div class="fpf-field full">
+                <label for="fpfHomeFeeling">The home environment we are building</label>
+                <textarea id="fpfHomeFeeling" class="tall" placeholder="Select an option above or describe how family members should feel and function at home."></textarea>
+                <p class="fpf-helper">This replaces vague questions such as “Where do you see your family?” Focus on how the home should feel: safe, peaceful, organized, supportive, joyful, focused, or another clear description.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="fpfFoundation" class="fpf-view" hidden>
+            <div class="fpf-notice info"><strong>Your family foundation</strong> explains what your family is trying to do now, what you hope to build over time, which principles guide decisions, and how those principles should look in daily life.</div>
+
+            <div class="fpf-bank">
+              <h4>Mission statement bank</h4>
+              <p class="fpf-helper">A mission describes what your family commits to practicing now.</p>
+              <div class="fpf-bank-row">
+                <div class="fpf-field"><label for="fpfMissionBank">Select a mission</label><select id="fpfMissionBank"></select></div>
+                <button type="button" class="fpf-btn" data-apply-bank="mission">Use selected mission</button>
+              </div>
+            </div>
+            <div class="fpf-field full">
+              <label for="fpfMission">Our mission</label>
+              <textarea id="fpfMission" class="tall" placeholder="Select a mission above or write your own."></textarea>
+            </div>
+
+            <div class="fpf-bank" style="margin-top:14px;">
+              <h4>Vision statement bank</h4>
+              <p class="fpf-helper">A vision describes what you hope your family will become or be prepared to do over time.</p>
+              <div class="fpf-bank-row">
+                <div class="fpf-field"><label for="fpfVisionBank">Select a vision</label><select id="fpfVisionBank"></select></div>
+                <button type="button" class="fpf-btn" data-apply-bank="vision">Use selected vision</button>
+              </div>
+            </div>
+            <div class="fpf-field full">
+              <label for="fpfVision">Our vision</label>
+              <textarea id="fpfVision" class="tall" placeholder="Select a vision above or write your own."></textarea>
+            </div>
+
+            <div class="fpf-section-head">
+              <div><h3>Core values</h3><p class="fpf-helper">Values are principles that guide behavior and decisions. Start with 5–7. You can change them later.</p></div>
+              <div class="fpf-actions" style="margin-top:0;">
+                <button type="button" class="fpf-btn" id="fpfAddStandardValues">Use balanced starter values</button>
+                <button type="button" class="fpf-btn primary" id="fpfAddValue">Add custom value</button>
+              </div>
+            </div>
+            <div id="fpfValueSuggestions" class="fpf-chips"></div>
+            <div id="fpfValueList" class="fpf-list" style="margin-top:12px;"></div>
+
+            <div class="fpf-section-head">
+              <div><h3>Shared commitments</h3><p class="fpf-helper">Commitments turn values into agreed family behaviors.</p></div>
+            </div>
+            <div id="fpfCommitmentSuggestions" class="fpf-chips"></div>
+            <div class="fpf-field full" style="margin-top:12px;">
+              <label for="fpfCommitments">Our shared commitments</label>
+              <textarea id="fpfCommitments" class="tall" placeholder="Choose commitments above or write your own. Each selection will be added as an editable line."></textarea>
+            </div>
+          </section>
+
+          <section id="fpfMembers" class="fpf-view" hidden>
+            <div class="fpf-notice info"><strong>Roles are contributions—not rank.</strong> Add only the information needed to clarify how each person helps. The role bank can prefill a responsibility description, and all wording remains editable.</div>
+            <div class="fpf-section-head">
+              <h3>Family members and roles</h3>
+              <button type="button" class="fpf-btn primary" id="fpfAddMember">Add family member</button>
+            </div>
+            <div id="fpfMemberList" class="fpf-list"></div>
+          </section>
+
+          <section id="fpfGoals" class="fpf-view" hidden>
+            <div class="fpf-notice info"><strong>You do not have to invent goals.</strong> Select practical starter goals from the five FamilyPD pillars. Choose only what your family can realistically begin.</div>
+            <div class="fpf-field" style="max-width:340px; margin-bottom:12px;">
+              <label for="fpfGoalFilter">Show goals for</label>
+              <select id="fpfGoalFilter"></select>
+            </div>
+            <div id="fpfGoalBank" class="fpf-goal-bank"></div>
+            <div class="fpf-section-head">
+              <h3>Our selected starter goals</h3>
+              <button type="button" class="fpf-btn primary" id="fpfAddGoal">Add custom goal</button>
+            </div>
+            <div id="fpfGoalList" class="fpf-list"></div>
+          </section>
+
+          <section id="fpfCulture" class="fpf-view" hidden>
+            <div class="fpf-notice info">These questions help your family preserve what is already strong. They are optional and can be completed gradually.</div>
+            <div class="fpf-form">
+              <div class="fpf-field full">
+                <label for="fpfStrengths">What our family already does well</label>
+                <textarea id="fpfStrengths" class="tall" placeholder="Examples: we support education, adapt during change, help extended family, communicate during emergencies, celebrate milestones, or solve practical problems."></textarea>
+              </div>
+              <div class="fpf-field full">
+                <label for="fpfTraditions">Traditions or routines we want to protect or build</label>
+                <textarea id="fpfTraditions" class="tall" placeholder="Examples: shared meals, celebrations, weekly check-ins, study time, service, family trips, storytelling, or cultural traditions."></textarea>
+              </div>
+              <div class="fpf-field full">
+                <label for="fpfCultureNotes">Culture, heritage, beliefs, or stories we want to honor</label>
+                <textarea id="fpfCultureNotes" class="tall" placeholder="Enter only what your family wants included. This section may remain blank."></textarea>
+              </div>
+            </div>
+          </section>
+
+          <section id="fpfDocument" class="fpf-view" hidden>
+            <div class="fpf-grid two">
+              <article class="fpf-card">
+                <h3>Create the Family Profile</h3>
+                <p>This creates an editable Google Doc and PDF in <strong>01 Family Profile & Values</strong>.</p>
+                <div id="fpfReadiness" class="fpf-checklist"></div>
+                <div class="fpf-actions">
+                  <button type="button" class="fpf-btn primary" id="fpfSaveCreate">Save & Create Family Profile</button>
+                  <button type="button" class="fpf-btn" id="fpfGoFoundation">Complete the foundation</button>
+                  <button type="button" class="fpf-btn" id="fpfOpenWorkspace" hidden>Open Workspace Setup</button>
+                </div>
+              </article>
+              <article class="fpf-card" id="fpfLastDocumentCard">
+                <h3>Most recent Family Profile</h3>
+                <p class="fpf-muted">No Family Profile has been generated yet.</p>
+              </article>
+            </div>
+            <article class="fpf-card" style="margin-top:14px;">
+              <h3>Start over</h3>
+              <p>This clears the saved Family Profile form. It does not delete existing Docs or PDFs.</p>
+              <button type="button" class="fpf-btn danger" id="fpfReset">Clear saved Family Profile</button>
+            </article>
+          </section>
+        </main>
+      </section>
+      <div id="fpfToast" class="fpf-toast" role="status" aria-live="polite"></div>`;
+    document.body.appendChild(shell);
+  }
+
+  function bindEvents_() {
+    document.getElementById('fpfClose').addEventListener('click', close_);
+    document.getElementById('fpfSave').addEventListener('click', function () { save_(false); });
+    document.getElementById('fpfSaveCreate').addEventListener('click', function () { save_(true); });
+    document.getElementById('fpfReset').addEventListener('click', reset_);
+    document.getElementById('fpfUseGuided').addEventListener('click', chooseGuided_);
+    document.getElementById('fpfUseCustom').addEventListener('click', chooseCustom_);
+    document.getElementById('fpfAddValue').addEventListener('click', addValue_);
+    document.getElementById('fpfAddStandardValues').addEventListener('click', addBalancedValues_);
+    document.getElementById('fpfAddMember').addEventListener('click', addMember_);
+    document.getElementById('fpfAddGoal').addEventListener('click', addGoal_);
+    document.getElementById('fpfGoFoundation').addEventListener('click', function () { showTab_('foundation'); });
+    document.getElementById('fpfOpenWorkspace').addEventListener('click', openWorkspaceSetup_);
+    document.getElementById('fpfPresetSelect').addEventListener('change', renderPresetDescription_);
+    document.getElementById('fpfGoalFilter').addEventListener('change', function (event) {
+      state.goalFilter = event.target.value;
+      renderGoalBank_();
+    });
+
+    document.querySelectorAll('[data-fpf-tab]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        if (button.disabled) {
+          toast_('Choose Guided Foundation or Personalized Journey first.', true);
+          return;
+        }
+        showTab_(button.dataset.fpfTab);
+      });
+    });
+
+    document.querySelectorAll('[data-apply-bank]').forEach(function (button) {
+      button.addEventListener('click', function () { applyTextBank_(button.dataset.applyBank); });
+    });
+
+    document.getElementById('fpfMottoBank').addEventListener('change', function () { applySelectDirect_('mottoOptions', 'fpfMottoBank', 'fpfTagline'); });
+    document.getElementById('fpfHomeBank').addEventListener('change', function () { applySelectDirect_('homeEnvironmentOptions', 'fpfHomeBank', 'fpfHomeFeeling'); });
+
+    document.getElementById('fpfValueSuggestions').addEventListener('click', function (event) {
+      const button = event.target.closest('[data-value-id]');
+      if (button) addSuggestedValue_(button.dataset.valueId);
+    });
+
+    document.getElementById('fpfCommitmentSuggestions').addEventListener('click', function (event) {
+      const button = event.target.closest('[data-commitment-id]');
+      if (button) addCommitment_(button.dataset.commitmentId);
+    });
+
+    document.getElementById('fpfGoalBank').addEventListener('click', function (event) {
+      const button = event.target.closest('[data-goal-id]');
+      if (button) addSuggestedGoal_(button.dataset.goalId);
+    });
+
+    document.getElementById('fpfValueList').addEventListener('click', function (event) {
+      const button = event.target.closest('[data-remove-value]');
+      if (!button) return;
+      preserveDynamicData_();
+      state.profile.values.splice(Number(button.dataset.removeValue), 1);
+      renderValues_();
+      renderOverview_();
+    });
+
+    document.getElementById('fpfMemberList').addEventListener('click', function (event) {
+      const button = event.target.closest('[data-remove-member]');
+      if (!button) return;
+      preserveDynamicData_();
+      state.profile.members.splice(Number(button.dataset.removeMember), 1);
+      renderMembers_();
+      renderOverview_();
+    });
+
+    document.getElementById('fpfMemberList').addEventListener('change', function (event) {
+      const select = event.target.closest('[data-role-select]');
+      if (!select) return;
+      applyRoleOption_(select);
+    });
+
+    document.getElementById('fpfGoalList').addEventListener('click', function (event) {
+      const button = event.target.closest('[data-remove-goal]');
+      if (!button) return;
+      preserveDynamicData_();
+      state.profile.goals.splice(Number(button.dataset.removeGoal), 1);
+      renderGoals_();
+      renderOverview_();
+    });
+
+    document.getElementById('fpfShell').addEventListener('click', function (event) {
+      if (event.target.id === 'fpfShell') close_();
+    });
+    document.addEventListener('keydown', function (event) {
+      const shell = document.getElementById('fpfShell');
+      if (shell.hidden) return;
+      if (event.key === 'Escape') close_();
+      if (event.key === 'Tab') trapFocus_(event);
+    });
+  }
+
+  function trapFocus_(event) {
+    const shell = document.getElementById('fpfShell');
+    const focusable = Array.prototype.slice.call(shell.querySelectorAll(
+      'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(function (element) { return element.offsetParent !== null; });
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault(); last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault(); first.focus();
+    }
+  }
+
+  async function open_() {
+    state.lastFocus = document.activeElement;
+    clearMessage_();
+    document.getElementById('fpfShell').hidden = false;
+    document.body.style.overflow = 'hidden';
+    document.getElementById('fpfClose').focus();
+    await load_(false);
+  }
+
+  function close_() {
+    document.getElementById('fpfShell').hidden = true;
+    document.body.style.overflow = '';
+    if (state.lastFocus && typeof state.lastFocus.focus === 'function') state.lastFocus.focus();
+  }
+
+  async function load_(forceRefresh) {
+    setBusy_(true);
+    clearMessage_();
+    try {
+      state.data = await server_('fpdFamilyProfileGetData', Boolean(forceRefresh));
+      state.profile = deepClone_(state.data.profile || {});
+      ensureArrays_();
+      populateFields_();
+      renderAll_();
+      document.getElementById('fpfLoading').hidden = true;
+      lockTabs_();
+      showTab_(state.profile.journeyMode ? state.activeTab : 'start');
+    } catch (error) {
+      document.getElementById('fpfLoading').hidden = true;
+      showMessage_(error.message, false);
+      toast_(error.message, true);
+    } finally {
+      setBusy_(false);
+    }
+  }
+
+  function ensureArrays_() {
+    state.profile.values = Array.isArray(state.profile.values) ? state.profile.values : [];
+    state.profile.members = Array.isArray(state.profile.members) ? state.profile.members : [];
+    state.profile.goals = Array.isArray(state.profile.goals) ? state.profile.goals : [];
+  }
+
+  function renderAll_() {
+    renderBankSelects_();
+    renderOverview_();
+    renderPresetDescription_();
+    renderValueSuggestions_();
+    renderValues_();
+    renderCommitmentSuggestions_();
+    renderMembers_();
+    renderGoalFilter_();
+    renderGoalBank_();
+    renderGoals_();
+    renderReadiness_();
+    renderLastDocument_();
+  }
+
+  function populateFields_() {
+    const profile = state.profile || {};
+    setValue_('fpfFamilyName', profile.familyName);
+    setValue_('fpfTagline', profile.familyTagline);
+    setValue_('fpfStory', profile.familyStory);
+    setValue_('fpfHomeFeeling', profile.homeFeeling);
+    setValue_('fpfMission', profile.mission);
+    setValue_('fpfVision', profile.vision);
+    setValue_('fpfStrengths', profile.strengths);
+    setValue_('fpfTraditions', profile.traditions);
+    setValue_('fpfCultureNotes', profile.cultureNotes);
+    setValue_('fpfCommitments', profile.commitments);
+  }
+
+  function renderBankSelects_() {
+    fillTextSelect_('fpfMottoBank', optionList_('mottoOptions'), 'Choose a motto');
+    fillTextSelect_('fpfHomeBank', optionList_('homeEnvironmentOptions'), 'Choose a home environment');
+    fillTextSelect_('fpfMissionBank', optionList_('missionOptions'), 'Choose a mission');
+    fillTextSelect_('fpfVisionBank', optionList_('visionOptions'), 'Choose a vision');
+
+    const presets = options_().foundationPresets || [];
+    const presetSelect = document.getElementById('fpfPresetSelect');
+    presetSelect.innerHTML = presets.length
+      ? presets.map(function (item) { return '<option value="' + escapeAttr_(item.id) + '">' + escapeHtml_(item.name) + '</option>'; }).join('')
+      : '<option value="">Guided options are unavailable—refresh the app</option>';
+    if (state.profile.foundationPresetId && presets.some(function (item) { return item.id === state.profile.foundationPresetId; })) {
+      presetSelect.value = state.profile.foundationPresetId;
+    }
+  }
+
+  function fillTextSelect_(id, items, placeholder) {
+    const select = document.getElementById(id);
+    select.innerHTML = '<option value="">' + escapeHtml_(placeholder) + '</option>' + items.map(function (item) {
+      return '<option value="' + escapeAttr_(item.id) + '">' + escapeHtml_(item.label) + '</option>';
+    }).join('');
+  }
+
+  function renderOverview_() {
+    const summary = calculateClientSummary_();
+    document.getElementById('fpfStats').innerHTML = [
+      statCard_('Profile complete', summary.completionPercent + '%'),
+      statCard_('Core values', state.profile.values.length),
+      statCard_('Starter goals', state.profile.goals.length),
+      statCard_('Profile created', state.profile.lastDocument ? 'Yes' : 'Not yet')
+    ].join('');
+    document.getElementById('fpfCompletionBar').style.width = summary.completionPercent + '%';
+    document.getElementById('fpfCompletionText').textContent = summary.completedSections + ' of ' + summary.totalSections + ' foundation areas started.';
+    const status = document.getElementById('fpfPathStatus');
+    if (!state.profile.journeyMode) {
+      status.innerHTML = '<strong>No path selected yet.</strong> Choose a guided foundation or personalized journey to unlock the rest of the Family Profile.';
+    } else if (state.profile.journeyMode === 'guided') {
+      const preset = findById_(options_().foundationPresets || [], state.profile.foundationPresetId);
+      status.innerHTML = '<strong>Guided Foundation selected.</strong> ' + escapeHtml_(preset ? preset.name : 'Your starting foundation') + ' is editable at any time.';
+    } else {
+      status.innerHTML = '<strong>Personalized Journey selected.</strong> Your profile starts blank, and every option bank remains available for support.';
+    }
+  }
+
+  function calculateClientSummary_() {
+    const fields = [
+      state.profile.journeyMode,
+      value_('fpfFamilyName'),
+      value_('fpfHomeFeeling'),
+      value_('fpfMission'),
+      value_('fpfVision'),
+      state.profile.values.length >= 3 ? 'values' : '',
+      state.profile.members.length ? 'members' : '',
+      state.profile.goals.length ? 'goals' : '',
+      value_('fpfCommitments')
+    ];
+    const completed = fields.filter(Boolean).length;
+    return { completedSections: completed, totalSections: fields.length, completionPercent: Math.round((completed / fields.length) * 100) };
+  }
+
+  function renderPresetDescription_() {
+    const preset = findById_(options_().foundationPresets || [], document.getElementById('fpfPresetSelect').value);
+    document.getElementById('fpfPresetDescription').textContent = preset ? preset.description : 'Select a guided foundation to see what it emphasizes.';
+  }
+
+  function chooseGuided_() {
+    const presetId = document.getElementById('fpfPresetSelect').value;
+    if (!presetId) {
+      toast_('Select a guided foundation first.', true);
+      return;
+    }
+    preserveDynamicData_();
+    const hasFoundation = Boolean(value_('fpfMission') || value_('fpfVision') || state.profile.values.length || state.profile.goals.length);
+    if (hasFoundation && !confirm('Apply this guided foundation? It will replace the current mission, vision, motto, home environment, values, commitments, and starter goals. Family name, story, members, strengths, and traditions will remain.')) return;
+    applyPreset_(presetId);
+    state.activeTab = 'basics';
+    lockTabs_();
+    renderAll_();
+    showTab_('basics');
+    toast_('Guided foundation applied. Review and edit any wording.', false);
+  }
+
+  function chooseCustom_() {
+    state.profile.journeyMode = 'custom';
+    state.profile.foundationPresetId = '';
+    state.activeTab = 'basics';
+    lockTabs_();
+    renderOverview_();
+    renderReadiness_();
+    showTab_('basics');
+    toast_('Personalized Journey selected. Option banks remain available.', false);
+  }
+
+  function applyPreset_(presetId) {
+    const preset = findById_(options_().foundationPresets || [], presetId);
+    if (!preset) return;
+    const mission = findById_(optionList_('missionOptions'), preset.missionId);
+    const vision = findById_(optionList_('visionOptions'), preset.visionId);
+    const motto = findById_(optionList_('mottoOptions'), preset.mottoId);
+    const home = findById_(optionList_('homeEnvironmentOptions'), preset.homeEnvironmentId);
+    const valueBank = options_().valueSuggestions || [];
+    const goalBank = options_().goalSuggestions || [];
+    const commitmentBank = options_().commitmentOptions || [];
+
+    state.profile.journeyMode = 'guided';
+    state.profile.foundationPresetId = preset.id;
+    state.profile.familyTagline = motto ? motto.text : '';
+    state.profile.homeFeeling = home ? home.text : '';
+    state.profile.mission = mission ? mission.text : '';
+    state.profile.vision = vision ? vision.text : '';
+    state.profile.values = (preset.valueIds || []).map(function (id) {
+      const item = findById_(valueBank, id);
+      return item ? { id: '', sourceId: item.id, name: item.name, meaning: item.meaning, behaviors: item.behaviors } : null;
+    }).filter(Boolean);
+    state.profile.commitments = (preset.commitmentIds || []).map(function (id) {
+      const item = findById_(commitmentBank, id);
+      return item ? '• ' + item.text : '';
+    }).filter(Boolean).join('\n');
+    state.profile.goals = (preset.goalIds || []).map(function (id) {
+      const item = findById_(goalBank, id);
+      return item ? goalFromSuggestion_(item) : null;
+    }).filter(Boolean);
+    populateFields_();
+  }
+
+  function applyTextBank_(type) {
+    const map = {
+      mission: { options: 'missionOptions', select: 'fpfMissionBank', field: 'fpfMission' },
+      vision: { options: 'visionOptions', select: 'fpfVisionBank', field: 'fpfVision' }
+    };
+    const config = map[type];
+    if (!config) return;
+    const selected = findById_(optionList_(config.options), document.getElementById(config.select).value);
+    if (!selected) {
+      toast_('Choose an option from the bank first.', true);
+      return;
+    }
+    if (!selected.text) {
+      document.getElementById(config.field).focus();
+      toast_('The custom option is ready for your own wording.', false);
+      return;
+    }
+    const current = value_(config.field);
+    if (current && current !== selected.text && !confirm('Replace the current wording with the selected option?')) return;
+    setValue_(config.field, selected.text);
+    renderReadiness_();
+  }
+
+  function applySelectDirect_(optionKey, selectId, fieldId) {
+    const selected = findById_(optionList_(optionKey), document.getElementById(selectId).value);
+    if (!selected) return;
+    if (!selected.text) {
+      document.getElementById(fieldId).focus();
+      return;
+    }
+    const current = value_(fieldId);
+    if (current && current !== selected.text && !confirm('Replace the current wording with the selected option?')) return;
+    setValue_(fieldId, selected.text);
+  }
+
+  function renderValueSuggestions_() {
+    const selected = {};
+    state.profile.values.forEach(function (item) { selected[String(item.sourceId || item.name).toLowerCase()] = true; });
+    document.getElementById('fpfValueSuggestions').innerHTML = (options_().valueSuggestions || []).map(function (item) {
+      const isSelected = selected[String(item.id || item.name).toLowerCase()];
+      return '<button type="button" class="fpf-chip' + (isSelected ? ' selected' : '') + '" data-value-id="' + escapeAttr_(item.id) + '">' + (isSelected ? '✓ ' : '+ ') + escapeHtml_(item.name) + '</button>';
+    }).join('') || '<span class="fpf-muted">Value options are unavailable. Refresh the app or use Add custom value.</span>';
+  }
+
+  function addSuggestedValue_(id) {
+    preserveDynamicData_();
+    const suggestion = findById_(options_().valueSuggestions || [], id);
+    if (!suggestion) return;
+    const exists = state.profile.values.some(function (item) {
+      return String(item.sourceId || item.name).toLowerCase() === String(suggestion.id || suggestion.name).toLowerCase();
+    });
+    if (exists) {
+      toast_(suggestion.name + ' is already selected.', true);
+      return;
+    }
+    state.profile.values.push({ id: '', sourceId: suggestion.id, name: suggestion.name, meaning: suggestion.meaning, behaviors: suggestion.behaviors });
+    renderValueSuggestions_();
+    renderValues_();
+    renderOverview_();
+    renderReadiness_();
+  }
+
+  function addBalancedValues_() {
+    ['respect', 'honesty', 'responsibility', 'growth', 'health', 'financial', 'teamwork'].forEach(function (id) {
+      const suggestion = findById_(options_().valueSuggestions || [], id);
+      if (!suggestion) return;
+      const exists = state.profile.values.some(function (item) { return (item.sourceId || '').toLowerCase() === id; });
+      if (!exists) state.profile.values.push({ id: '', sourceId: suggestion.id, name: suggestion.name, meaning: suggestion.meaning, behaviors: suggestion.behaviors });
+    });
+    renderValueSuggestions_();
+    renderValues_();
+    renderOverview_();
+    renderReadiness_();
+  }
+
+  function addValue_() {
+    preserveDynamicData_();
+    state.profile.values.push({ id: '', sourceId: '', name: '', meaning: '', behaviors: '' });
+    renderValues_();
+    const cards = document.querySelectorAll('[data-value-card]');
+    if (cards.length) cards[cards.length - 1].querySelector('[data-value-field="name"]').focus();
+  }
+
+  function renderValues_() {
+    const list = document.getElementById('fpfValueList');
+    if (!state.profile.values.length) {
+      list.innerHTML = '<div class="fpf-empty"><strong>No values selected yet.</strong><br>Use balanced starter values, choose from the value bank, or add a custom value.</div>';
+      return;
+    }
+    list.innerHTML = state.profile.values.map(function (item, index) {
+      return `<article class="fpf-item" data-value-card="${index}">
+        <div class="fpf-item-head"><h4>Value ${index + 1}: ${escapeHtml_(item.name || 'Custom value')}</h4><button type="button" class="fpf-btn small danger" data-remove-value="${index}">Remove</button></div>
+        <input type="hidden" data-value-field="id" value="${escapeAttr_(item.id || '')}">
+        <input type="hidden" data-value-field="sourceId" value="${escapeAttr_(item.sourceId || '')}">
+        <div class="fpf-form">
+          <div class="fpf-field full"><label>Value name</label><input data-value-field="name" maxlength="80" value="${escapeAttr_(item.name || '')}" placeholder="Example: Respect"></div>
+          <div class="fpf-field full"><label>What this value means to us</label><textarea data-value-field="meaning">${escapeHtml_(item.meaning || '')}</textarea></div>
+          <div class="fpf-field full"><label>What this value looks like in practice</label><textarea data-value-field="behaviors" placeholder="List specific actions or habits.">${escapeHtml_(item.behaviors || '')}</textarea></div>
+        </div>
+      </article>`;
+    }).join('');
+  }
+
+  function renderCommitmentSuggestions_() {
+    document.getElementById('fpfCommitmentSuggestions').innerHTML = (options_().commitmentOptions || []).map(function (item) {
+      return '<button type="button" class="fpf-chip" data-commitment-id="' + escapeAttr_(item.id) + '">+ ' + escapeHtml_(item.label) + '</button>';
+    }).join('') || '<span class="fpf-muted">Commitment options are unavailable. You may write your own commitments below.</span>';
+  }
+
+  function addCommitment_(id) {
+    const item = findById_(options_().commitmentOptions || [], id);
+    if (!item) return;
+    if (!item.text) {
+      document.getElementById('fpfCommitments').focus();
+      return;
+    }
+    const field = document.getElementById('fpfCommitments');
+    if (field.value.toLowerCase().indexOf(item.text.toLowerCase()) >= 0) {
+      toast_('That commitment is already included.', true);
+      return;
+    }
+    field.value = (field.value.trim() ? field.value.trim() + '\n' : '') + '• ' + item.text;
+  }
+
+  function renderMembers_() {
+    const list = document.getElementById('fpfMemberList');
+    if (!state.profile.members.length) {
+      list.innerHTML = '<div class="fpf-empty"><strong>No family members added yet.</strong><br>Add the first member when you are ready to clarify roles and contributions.</div>';
+      return;
+    }
+    const relationships = options_().relationshipOptions || ['Parent / guardian', 'Child', 'Other'];
+    const ages = optionList_('ageGroups');
+    const roles = options_().roleOptions || [];
+    list.innerHTML = state.profile.members.map(function (member, index) {
+      return `<article class="fpf-item" data-member-card="${index}">
+        <div class="fpf-item-head"><h4>Family member ${index + 1}</h4><button type="button" class="fpf-btn small danger" data-remove-member="${index}">Remove</button></div>
+        <input type="hidden" data-member-field="id" value="${escapeAttr_(member.id || '')}">
+        <div class="fpf-form">
+          <div class="fpf-field"><label>Name or family label</label><input data-member-field="name" maxlength="100" value="${escapeAttr_(member.name || '')}" placeholder="First name or preferred family label"></div>
+          <div class="fpf-field"><label>Relationship</label><select data-member-field="relationship"><option value="">Choose relationship</option>${relationships.map(function (label) { return '<option value="' + escapeAttr_(label) + '"' + (label === member.relationship ? ' selected' : '') + '>' + escapeHtml_(label) + '</option>'; }).join('')}</select></div>
+          <div class="fpf-field"><label>Age group</label><select data-member-field="ageGroup">${ages.map(function (item) { return '<option value="' + escapeAttr_(item.value) + '"' + (item.value === member.ageGroup ? ' selected' : '') + '>' + escapeHtml_(item.label) + '</option>'; }).join('')}</select></div>
+          <div class="fpf-field"><label>Choose a role bank option</label><select data-role-select><option value="">Choose a role to prefill</option>${roles.map(function (item) { return '<option value="' + escapeAttr_(item.id) + '">' + escapeHtml_(item.label) + '</option>'; }).join('')}</select></div>
+          <div class="fpf-field full"><label>Role or contribution</label><input data-member-field="roleTitle" maxlength="140" value="${escapeAttr_(member.roleTitle || '')}" placeholder="Select a role above or write a custom contribution"></div>
+          <div class="fpf-field full"><label>Responsibilities</label><textarea data-member-field="responsibilities" placeholder="What does this person own, support, or help complete?">${escapeHtml_(member.responsibilities || '')}</textarea></div>
+          <div class="fpf-field full"><label>Strengths and contributions</label><textarea data-member-field="strengths" placeholder="What does this person contribute or do well?">${escapeHtml_(member.strengths || '')}</textarea></div>
+          <div class="fpf-field full"><label>Optional notes</label><textarea data-member-field="notes">${escapeHtml_(member.notes || '')}</textarea></div>
+        </div>
+      </article>`;
+    }).join('');
+  }
+
+  function addMember_() {
+    preserveDynamicData_();
+    state.profile.members.push({ id: '', name: '', relationship: '', ageGroup: 'other', roleTitle: '', responsibilities: '', strengths: '', notes: '' });
+    renderMembers_();
+    const cards = document.querySelectorAll('[data-member-card]');
+    if (cards.length) cards[cards.length - 1].querySelector('[data-member-field="name"]').focus();
+  }
+
+  function applyRoleOption_(select) {
+    const role = findById_(options_().roleOptions || [], select.value);
+    if (!role) return;
+    const card = select.closest('[data-member-card]');
+    const title = card.querySelector('[data-member-field="roleTitle"]');
+    const responsibilities = card.querySelector('[data-member-field="responsibilities"]');
+    if (!role.responsibilities) {
+      title.focus();
+      return;
+    }
+    if ((title.value.trim() || responsibilities.value.trim()) && !confirm('Replace the current role and responsibility wording with this bank option?')) return;
+    title.value = role.label;
+    responsibilities.value = role.responsibilities;
+  }
+
+  function renderGoalFilter_() {
+    const pillars = optionList_('pillars');
+    const select = document.getElementById('fpfGoalFilter');
+    select.innerHTML = '<option value="All">All five pillars</option>' + pillars.map(function (pillar) {
+      return '<option value="' + escapeAttr_(pillar) + '"' + (pillar === state.goalFilter ? ' selected' : '') + '>' + escapeHtml_(pillar) + '</option>';
+    }).join('');
+  }
+
+  function renderGoalBank_() {
+    const bank = (options_().goalSuggestions || []).filter(function (item) {
+      return state.goalFilter === 'All' || item.pillar === state.goalFilter;
+    });
+    const selected = {};
+    state.profile.goals.forEach(function (item) { if (item.sourceId) selected[item.sourceId] = true; });
+    document.getElementById('fpfGoalBank').innerHTML = bank.map(function (item) {
+      return `<article class="fpf-goal-option">
+        <span class="fpf-pill">${escapeHtml_(item.pillar)}</span>
+        <h4 style="margin-top:8px;">${escapeHtml_(item.title)}</h4>
+        <p class="fpf-helper">${escapeHtml_(item.why)}</p>
+        <button type="button" class="fpf-btn small${selected[item.id] ? ' success' : ''}" data-goal-id="${escapeAttr_(item.id)}" ${selected[item.id] ? 'disabled' : ''}>${selected[item.id] ? 'Selected' : 'Add this goal'}</button>
+      </article>`;
+    }).join('') || '<div class="fpf-empty">No starter goals are available for this filter. You can add a custom goal.</div>';
+  }
+
+  function addSuggestedGoal_(id) {
+    preserveDynamicData_();
+    const suggestion = findById_(options_().goalSuggestions || [], id);
+    if (!suggestion) return;
+    if (state.profile.goals.some(function (item) { return item.sourceId === id; })) {
+      toast_('That goal is already selected.', true);
+      return;
+    }
+    state.profile.goals.push(goalFromSuggestion_(suggestion));
+    renderGoalBank_();
+    renderGoals_();
+    renderOverview_();
+  }
+
+  function goalFromSuggestion_(item) {
+    return { id: '', sourceId: item.id, pillar: item.pillar, title: item.title, why: item.why, firstStep: item.firstStep, timeframe: item.timeframe, status: 'not-started' };
+  }
+
+  function addGoal_() {
+    preserveDynamicData_();
+    state.profile.goals.push({ id: '', sourceId: '', pillar: 'Goals', title: '', why: '', firstStep: '', timeframe: 'monthly', status: 'not-started' });
+    renderGoals_();
+    const cards = document.querySelectorAll('[data-goal-card]');
+    if (cards.length) cards[cards.length - 1].querySelector('[data-goal-field="title"]').focus();
+  }
+
+  function renderGoals_() {
+    const list = document.getElementById('fpfGoalList');
+    if (!state.profile.goals.length) {
+      list.innerHTML = '<div class="fpf-empty"><strong>No starter goals selected yet.</strong><br>Choose from the bank above. Guided foundations automatically include one goal in each pillar.</div>';
+      return;
+    }
+    const pillars = optionList_('pillars');
+    const timeframes = optionList_('timeframes');
+    list.innerHTML = state.profile.goals.map(function (goal, index) {
+      return `<article class="fpf-item" data-goal-card="${index}">
+        <div class="fpf-item-head"><h4>${escapeHtml_(goal.pillar || 'Goal')} goal ${index + 1}</h4><button type="button" class="fpf-btn small danger" data-remove-goal="${index}">Remove</button></div>
+        <input type="hidden" data-goal-field="id" value="${escapeAttr_(goal.id || '')}">
+        <input type="hidden" data-goal-field="sourceId" value="${escapeAttr_(goal.sourceId || '')}">
+        <input type="hidden" data-goal-field="status" value="${escapeAttr_(goal.status || 'not-started')}">
+        <div class="fpf-form">
+          <div class="fpf-field"><label>Pillar</label><select data-goal-field="pillar">${pillars.map(function (pillar) { return '<option value="' + escapeAttr_(pillar) + '"' + (pillar === goal.pillar ? ' selected' : '') + '>' + escapeHtml_(pillar) + '</option>'; }).join('')}</select></div>
+          <div class="fpf-field"><label>Review rhythm</label><select data-goal-field="timeframe">${timeframes.map(function (item) { return '<option value="' + escapeAttr_(item.value) + '"' + (item.value === goal.timeframe ? ' selected' : '') + '>' + escapeHtml_(item.label) + '</option>'; }).join('')}</select></div>
+          <div class="fpf-field full"><label>Goal</label><input data-goal-field="title" maxlength="180" value="${escapeAttr_(goal.title || '')}" placeholder="What will your family work on?"></div>
+          <div class="fpf-field full"><label>Why this matters</label><textarea data-goal-field="why">${escapeHtml_(goal.why || '')}</textarea></div>
+          <div class="fpf-field full"><label>First practical step</label><textarea data-goal-field="firstStep">${escapeHtml_(goal.firstStep || '')}</textarea></div>
+        </div>
+      </article>`;
+    }).join('');
+  }
+
+  function renderReadiness_() {
+    const workspace = state.data && state.data.workspace || {};
+    const workspaceConnected = Boolean(workspace.connected);
+    const foundationChecks = [
+      { ready: Boolean(state.profile.journeyMode), label: 'Choose a starting path' },
+      { ready: Boolean(value_('fpfFamilyName')), label: 'Add a Family Profile name' },
+      { ready: Boolean(value_('fpfMission')), label: 'Select or write a mission' },
+      { ready: Boolean(value_('fpfVision')), label: 'Select or write a vision' },
+      { ready: state.profile.values.length >= 3, label: 'Select at least three core values' }
+    ];
+    const checks = foundationChecks.concat([{
+      ready: workspaceConnected,
+      label: workspaceConnected ? 'FamilyPD Workspace is connected' : (workspace.message || 'Connect the FamilyPD Workspace to create the Doc and PDF')
+    }]);
+    document.getElementById('fpfReadiness').innerHTML = checks.map(function (item) {
+      return '<div class="fpf-check' + (item.ready ? ' ready' : '') + '"><strong>' + (item.ready ? '✓' : '○') + '</strong><span>' + escapeHtml_(item.label) + '</span></div>';
+    }).join('');
+    const foundationReady = foundationChecks.every(function (item) { return item.ready; });
+    document.getElementById('fpfSaveCreate').disabled = !foundationReady || !workspaceConnected || state.busy;
+    document.getElementById('fpfGoFoundation').hidden = foundationReady;
+    document.getElementById('fpfOpenWorkspace').hidden = workspaceConnected;
+  }
+
+  function renderLastDocument_() {
+    const info = state.profile.lastDocument;
+    const card = document.getElementById('fpfLastDocumentCard');
+    if (!info) {
+      card.innerHTML = '<h3>Most recent Family Profile</h3><p class="fpf-muted">No Family Profile has been generated yet.</p>';
+      return;
+    }
+    card.innerHTML = `<h3>Most recent Family Profile</h3>
+      <p><strong>${escapeHtml_(info.fileName || 'FamilyPD Family Profile')}</strong></p>
+      <p class="fpf-muted">Created ${formatDateTime_(info.createdAt)}</p>
+      <div class="fpf-actions">
+        ${info.documentUrl ? '<a class="fpf-btn small fpf-link" href="' + escapeAttr_(info.documentUrl) + '" target="_blank" rel="noopener">Open editable Doc</a>' : ''}
+        ${info.pdfUrl ? '<a class="fpf-btn small fpf-link" href="' + escapeAttr_(info.pdfUrl) + '" target="_blank" rel="noopener">Open PDF</a>' : ''}
+        ${info.folderUrl ? '<a class="fpf-btn small fpf-link" href="' + escapeAttr_(info.folderUrl) + '" target="_blank" rel="noopener">Open folder</a>' : ''}
+      </div>`;
+  }
+
+  function lockTabs_() {
+    const unlocked = Boolean(state.profile && state.profile.journeyMode);
+    document.querySelectorAll('[data-fpf-tab]').forEach(function (button) {
+      button.disabled = button.dataset.fpfTab !== 'start' && !unlocked;
+      button.title = button.disabled ? 'Choose a starting path first' : '';
+    });
+  }
+
+  function showTab_(tab) {
+    if (tab !== 'start' && !state.profile.journeyMode) {
+      tab = 'start';
+      toast_('Choose a starting path to unlock the Family Profile sections.', true);
+    }
+    state.activeTab = tab;
+    document.querySelectorAll('[data-fpf-tab]').forEach(function (button) {
+      button.classList.toggle('active', button.dataset.fpfTab === tab);
+    });
+    const map = {
+      start: 'fpfStart', basics: 'fpfBasics', foundation: 'fpfFoundation', members: 'fpfMembers', goals: 'fpfGoals', culture: 'fpfCulture', document: 'fpfDocument'
+    };
+    Object.keys(map).forEach(function (key) { document.getElementById(map[key]).hidden = key !== tab; });
+    if (tab === 'document') renderReadiness_();
+  }
+
+  function preserveDynamicData_() {
+    if (!state.profile) return;
+    state.profile.values = Array.from(document.querySelectorAll('[data-value-card]')).map(function (card) { return collectFields_(card, 'value'); });
+    state.profile.members = Array.from(document.querySelectorAll('[data-member-card]')).map(function (card) { return collectFields_(card, 'member'); });
+    state.profile.goals = Array.from(document.querySelectorAll('[data-goal-card]')).map(function (card) { return collectFields_(card, 'goal'); });
+  }
+
+  function collectProfile_() {
+    preserveDynamicData_();
+    return {
+      journeyMode: state.profile.journeyMode || '',
+      foundationPresetId: state.profile.foundationPresetId || '',
+      familyName: value_('fpfFamilyName'),
+      familyTagline: value_('fpfTagline'),
+      familyStory: value_('fpfStory'),
+      homeFeeling: value_('fpfHomeFeeling'),
+      mission: value_('fpfMission'),
+      vision: value_('fpfVision'),
+      strengths: value_('fpfStrengths'),
+      traditions: value_('fpfTraditions'),
+      cultureNotes: value_('fpfCultureNotes'),
+      commitments: value_('fpfCommitments'),
+      values: state.profile.values,
+      members: state.profile.members,
+      goals: state.profile.goals
+    };
+  }
+
+  function collectFields_(card, prefix) {
+    const output = {};
+    card.querySelectorAll('[data-' + prefix + '-field]').forEach(function (field) {
+      output[field.dataset[prefix + 'Field']] = field.value.trim();
+    });
+    return output;
+  }
+
+  async function save_(createFiles) {
+    if (state.busy) return;
+    if (!state.profile.journeyMode) {
+      showTab_('start');
+      showMessage_('Choose Guided Foundation or Personalized Journey before saving the Family Profile.', false);
+      toast_('Choose Guided Foundation or Personalized Journey before saving the Family Profile.', true);
+      return;
+    }
+    setBusy_(true);
+    try {
+      const result = await server_('fpdFamilyProfileSave', collectProfile_());
+      state.data = result.data;
+      state.profile = deepClone_(state.data.profile || {});
+      ensureArrays_();
+      populateFields_();
+      renderAll_();
+      lockTabs_();
+      toast_('Family Profile saved.', false);
+      if (createFiles) {
+        const created = await server_('fpdFamilyProfileCreateFiles');
+        toast_('Family Profile Doc and PDF created.', false);
+        if (created.documentUrl) window.open(created.documentUrl, '_blank', 'noopener');
+        await load_(true);
+        showTab_('document');
+      }
+    } catch (error) {
+      showMessage_(error.message, false);
+      toast_(error.message, true);
+    } finally {
+      setBusy_(false);
+      renderReadiness_();
+    }
+  }
+
+  async function reset_() {
+    if (!confirm('Clear the saved Family Profile form? Existing Google Docs and PDFs will remain in Drive.')) return;
+    setBusy_(true);
+    try {
+      const result = await server_('fpdFamilyProfileReset');
+      state.data = result.data;
+      state.profile = deepClone_(state.data.profile || {});
+      ensureArrays_();
+      state.activeTab = 'start';
+      populateFields_();
+      renderAll_();
+      lockTabs_();
+      showTab_('start');
+      toast_('Saved Family Profile cleared.', false);
+    } catch (error) {
+      showMessage_(error.message, false);
+      toast_(error.message, true);
+    } finally {
+      setBusy_(false);
+    }
+  }
+
+  function openWorkspaceSetup_() {
+    close_();
+    const direct = document.querySelector('[data-view="workspace"], [data-view="workspace-setup"], [data-fpd-view="workspace"], [data-page="workspace"]');
+    if (direct) { direct.click(); direct.focus(); return; }
+    const candidate = Array.from(document.querySelectorAll('a, button, [role="button"]')).find(function (element) {
+      if (element.closest('#fpfShell, #fpdrcShell')) return false;
+      const text = String(element.textContent || '').trim();
+      const view = String(element.getAttribute('data-view') || element.getAttribute('data-page') || '').toLowerCase();
+      return /^(workspace|workspace setup|google workspace)$/i.test(text) || /workspace/.test(view);
+    });
+    if (candidate) { candidate.click(); candidate.focus(); }
+    else alert('Open Workspace Setup from the main FamilyPD menu, then choose Build or Reconnect Workspace.');
+  }
+
+  function showMessage_(message, info) {
+    const box = document.getElementById('fpfMessage');
+    box.textContent = message || 'Something went wrong.';
+    box.classList.toggle('info', Boolean(info));
+    box.setAttribute('role', info ? 'status' : 'alert');
+    box.setAttribute('aria-live', info ? 'polite' : 'assertive');
+    box.hidden = false;
+    box.focus();
+  }
+
+  function clearMessage_() {
+    const box = document.getElementById('fpfMessage');
+    if (!box) return;
+    box.hidden = true;
+    box.textContent = '';
+    box.classList.remove('info');
+  }
+
+  function setBusy_(busy) {
+    state.busy = busy;
+    if (busy && !state.data) document.getElementById('fpfLoading').hidden = false;
+    document.querySelectorAll('#fpfShell button').forEach(function (button) {
+      if (button.id === 'fpfClose') return;
+      if (busy) {
+        button.dataset.fpfBusyDisabled = button.disabled ? 'preserve' : 'restore';
+        button.disabled = true;
+      } else if (button.dataset.fpfBusyDisabled === 'restore') {
+        button.disabled = false;
+        delete button.dataset.fpfBusyDisabled;
+      } else if (button.dataset.fpfBusyDisabled === 'preserve') {
+        delete button.dataset.fpfBusyDisabled;
+      }
+    });
+    if (!busy && state.profile) {
+      lockTabs_();
+      renderGoalBank_();
+      renderReadiness_();
+    }
+  }
+
+  function server_(functionName) {
+    const args = Array.prototype.slice.call(arguments, 1);
+    return new Promise(function (resolve, reject) {
+      let runner = google.script.run
+        .withSuccessHandler(resolve)
+        .withFailureHandler(function (error) { reject(new Error(error && error.message ? error.message : String(error))); });
+      runner[functionName](...args);
+    });
+  }
+
+  function options_() { return state.data && state.data.options ? state.data.options : {}; }
+
+  function optionList_(key) {
+    const live = options_()[key];
+    if (Array.isArray(live) && live.length) return live;
+    return Array.isArray(FALLBACK[key]) ? FALLBACK[key] : [];
+  }
+
+  function findById_(items, id) {
+    return (items || []).find(function (item) { return String(item.id || item.value) === String(id); }) || null;
+  }
+
+  function toast_(message, isError) {
+    const toast = document.getElementById('fpfToast');
+    toast.textContent = message;
+    toast.classList.toggle('error', Boolean(isError));
+    toast.setAttribute('role', isError ? 'alert' : 'status');
+    toast.classList.add('show');
+    clearTimeout(toast.timer);
+    toast.timer = setTimeout(function () { toast.classList.remove('show'); }, 4400);
+  }
+
+  function statCard_(label, value) {
+    return '<article class="fpf-card fpf-stat"><span class="fpf-muted">' + escapeHtml_(label) + '</span><strong>' + escapeHtml_(value) + '</strong></article>';
+  }
+
+  function value_(id) {
+    const element = document.getElementById(id);
+    return element ? element.value.trim() : '';
+  }
+  function setValue_(id, value) {
+    const element = document.getElementById(id);
+    if (element) element.value = value === null || value === undefined ? '' : value;
+  }
+  function deepClone_(value) { return JSON.parse(JSON.stringify(value || {})); }
+
+  function formatDateTime_(value) {
+    if (!value) return '';
+    const date = new Date(value);
+    return isNaN(date.getTime()) ? escapeHtml_(value) : date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  }
+
+  function escapeHtml_(value) {
+    return String(value === null || value === undefined ? '' : value)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+  }
+  function escapeAttr_(value) { return escapeHtml_(value).replace(/`/g, '&#096;'); }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+}());
+</script>

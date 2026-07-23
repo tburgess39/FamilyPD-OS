@@ -1,0 +1,1864 @@
+<script>
+  const OPPORTUNITY_UI = {
+    en: {
+      nav: 'Opportunities & Mobility',
+      eyebrow: 'DISCOVER · VERIFY · PLAN · ACT',
+      panelTitle: 'Opportunities & Socioeconomic Mobility',
+      panelIntro: 'Start with an official search tool or paste one public opportunity link. Save only the opportunities worth considering and turn each one into clear next steps.',
+      newPlan: 'Create Opportunity Plan',
+      guidanceTitle: 'Skills, credentials, connections, and access can expand options',
+      guidanceText: 'FamilyPD helps households compare trustworthy sources, understand requirements, and move from “this looks interesting” to a realistic next action.',
+      privacyTitle: 'Research broadly; save privately and carefully',
+      mobilityEyebrow: 'UNDERSTAND THE BIGGER PICTURE',
+      mobilityTitle: 'What does socioeconomic mobility mean?',
+      mobilityRead: 'Read this section',
+      mobilityCautionTitle: 'Data should guide questions—not label people',
+      mobilityStarterTitle: 'Five ways a family can begin',
+      mobilityResourcesEyebrow: 'LEARN WITH TRUSTWORTHY DATA',
+      mobilityResourcesTitle: 'Mobility data and community tools',
+      mobilityResourcesIntro: 'Use these tools to understand neighborhood, county, income, social-capital, and community conditions. Then connect what you learn to a goal, meeting, learning plan, system, or opportunity search.',
+      mobilityOpen: 'Open Data Tool',
+      mobilityUse: 'Use in an Action Plan',
+      mobilityVerified: 'Source reviewed',
+      mobilitySuggestedAction: 'Suggested family action',
+      mobilityUseAction: 'Use as Next Action',
+      guideEyebrow: 'FOLLOW ONE STEP AT A TIME',
+      guidePrevious: 'Previous',
+      guideNext: 'Next step',
+      guideLabels: {
+        learn: 'Learn', find: 'Find Sources', link: 'Check a Link',
+        plan: 'Build a Plan', saved: 'Saved Plans'
+      },
+      guideInstructions: {
+        learn: 'Start by learning what socioeconomic mobility means and which pathways may expand a family’s options.',
+        find: 'Choose one category and audience. Open one or two official tools rather than searching everywhere at once.',
+        link: 'Paste the exact public HTTPS page for a specific opportunity. FamilyPD explains what the link check can and cannot verify.',
+        plan: 'Save only a promising opportunity. Use the prepopulated questions and actions, then edit them to fit the situation.',
+        saved: 'Review deadlines, priorities, questions, and next actions for the opportunities already saved.'
+      },
+      finderEyebrow: 'QUICK OFFICIAL-SOURCE FINDER',
+      finderTitle: 'Where should we start?',
+      finderIntro: 'Choose the type of opportunity and who it is for. Keyword and location are optional.',
+      searchCategory: 'Opportunity type',
+      searchAudience: 'Who is exploring?',
+      searchKeyword: 'Career, skill, program, or keyword',
+      searchLocation: 'City, state, or ZIP code',
+      optional: 'Optional',
+      findSources: 'Find Official Starting Points',
+      showAll: 'Show All Sources',
+      sourceReminder: 'Open the official tool to see current listings. FamilyPD does not claim that every opportunity is still open.',
+      openOfficial: 'Open Official Tool',
+      useSource: 'Use as Starting Point',
+      verified: 'Source reviewed',
+      searchTip: 'Search tip',
+      noSources: 'No matching official starting points were found. Try a broader category or show all sources.',
+      linkEyebrow: 'ALREADY FOUND SOMETHING?',
+      linkTitle: 'Check one public opportunity link',
+      linkIntro: 'Paste the exact job, scholarship, program, apprenticeship, benefit, or service page.',
+      checkUse: 'Check & Use Link',
+      checkLink: 'Check Link',
+      checking: 'Checking…',
+      builderEyebrow: 'OPPORTUNITY ACTION PLANNER',
+      builderTitle: 'Save an opportunity and plan the next step',
+      builderIntro: 'Complete only what is useful now. Unknown information can become a question to research.',
+      cancel: 'Cancel',
+      scope: 'Save as',
+      scopeHelp: 'Household opportunities can be included in a Family Sharing File. Personal opportunities remain in this workspace.',
+      category: 'Category',
+      title: 'Opportunity title',
+      provider: 'Provider or organization',
+      audience: 'General audience',
+      url: 'Public opportunity link',
+      location: 'General location',
+      deadline: 'Deadline',
+      status: 'Status',
+      priority: 'Priority',
+      detailsHeading: 'What do we know?',
+      benefits: 'What could this provide?',
+      eligibility: 'Known eligibility',
+      cost: 'Cost, pay, aid, or other financial information',
+      requirementsHeading: 'What must be confirmed?',
+      requirementsHelp: 'Add known requirements or items to verify before applying.',
+      addRequirement: '+ Add Requirement',
+      actionHeading: 'What happens next?',
+      nextAction: 'Most important next action',
+      actionHelp: 'Break the opportunity into small actions with optional due dates.',
+      addAction: '+ Add Action',
+      questionsHeading: 'Questions and general notes',
+      questionsHelp: 'Turn unknown requirements, deadlines, or costs into questions.',
+      addQuestion: '+ Add Question',
+      notes: 'General notes',
+      save: 'Save Opportunity Plan',
+      filter: 'Show',
+      categoryFilter: 'Category',
+      current: 'Current opportunities',
+      actionNeeded: 'Action needed',
+      upcoming: 'Upcoming deadlines',
+      shared: 'Shared household opportunities',
+      personal: 'My personal opportunities',
+      archived: 'Archived',
+      all: 'All records',
+      allCategories: 'All categories',
+      noRecordsLead: 'No opportunity plans have been saved yet. Use the official-source finder or paste one public link.',
+      noRecordsMember: 'No opportunities have been saved yet. Shared household opportunities will appear after a Family Sharing File is imported.',
+      edit: 'Edit',
+      pdf: 'PDF',
+      archive: 'Archive',
+      personalCopy: 'Make Personal Copy',
+      openLink: 'Open Source',
+      readOnly: 'Shared · read only',
+      sharedBadge: 'Shared household',
+      personalBadge: 'Private personal',
+      due: 'Deadline',
+      noDeadline: 'No deadline saved',
+      next: 'Next action',
+      requirements: 'requirements',
+      actions: 'actions',
+      saved: 'Opportunity plan saved.',
+      copied: 'A personal action-plan copy was created.',
+      archivedMessage: 'Opportunity archived.',
+      confirmArchive: 'Archive this opportunity? It will remain in workspace history.',
+      titleRequired: 'Enter a short opportunity title.',
+      sourceUsed: 'The official source was added as a starting point. Replace it with the exact opportunity page when available.',
+      linkAdded: 'The checked public link was added to the opportunity planner.',
+      requirementPlaceholder: 'Requirement or item to confirm',
+      questionPlaceholder: 'Question to answer before deciding or applying',
+      actionPlaceholder: 'Small action step',
+      actionDue: 'Due date',
+      actionComplete: 'Completed',
+      remove: 'Remove',
+      saving: 'Saving…',
+      creating: 'Creating…',
+      dashboardEyebrow: 'TURN INFORMATION INTO OPTIONS',
+      dashboardTitle: 'Opportunities and next actions',
+      dashboardHelp: 'Review saved opportunities, approaching deadlines, and plans that need a next step.',
+      dashboardOpen: 'Open Opportunities',
+      dashboardShared: 'Shared',
+      dashboardPersonal: 'Personal',
+      dashboardAction: 'Action needed',
+      dashboardOverdue: 'Past deadline',
+      dashboardEmpty: 'Saved opportunity deadlines will appear here.',
+      helpTitle: 'Opportunities & Mobility quick guide',
+      helpExploreTitle: 'Start with an official source',
+      helpExploreText: 'Choose a category and audience. Open one or two official search tools instead of completing a long questionnaire.',
+      helpVerifyTitle: 'Confirm the exact opportunity',
+      helpVerifyText: 'Open the provider page and confirm the current deadline, eligibility, cost, location, and application process.',
+      helpPlanTitle: 'Save only promising options',
+      helpPlanText: 'Record the next action, questions, requirements, and small steps. Unknown information does not need to become guesswork.',
+      helpProtectTitle: 'Protect private information',
+      helpProtectText: 'Apply on the official provider site. Do not store identification numbers, accounts, passwords, documents, or exact addresses in FamilyPD.',
+      linkResponded: 'The public link responded.',
+      linkFailed: 'FamilyPD could not confirm this link.',
+      notFactCheck: 'A link check is not a fact-check or eligibility decision.',
+      officialGovernment: 'Official government source',
+      sponsoredGovernment: 'Government-sponsored source',
+      publicChecked: 'Public link checked',
+      notChecked: 'Not yet checked'
+    },
+    es: {
+      nav: 'Oportunidades y movilidad',
+      eyebrow: 'DESCUBRIR · VERIFICAR · PLANIFICAR · ACTUAR',
+      panelTitle: 'Oportunidades y movilidad socioeconómica',
+      panelIntro: 'Comience con una herramienta oficial o pegue un enlace público. Guarde solamente oportunidades que vale la pena considerar y conviértalas en próximos pasos.',
+      newPlan: 'Crear plan de oportunidad',
+      guidanceTitle: 'Las habilidades, credenciales, conexiones y acceso pueden ampliar las opciones',
+      guidanceText: 'FamilyPD ayuda a comparar fuentes confiables, comprender requisitos y pasar de “esto parece interesante” a una acción realista.',
+      privacyTitle: 'Investigue ampliamente; guarde con cuidado',
+      mobilityEyebrow: 'COMPRENDA EL PANORAMA COMPLETO',
+      mobilityTitle: '¿Qué significa movilidad socioeconómica?',
+      mobilityRead: 'Leer esta sección',
+      mobilityCautionTitle: 'Los datos deben guiar preguntas, no etiquetar personas',
+      mobilityStarterTitle: 'Cinco maneras de comenzar',
+      mobilityResourcesEyebrow: 'APRENDA CON DATOS CONFIABLES',
+      mobilityResourcesTitle: 'Datos de movilidad y herramientas comunitarias',
+      mobilityResourcesIntro: 'Use estas herramientas para comprender condiciones de vecindarios, condados, ingresos, capital social y comunidad. Conecte lo aprendido con una meta, reunión, plan de aprendizaje, sistema o búsqueda de oportunidades.',
+      mobilityOpen: 'Abrir herramienta de datos',
+      mobilityUse: 'Usar en un plan de acción',
+      mobilityVerified: 'Fuente revisada',
+      mobilitySuggestedAction: 'Acción familiar sugerida',
+      mobilityUseAction: 'Usar como próxima acción',
+      guideEyebrow: 'SIGA UN PASO A LA VEZ',
+      guidePrevious: 'Anterior',
+      guideNext: 'Próximo paso',
+      guideLabels: {
+        learn: 'Aprender', find: 'Buscar fuentes', link: 'Revisar enlace',
+        plan: 'Crear plan', saved: 'Planes guardados'
+      },
+      guideInstructions: {
+        learn: 'Comience aprendiendo qué significa la movilidad socioeconómica y qué caminos pueden ampliar las opciones de una familia.',
+        find: 'Elija una categoría y audiencia. Abra una o dos herramientas oficiales en vez de buscar en todas partes.',
+        link: 'Pegue la página pública HTTPS exacta de una oportunidad. FamilyPD explica lo que la revisión puede y no puede verificar.',
+        plan: 'Guarde solamente una oportunidad prometedora. Use preguntas y acciones preescritas y edítelas según la situación.',
+        saved: 'Revise fechas, prioridades, preguntas y próximas acciones de las oportunidades guardadas.'
+      },
+      finderEyebrow: 'BUSCADOR RÁPIDO DE FUENTES OFICIALES',
+      finderTitle: '¿Dónde debemos comenzar?',
+      finderIntro: 'Elija el tipo de oportunidad y para quién es. La palabra y ubicación son opcionales.',
+      searchCategory: 'Tipo de oportunidad',
+      searchAudience: '¿Quién está explorando?',
+      searchKeyword: 'Carrera, habilidad, programa o palabra',
+      searchLocation: 'Ciudad, estado o código postal',
+      optional: 'Opcional',
+      findSources: 'Buscar puntos de partida oficiales',
+      showAll: 'Mostrar todas las fuentes',
+      sourceReminder: 'Abra la herramienta oficial para ver anuncios actuales. FamilyPD no afirma que cada oportunidad siga abierta.',
+      openOfficial: 'Abrir herramienta oficial',
+      useSource: 'Usar como punto de partida',
+      verified: 'Fuente revisada',
+      searchTip: 'Consejo de búsqueda',
+      noSources: 'No se encontraron puntos de partida. Pruebe una categoría más amplia o muestre todas las fuentes.',
+      linkEyebrow: '¿YA ENCONTRÓ ALGO?',
+      linkTitle: 'Revisar un enlace público',
+      linkIntro: 'Pegue la página exacta del empleo, beca, programa, aprendizaje, beneficio o servicio.',
+      checkUse: 'Revisar y usar enlace',
+      checkLink: 'Revisar enlace',
+      checking: 'Revisando…',
+      builderEyebrow: 'PLANIFICADOR DE OPORTUNIDADES',
+      builderTitle: 'Guarde una oportunidad y planifique el próximo paso',
+      builderIntro: 'Complete solamente lo útil ahora. La información desconocida puede convertirse en una pregunta.',
+      cancel: 'Cancelar',
+      scope: 'Guardar como',
+      scopeHelp: 'Las oportunidades del hogar pueden incluirse en un Archivo para compartir. Las personales permanecen en este espacio.',
+      category: 'Categoría',
+      title: 'Título de la oportunidad',
+      provider: 'Proveedor u organización',
+      audience: 'Audiencia general',
+      url: 'Enlace público',
+      location: 'Ubicación general',
+      deadline: 'Fecha límite',
+      status: 'Estado',
+      priority: 'Prioridad',
+      detailsHeading: '¿Qué sabemos?',
+      benefits: '¿Qué podría proporcionar?',
+      eligibility: 'Elegibilidad conocida',
+      cost: 'Costo, pago, ayuda u otra información financiera',
+      requirementsHeading: '¿Qué debe confirmarse?',
+      requirementsHelp: 'Agregue requisitos conocidos o elementos para verificar.',
+      addRequirement: '+ Agregar requisito',
+      actionHeading: '¿Qué sucede después?',
+      nextAction: 'Próxima acción más importante',
+      actionHelp: 'Divida la oportunidad en acciones pequeñas con fechas opcionales.',
+      addAction: '+ Agregar acción',
+      questionsHeading: 'Preguntas y notas generales',
+      questionsHelp: 'Convierta requisitos, fechas o costos desconocidos en preguntas.',
+      addQuestion: '+ Agregar pregunta',
+      notes: 'Notas generales',
+      save: 'Guardar plan de oportunidad',
+      filter: 'Mostrar',
+      categoryFilter: 'Categoría',
+      current: 'Oportunidades actuales',
+      actionNeeded: 'Necesita acción',
+      upcoming: 'Próximas fechas límite',
+      shared: 'Oportunidades compartidas',
+      personal: 'Mis oportunidades personales',
+      archived: 'Archivadas',
+      all: 'Todos los registros',
+      allCategories: 'Todas las categorías',
+      noRecordsLead: 'Todavía no se han guardado planes. Use el buscador oficial o pegue un enlace público.',
+      noRecordsMember: 'Todavía no se han guardado oportunidades. Las compartidas aparecerán después de importar un Archivo para compartir.',
+      edit: 'Editar',
+      pdf: 'PDF',
+      archive: 'Archivar',
+      personalCopy: 'Crear copia personal',
+      openLink: 'Abrir fuente',
+      readOnly: 'Compartida · solo lectura',
+      sharedBadge: 'Hogar compartido',
+      personalBadge: 'Personal privada',
+      due: 'Fecha límite',
+      noDeadline: 'Sin fecha guardada',
+      next: 'Próxima acción',
+      requirements: 'requisitos',
+      actions: 'acciones',
+      saved: 'Plan de oportunidad guardado.',
+      copied: 'Se creó una copia personal para el plan de acción.',
+      archivedMessage: 'Oportunidad archivada.',
+      confirmArchive: '¿Archivar esta oportunidad? Permanecerá en el historial.',
+      titleRequired: 'Escriba un título corto.',
+      sourceUsed: 'La fuente oficial se agregó como punto de partida. Reemplácela con la página exacta cuando esté disponible.',
+      linkAdded: 'El enlace revisado se agregó al planificador.',
+      requirementPlaceholder: 'Requisito o elemento para confirmar',
+      questionPlaceholder: 'Pregunta que debe responder antes de decidir o solicitar',
+      actionPlaceholder: 'Acción pequeña',
+      actionDue: 'Fecha',
+      actionComplete: 'Completada',
+      remove: 'Quitar',
+      saving: 'Guardando…',
+      creating: 'Creando…',
+      dashboardEyebrow: 'CONVIERTA INFORMACIÓN EN OPCIONES',
+      dashboardTitle: 'Oportunidades y próximas acciones',
+      dashboardHelp: 'Revise oportunidades guardadas, fechas cercanas y planes que necesitan un próximo paso.',
+      dashboardOpen: 'Abrir oportunidades',
+      dashboardShared: 'Compartidas',
+      dashboardPersonal: 'Personales',
+      dashboardAction: 'Necesita acción',
+      dashboardOverdue: 'Fecha vencida',
+      dashboardEmpty: 'Las fechas de oportunidades aparecerán aquí.',
+      helpTitle: 'Guía rápida de oportunidades y movilidad',
+      helpExploreTitle: 'Comience con una fuente oficial',
+      helpExploreText: 'Elija categoría y audiencia. Abra una o dos herramientas oficiales en vez de completar un cuestionario largo.',
+      helpVerifyTitle: 'Confirme la oportunidad exacta',
+      helpVerifyText: 'Abra la página del proveedor y confirme fecha, elegibilidad, costo, ubicación y proceso actual.',
+      helpPlanTitle: 'Guarde solamente opciones prometedoras',
+      helpPlanText: 'Registre la próxima acción, preguntas, requisitos y pasos pequeños. Lo desconocido no necesita convertirse en suposición.',
+      helpProtectTitle: 'Proteja información privada',
+      helpProtectText: 'Solicite en el sitio oficial. No guarde identificación, cuentas, contraseñas, documentos ni direcciones exactas.',
+      linkResponded: 'El enlace público respondió.',
+      linkFailed: 'FamilyPD no pudo confirmar este enlace.',
+      notFactCheck: 'La revisión del enlace no es verificación de hechos ni decisión de elegibilidad.',
+      officialGovernment: 'Fuente oficial del gobierno',
+      sponsoredGovernment: 'Fuente patrocinada por el gobierno',
+      publicChecked: 'Enlace público revisado',
+      notChecked: 'Todavía no revisado'
+    }
+  };
+
+
+  function opportunityUi() {
+    return OPPORTUNITY_UI[state.language] || OPPORTUNITY_UI.en;
+  }
+
+
+  function bindOpportunityEvents() {
+    document.getElementById('newOpportunityButton').addEventListener(
+      'click',
+      function() { openOpportunityBuilder(); }
+    );
+    document.getElementById('cancelOpportunityEditButton').addEventListener(
+      'click',
+      closeOpportunityBuilder
+    );
+    document.querySelectorAll('[data-opportunity-step]').forEach(function(button) {
+      button.addEventListener('click', function() {
+        activateOpportunityGuideStep(button.dataset.opportunityStep, true);
+      });
+    });
+    document.getElementById('opportunityPreviousStepButton').addEventListener(
+      'click',
+      function() { moveOpportunityGuideStep(-1); }
+    );
+    document.getElementById('opportunityNextStepButton').addEventListener(
+      'click',
+      function() { moveOpportunityGuideStep(1); }
+    );
+    document.getElementById('searchOpportunitySourcesButton').addEventListener(
+      'click',
+      searchOfficialOpportunitySources
+    );
+    document.getElementById('showAllOpportunitySourcesButton').addEventListener(
+      'click',
+      showAllOpportunitySources
+    );
+    document.getElementById('opportunitySourceResults').addEventListener(
+      'click',
+      handleOpportunitySourceAction
+    );
+    document.getElementById('checkOpportunityLinkButton').addEventListener(
+      'click',
+      function() {
+        checkOpportunityLinkFromField(
+          'opportunityLinkInput',
+          true,
+          'opportunityBuilderLinkResult'
+        );
+      }
+    );
+    document.getElementById('recheckOpportunityUrlButton').addEventListener(
+      'click',
+      function() {
+        checkOpportunityLinkFromField(
+          'opportunityUrlInput',
+          false,
+          'opportunityLinkResult'
+        );
+      }
+    );
+    document.getElementById('addOpportunityRequirementButton').addEventListener(
+      'click',
+      function() { addOpportunitySimpleRow('requirements', ''); }
+    );
+    document.getElementById('addOpportunityQuestionButton').addEventListener(
+      'click',
+      function() { addOpportunitySimpleRow('questions', ''); }
+    );
+    document.getElementById('addOpportunityActionButton').addEventListener(
+      'click',
+      function() { addOpportunityActionRow({}); }
+    );
+    document.getElementById('saveOpportunityButton').addEventListener(
+      'click',
+      saveOpportunityPlan
+    );
+    document.getElementById('opportunityRecordFilterSelect').addEventListener(
+      'change',
+      renderOpportunityRecords
+    );
+    document.getElementById('opportunityCategoryFilterSelect').addEventListener(
+      'change',
+      renderOpportunityRecords
+    );
+    document.getElementById('opportunityRecordList').addEventListener(
+      'click',
+      handleOpportunityRecordAction
+    );
+    document.getElementById('dashboardOpenOpportunitiesButton').addEventListener(
+      'click',
+      function() {
+        openPanel('opportunitiesPanel');
+        document.getElementById('opportunityRecordList').scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    );
+    document.getElementById('readMobilitySectionButton').addEventListener(
+      'click',
+      function() {
+        if (typeof readElementAloud === 'function') {
+          readElementAloud('mobilityLearningCard');
+        } else {
+          handleReadPage();
+        }
+      }
+    );
+    document.getElementById('mobilityStarterActions').addEventListener(
+      'click',
+      handleMobilityStarterAction
+    );
+    document.getElementById('mobilityResourceList').addEventListener(
+      'click',
+      handleMobilityResourceAction
+    );
+  }
+
+
+  async function loadOpportunityWorkspace() {
+    try {
+      const data = await callServer('getOpportunityWorkspace', state.language);
+      state.opportunitiesData = normalizeOpportunityWorkspace_(data);
+      renderOpportunityWorkspace(state.opportunitiesData);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    }
+  }
+
+
+  function normalizeOpportunityWorkspace_(data) {
+    data = data && typeof data === 'object' ? data : {};
+    const options = data.options && typeof data.options === 'object'
+      ? data.options
+      : {};
+    return Object.assign({}, data, {
+      role: data.role ||
+        state.workspace && state.workspace.role ||
+        'FAMILY_MEMBER',
+      sharedRecords: Array.isArray(data.sharedRecords)
+        ? data.sharedRecords
+        : [],
+      personalRecords: Array.isArray(data.personalRecords)
+        ? data.personalRecords
+        : [],
+      directory: Array.isArray(data.directory) ? data.directory : [],
+      mobilityGuide: data.mobilityGuide && typeof data.mobilityGuide === 'object'
+        ? data.mobilityGuide
+        : { title: '', explanation: '', caution: '', pathways: [], starterActions: [] },
+      mobilityResources: Array.isArray(data.mobilityResources)
+        ? data.mobilityResources
+        : [],
+      options: {
+        categories: Array.isArray(options.categories) ? options.categories : [],
+        audiences: Array.isArray(options.audiences) ? options.audiences : [],
+        statuses: Array.isArray(options.statuses) ? options.statuses : [],
+        priorities: Array.isArray(options.priorities) ? options.priorities : [],
+        scopes: Array.isArray(options.scopes) ? options.scopes : []
+      },
+      summary: data.summary && typeof data.summary === 'object'
+        ? data.summary
+        : {
+            shared: 0,
+            personal: 0,
+            actionNeeded: 0,
+            overdue: 0,
+            upcomingDeadlines: []
+          },
+      guidance: data.guidance && typeof data.guidance === 'object'
+        ? data.guidance
+        : {
+            statement: '',
+            inTextCitation: '(Hall, 2025, pp. 34–41, 106–108)',
+            sourceReminder: '',
+            privacyReminder: ''
+          }
+    });
+  }
+
+
+  function renderOpportunityWorkspace(data) {
+    state.opportunitiesData = normalizeOpportunityWorkspace_(data);
+    const isLead = state.opportunitiesData.role === 'HOUSEHOLD_LEAD';
+
+    setText(
+      'opportunityGuidanceText',
+      state.opportunitiesData.guidance.statement || opportunityUi().guidanceText
+    );
+    setText(
+      'opportunityGuidanceCitation',
+      state.opportunitiesData.guidance.inTextCitation ||
+        '(Hall, 2025, pp. 34–41, 106–108)'
+    );
+    setText(
+      'opportunityPrivacyText',
+      state.opportunitiesData.guidance.privacyReminder || ''
+    );
+    setText(
+      'opportunitySourceReminder',
+      state.opportunitiesData.guidance.sourceReminder ||
+        opportunityUi().sourceReminder
+    );
+
+    applyOpportunityLanguage();
+    populateOpportunitySelects_();
+    renderMobilityLearning_();
+    renderOpportunitySources_(
+      state.opportunitiesData.directory,
+      false
+    );
+    renderOpportunityRecords();
+    renderOpportunityDashboard();
+    activateOpportunityGuideStep(state.opportunityGuideStep || 'learn');
+
+    const scope = document.getElementById('opportunityScopeSelect');
+    if (!isLead && scope) {
+      Array.from(scope.options).forEach(function(option) {
+        if (option.value === 'HOUSEHOLD') option.remove();
+      });
+      scope.value = 'PERSONAL';
+    }
+  }
+
+
+  function applyOpportunityLanguage() {
+    const text = opportunityUi();
+    const mapping = {
+      opportunitiesEyebrow: text.eyebrow,
+      opportunitiesPanelTitle: text.panelTitle,
+      opportunitiesPanelIntro: text.panelIntro,
+      newOpportunityButton: text.newPlan,
+      opportunityGuidanceTitle: text.guidanceTitle,
+      opportunityPrivacyTitle: text.privacyTitle,
+      opportunityGuideEyebrow: text.guideEyebrow,
+      opportunityPreviousStepButton: text.guidePrevious,
+      opportunityNextStepButton: text.guideNext,
+      mobilityLearningEyebrow: text.mobilityEyebrow,
+      mobilityLearningTitle: text.mobilityTitle,
+      readMobilitySectionButton: text.mobilityRead,
+      mobilityCautionTitle: text.mobilityCautionTitle,
+      mobilityStarterTitle: text.mobilityStarterTitle,
+      mobilityResourcesEyebrow: text.mobilityResourcesEyebrow,
+      mobilityResourcesTitle: text.mobilityResourcesTitle,
+      mobilityResourcesIntro: text.mobilityResourcesIntro,
+      opportunityFinderEyebrow: text.finderEyebrow,
+      opportunityFinderTitle: text.finderTitle,
+      opportunityFinderIntro: text.finderIntro,
+      opportunitySearchCategoryLabel: text.searchCategory,
+      opportunitySearchAudienceLabel: text.searchAudience,
+      opportunitySearchKeywordLabel: text.searchKeyword,
+      opportunitySearchLocationLabel: text.searchLocation,
+      searchOpportunitySourcesButton: text.findSources,
+      showAllOpportunitySourcesButton: text.showAll,
+      opportunityLinkEyebrow: text.linkEyebrow,
+      opportunityLinkTitle: text.linkTitle,
+      opportunityLinkIntro: text.linkIntro,
+      checkOpportunityLinkButton: text.checkUse,
+      opportunityBuilderEyebrow: text.builderEyebrow,
+      opportunityBuilderTitle: text.builderTitle,
+      opportunityBuilderIntro: text.builderIntro,
+      cancelOpportunityEditButton: text.cancel,
+      opportunityScopeLabel: text.scope,
+      opportunityScopeHelp: text.scopeHelp,
+      opportunityCategoryLabel: text.category,
+      opportunityTitleLabel: text.title,
+      opportunityProviderLabel: text.provider,
+      opportunityAudienceLabel: text.audience,
+      opportunityUrlLabel: text.url,
+      recheckOpportunityUrlButton: text.checkLink,
+      opportunityLocationLabel: text.location,
+      opportunityDeadlineLabel: text.deadline,
+      opportunityStatusLabel: text.status,
+      opportunityPriorityLabel: text.priority,
+      opportunityDetailsHeading: text.detailsHeading,
+      opportunityBenefitsLabel: text.benefits,
+      opportunityEligibilityLabel: text.eligibility,
+      opportunityCostLabel: text.cost,
+      opportunityRequirementsHeading: text.requirementsHeading,
+      opportunityRequirementsHelp: text.requirementsHelp,
+      addOpportunityRequirementButton: text.addRequirement,
+      opportunityActionHeading: text.actionHeading,
+      opportunityNextActionLabel: text.nextAction,
+      opportunityActionStepsHelp: text.actionHelp,
+      addOpportunityActionButton: text.addAction,
+      opportunityQuestionsHeading: text.questionsHeading,
+      opportunityQuestionsHelp: text.questionsHelp,
+      addOpportunityQuestionButton: text.addQuestion,
+      opportunityNotesLabel: text.notes,
+      saveOpportunityButton: text.save,
+      opportunityRecordFilterLabel: text.filter,
+      opportunityCategoryFilterLabel: text.categoryFilter,
+      dashboardOpportunitiesEyebrow: text.dashboardEyebrow,
+      dashboardOpportunitiesTitle: text.dashboardTitle,
+      dashboardOpportunitiesHelp: text.dashboardHelp,
+      dashboardOpenOpportunitiesButton: text.dashboardOpen,
+      dashboardOpportunitySharedLabel: text.dashboardShared,
+      dashboardOpportunityPersonalLabel: text.dashboardPersonal,
+      dashboardOpportunityActionLabel: text.dashboardAction,
+      dashboardOpportunityOverdueLabel: text.dashboardOverdue,
+      opportunityHelpTitle: text.helpTitle,
+      opportunityHelpExploreTitle: text.helpExploreTitle,
+      opportunityHelpExploreText: text.helpExploreText,
+      opportunityHelpVerifyTitle: text.helpVerifyTitle,
+      opportunityHelpVerifyText: text.helpVerifyText,
+      opportunityHelpPlanTitle: text.helpPlanTitle,
+      opportunityHelpPlanText: text.helpPlanText,
+      opportunityHelpProtectTitle: text.helpProtectTitle,
+      opportunityHelpProtectText: text.helpProtectText
+    };
+    Object.keys(mapping).forEach(function(id) {
+      setText(id, mapping[id]);
+    });
+
+    const keyword = document.getElementById('opportunitySearchKeywordInput');
+    const location = document.getElementById('opportunitySearchLocationInput');
+    if (keyword) keyword.placeholder = text.optional;
+    if (location) location.placeholder = text.optional;
+
+    const filter = document.getElementById('opportunityRecordFilterSelect');
+    if (filter && filter.options.length >= 7) {
+      filter.options[0].textContent = text.current;
+      filter.options[1].textContent = text.actionNeeded;
+      filter.options[2].textContent = text.upcoming;
+      filter.options[3].textContent = text.shared;
+      filter.options[4].textContent = text.personal;
+      filter.options[5].textContent = text.archived;
+      filter.options[6].textContent = text.all;
+    }
+
+    Object.keys(text.guideLabels || {}).forEach(function(step) {
+      const id = {
+        learn: 'opportunityStepLearnText', find: 'opportunityStepFindText',
+        link: 'opportunityStepLinkText', plan: 'opportunityStepPlanText',
+        saved: 'opportunityStepSavedText'
+      }[step];
+      setText(id, text.guideLabels[step]);
+    });
+
+    if (state.opportunitiesData) {
+      populateOpportunitySelects_();
+      renderMobilityLearning_();
+      renderOpportunityRecords();
+      renderOpportunityDashboard();
+      activateOpportunityGuideStep(
+        state.opportunityGuideStep || 'learn'
+      );
+    }
+  }
+
+
+  function renderMobilityLearning_() {
+    if (!state.opportunitiesData) return;
+    const guide = state.opportunitiesData.mobilityGuide || {};
+    const text = opportunityUi();
+
+    setText('mobilityLearningTitle', guide.title || text.mobilityTitle);
+    setText('mobilityLearningExplanation', guide.explanation || '');
+    setText('mobilityCautionText', guide.caution || '');
+
+    const pathwayGrid = document.getElementById('mobilityPathwayGrid');
+    pathwayGrid.innerHTML = (guide.pathways || []).map(function(pathway, index) {
+      return '<article class="mobility-pathway-card"><span>' +
+        (index + 1) + '</span><div><h4>' +
+        escapeHtml(pathway.title || '') + '</h4><p>' +
+        escapeHtml(pathway.description || '') + '</p></div></article>';
+    }).join('');
+
+    const starter = document.getElementById('mobilityStarterActions');
+    starter.innerHTML = (guide.starterActions || []).map(function(action, index) {
+      return '<button type="button" class="choice-chip mobility-action-chip" ' +
+        'data-mobility-starter-index="' + index + '"><span>' +
+        escapeHtml(action) + '</span><small>' +
+        escapeHtml(text.mobilityUseAction) + '</small></button>';
+    }).join('');
+
+    const resources = document.getElementById('mobilityResourceList');
+    resources.innerHTML = (state.opportunitiesData.mobilityResources || [])
+      .map(function(resource, index) {
+        return '<article class="mobility-resource-card"><div class="mobility-resource-top">' +
+          '<div><span class="source-tier-badge">' +
+          escapeHtml(opportunitySourceTierLabel_(resource.sourceTier || '')) + '</span><h4>' +
+          escapeHtml(resource.title || '') + '</h4><p class="source-organization">' +
+          escapeHtml(resource.organization || '') + '</p></div><span class="source-reviewed-date">' +
+          escapeHtml(text.mobilityVerified + ': ' +
+            (resource.lastVerifiedDate || '—')) + '</span></div><p>' +
+          escapeHtml(resource.description || '') + '</p><div class="mobility-resource-action">' +
+          '<strong>' + escapeHtml(text.mobilitySuggestedAction) + ':</strong> ' +
+          escapeHtml(resource.action || '') + '</div><div class="button-row">' +
+          '<a class="primary-button link-button" target="_blank" rel="noopener" href="' +
+          escapeAttribute(resource.url || '#') + '">' +
+          escapeHtml(text.mobilityOpen) + '</a><button type="button" ' +
+          'class="secondary-button" data-mobility-resource-index="' + index + '">' +
+          escapeHtml(text.mobilityUse) + '</button></div></article>';
+      }).join('');
+  }
+
+
+  function handleMobilityStarterAction(event) {
+    const button = event.target.closest('[data-mobility-starter-index]');
+    if (!button || !state.opportunitiesData) return;
+    const actions = state.opportunitiesData.mobilityGuide &&
+      state.opportunitiesData.mobilityGuide.starterActions || [];
+    const action = actions[Number(button.dataset.mobilityStarterIndex)];
+    if (!action) return;
+
+    openOpportunityBuilder({
+      title: state.language === 'es'
+        ? 'Próximo paso de movilidad'
+        : 'Mobility next step',
+      category: 'Benefits & community support',
+      audience: 'Any household member',
+      priority: 'Interested',
+      nextAction: action,
+      questions: [
+        state.language === 'es'
+          ? '¿Qué información confiable necesitamos antes de comenzar?'
+          : 'What trustworthy information do we need before beginning?',
+        state.language === 'es'
+          ? '¿Qué apoyo o recurso comunitario podría ayudar?'
+          : 'What support or community resource could help?'
+      ]
+    });
+  }
+
+
+  function handleMobilityResourceAction(event) {
+    const button = event.target.closest('[data-mobility-resource-index]');
+    if (!button || !state.opportunitiesData) return;
+    const resource = (state.opportunitiesData.mobilityResources || [])[Number(
+      button.dataset.mobilityResourceIndex
+    )];
+    if (!resource) return;
+
+    openOpportunityBuilder({
+      title: resource.title || '',
+      provider: resource.organization || '',
+      category: 'Benefits & community support',
+      audience: 'Any household member',
+      url: resource.url || '',
+      domain: opportunityDomainFromUrl_(resource.url || ''),
+      sourceTier: resource.sourceTier || 'Public link checked',
+      verificationStatus: 'Official or research resource listed by FamilyPD',
+      lastCheckedAt: new Date().toISOString(),
+      benefits: resource.description || '',
+      nextAction: resource.action || '',
+      questions: [
+        state.language === 'es'
+          ? '¿Qué patrón o información notamos?'
+          : 'What pattern or information do we notice?',
+        state.language === 'es'
+          ? '¿Cómo se conecta esto con una meta o barrera del hogar?'
+          : 'How does this connect to a household goal or barrier?',
+        state.language === 'es'
+          ? '¿Qué acción realista podemos tomar después?'
+          : 'What realistic action can we take next?'
+      ]
+    });
+  }
+
+
+  function populateOpportunitySelects_() {
+    if (!state.opportunitiesData) return;
+    const options = state.opportunitiesData.options;
+    fillOpportunitySelect_(
+      'opportunitySearchCategorySelect',
+      options.categories,
+      true,
+      state.language === 'es' ? 'Cualquier tipo' : 'Any opportunity type'
+    );
+    fillOpportunitySelect_(
+      'opportunitySearchAudienceSelect',
+      options.audiences,
+      true,
+      state.language === 'es' ? 'Cualquier miembro' : 'Any household member'
+    );
+    fillOpportunitySelect_(
+      'opportunityCategorySelect',
+      options.categories
+    );
+    fillOpportunitySelect_(
+      'opportunityAudienceSelect',
+      options.audiences
+    );
+    fillOpportunitySelect_(
+      'opportunityStatusSelect',
+      options.statuses
+    );
+    fillOpportunitySelect_(
+      'opportunityPrioritySelect',
+      options.priorities
+    );
+    fillOpportunitySelect_(
+      'opportunityScopeSelect',
+      options.scopes
+    );
+    populateOpportunityCategoryFilter_();
+  }
+
+
+  function fillOpportunitySelect_(id, options, includeBlank, blankLabel) {
+    const select = document.getElementById(id);
+    if (!select) return;
+    const current = select.value;
+    const values = Array.isArray(options) ? options : [];
+    select.innerHTML =
+      (includeBlank
+        ? '<option value="">' + escapeHtml(blankLabel || '') + '</option>'
+        : '') +
+      values.map(function(option) {
+        return '<option value="' + escapeAttribute(option.value) + '">' +
+          escapeHtml(option.label) + '</option>';
+      }).join('');
+
+    if (current && Array.from(select.options).some(function(option) {
+      return option.value === current;
+    })) {
+      select.value = current;
+    } else if (select.options.length) {
+      select.selectedIndex = 0;
+    }
+  }
+
+
+  function populateOpportunityCategoryFilter_() {
+    const select = document.getElementById('opportunityCategoryFilterSelect');
+    if (!select || !state.opportunitiesData) return;
+    const current = select.value || 'ALL';
+    select.innerHTML = '<option value="ALL">' +
+      escapeHtml(opportunityUi().allCategories) + '</option>' +
+      state.opportunitiesData.options.categories.map(function(option) {
+        return '<option value="' + escapeAttribute(option.value) + '">' +
+          escapeHtml(option.label) + '</option>';
+      }).join('');
+    select.value = current;
+  }
+
+
+  async function searchOfficialOpportunitySources() {
+    const button = document.getElementById('searchOpportunitySourcesButton');
+    setBusy(button, true, opportunityUi().creating);
+    try {
+      const result = await callServer('searchOpportunitySources', {
+        language: state.language,
+        category: document.getElementById(
+          'opportunitySearchCategorySelect'
+        ).value,
+        audience: document.getElementById(
+          'opportunitySearchAudienceSelect'
+        ).value,
+        keyword: document.getElementById(
+          'opportunitySearchKeywordInput'
+        ).value,
+        location: document.getElementById(
+          'opportunitySearchLocationInput'
+        ).value
+      });
+      renderOpportunitySources_(result.results || [], true);
+      if (result.message) toast(result.message);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, opportunityUi().findSources);
+    }
+  }
+
+
+  function showAllOpportunitySources() {
+    if (!state.opportunitiesData) return;
+    document.getElementById('opportunitySearchCategorySelect').value = '';
+    document.getElementById('opportunitySearchAudienceSelect').value = '';
+    renderOpportunitySources_(state.opportunitiesData.directory, true);
+  }
+
+
+  function renderOpportunitySources_(sources, scroll) {
+    const container = document.getElementById('opportunitySourceResults');
+    if (!container) return;
+    const records = Array.isArray(sources) ? sources : [];
+
+    if (!records.length) {
+      container.innerHTML = '<div class="empty-state">' +
+        escapeHtml(opportunityUi().noSources) + '</div>';
+      return;
+    }
+
+    container.innerHTML = records.map(function(source) {
+      return '<article class="opportunity-source-card">' +
+        '<div class="opportunity-source-top"><div>' +
+        '<span class="source-tier-badge">' +
+        escapeHtml(opportunitySourceTierLabel_(source.sourceTierValue || source.sourceTier || '')) + '</span>' +
+        '<h4>' + escapeHtml(source.title || '') + '</h4>' +
+        '<p class="source-organization">' +
+        escapeHtml(source.organization || '') + '</p></div>' +
+        '<span class="source-reviewed-date">' +
+        escapeHtml(opportunityUi().verified + ': ' +
+          (source.lastVerifiedDate || '—')) + '</span></div>' +
+        '<p>' + escapeHtml(source.description || '') + '</p>' +
+        '<p class="source-search-tip"><strong>' +
+        escapeHtml(opportunityUi().searchTip) + ':</strong> ' +
+        escapeHtml(source.searchTip || '') + '</p>' +
+        '<div class="source-category-row">' +
+        (source.categories || []).map(function(value) {
+          return '<span>' + escapeHtml(value) + '</span>';
+        }).join('') + '</div>' +
+        '<div class="button-row">' +
+        '<a class="primary-button link-button" target="_blank" rel="noopener" href="' +
+        escapeAttribute(source.url || source.baseUrl || '#') + '">' +
+        escapeHtml(opportunityUi().openOfficial) + '</a>' +
+        '<button type="button" class="secondary-button" ' +
+        'data-opportunity-source-use="' + escapeAttribute(source.id) + '">' +
+        escapeHtml(opportunityUi().useSource) + '</button></div></article>';
+    }).join('');
+
+    container.dataset.sourceRecords = JSON.stringify(records);
+    if (scroll) {
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+
+  function handleOpportunitySourceAction(event) {
+    const button = event.target.closest(
+      'button[data-opportunity-source-use]'
+    );
+    if (!button) return;
+
+    let records = [];
+    try {
+      records = JSON.parse(
+        document.getElementById('opportunitySourceResults')
+          .dataset.sourceRecords || '[]'
+      );
+    } catch (error) {
+      records = [];
+    }
+    const source = records.find(function(item) {
+      return item.id === button.dataset.opportunitySourceUse;
+    });
+    if (!source) return;
+
+    const rawCategory = source.categoryValues &&
+      source.categoryValues[0] || 'Career exploration';
+    openOpportunityBuilder({
+      title: source.title || '',
+      category: rawCategory,
+      provider: source.organization || '',
+      url: source.baseUrl || source.url || '',
+      domain: opportunityDomainFromUrl_(source.baseUrl || source.url || ''),
+      sourceTier: source.sourceTierValue || 'Government-sponsored source',
+      verificationStatus: source.officialSource
+        ? (source.sourceTierValue === 'Official government source'
+          ? 'Official domain checked'
+          : 'Government-sponsored domain checked')
+        : 'Not yet checked',
+      lastCheckedAt: new Date().toISOString(),
+      audience: document.getElementById(
+        'opportunitySearchAudienceSelect'
+      ).value || 'Any household member',
+      locationLabel: document.getElementById(
+        'opportunitySearchLocationInput'
+      ).value || '',
+      benefits: source.description || '',
+      questions: [
+        state.language === 'es'
+          ? '¿Cuál es la oportunidad o anuncio específico que queremos considerar?'
+          : 'What exact opportunity or listing do we want to consider?',
+        state.language === 'es'
+          ? '¿Cuáles son la fecha, elegibilidad, costo y proceso actuales?'
+          : 'What are the current deadline, eligibility, cost, and application steps?'
+      ]
+    });
+    toast(opportunityUi().sourceUsed);
+  }
+
+
+  async function checkOpportunityLinkFromField(
+    inputId,
+    openBuilderAfter,
+    resultId
+  ) {
+    const input = document.getElementById(inputId);
+    const url = input.value.trim();
+    if (!url) {
+      toast(
+        state.language === 'es'
+          ? 'Pegue un enlace público HTTPS.'
+          : 'Paste a public HTTPS link.',
+        true
+      );
+      return;
+    }
+
+    const button = inputId === 'opportunityLinkInput'
+      ? document.getElementById('checkOpportunityLinkButton')
+      : document.getElementById('recheckOpportunityUrlButton');
+    setBusy(button, true, opportunityUi().checking);
+
+    try {
+      const checked = await callServer(
+        'checkOpportunityLink',
+        url,
+        state.language
+      );
+      renderOpportunityLinkResult_(checked, resultId);
+
+      if (checked.success) {
+        applyOpportunityCheck_(checked);
+        if (openBuilderAfter) {
+          openOpportunityBuilder({
+            title: checked.title || checked.domain || '',
+            provider: checked.providerSuggestion || checked.domain || '',
+            url: checked.url || url,
+            domain: checked.domain || '',
+            sourceTier: checked.sourceTier || 'Public link checked',
+            verificationStatus: checked.verificationStatus || 'Link checked',
+            lastCheckedAt: checked.lastCheckedAt || '',
+            audience: document.getElementById(
+              'opportunitySearchAudienceSelect'
+            ).value || 'Any household member',
+            locationLabel: document.getElementById(
+              'opportunitySearchLocationInput'
+            ).value || ''
+          });
+          toast(opportunityUi().linkAdded);
+        }
+      }
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(
+        button,
+        false,
+        inputId === 'opportunityLinkInput'
+          ? opportunityUi().checkUse
+          : opportunityUi().checkLink
+      );
+    }
+  }
+
+
+  function renderOpportunityLinkResult_(checked, resultId) {
+    const container = document.getElementById(resultId);
+    if (!container) return;
+    show(resultId);
+    container.classList.toggle('check-failed', !checked.success);
+    const checks = checked.verificationChecks || {};
+    const badges = [
+      checked.secureHttps
+        ? (state.language === 'es' ? 'HTTPS seguro' : 'Secure HTTPS')
+        : '',
+      checked.publicDomain
+        ? (state.language === 'es' ? 'Dominio público' : 'Public domain')
+        : '',
+      checks.httpsCertificateCheck
+        ? (state.language === 'es' ? 'Certificado revisado' : 'Certificate checked')
+        : '',
+      checked.reachable
+        ? (state.language === 'es' ? 'La página respondió' : 'Page responded')
+        : checked.automatedAccessLimited
+          ? (state.language === 'es'
+            ? 'El sitio limitó la revisión automática'
+            : 'Site limited automated checking')
+          : '',
+      checked.httpStatus ? 'HTTP ' + checked.httpStatus : ''
+    ].filter(Boolean);
+
+    container.innerHTML =
+      '<strong>' +
+      escapeHtml(checked.success
+        ? opportunityUi().linkResponded
+        : opportunityUi().linkFailed) + '</strong>' +
+      '<p>' + escapeHtml(checked.message || '') + '</p>' +
+      '<div class="link-result-meta">' + badges.map(function(value) {
+        return '<span>' + escapeHtml(value) + '</span>';
+      }).join('') + '</div><div class="source-verification-line">' +
+      escapeHtml(checked.verificationStatus || '') +
+      (checked.domain ? ' · ' + escapeHtml(checked.domain) : '') +
+      '</div><small>' +
+      escapeHtml(opportunityUi().notFactCheck) + '</small>';
+  }
+
+
+  function applyOpportunityCheck_(checked) {
+    document.getElementById('opportunityDomainInput').value =
+      checked.domain || '';
+    document.getElementById('opportunitySourceTierInput').value =
+      checked.sourceTier || 'Public link checked';
+    document.getElementById('opportunityVerificationInput').value =
+      checked.verificationStatus || 'Link checked';
+    document.getElementById('opportunityLastCheckedInput').value =
+      checked.lastCheckedAt || '';
+    setText(
+      'opportunityVerificationStatusText',
+      [
+        opportunitySourceTierLabel_(checked.sourceTier || ''),
+        opportunityVerificationLabel_(checked.verificationStatus || ''),
+        checked.domain || ''
+      ].filter(Boolean).join(' · ')
+    );
+    if (!document.getElementById('opportunityProviderInput').value.trim()) {
+      document.getElementById('opportunityProviderInput').value =
+        checked.providerSuggestion || checked.domain || '';
+    }
+    if (!document.getElementById('opportunityTitleInput').value.trim()) {
+      document.getElementById('opportunityTitleInput').value =
+        checked.title || checked.domain || '';
+    }
+  }
+
+
+  function openOpportunityBuilder(record) {
+    record = record || {};
+    const isLead = state.opportunitiesData &&
+      state.opportunitiesData.role === 'HOUSEHOLD_LEAD';
+    const defaultScope = isLead ? 'HOUSEHOLD' : 'PERSONAL';
+
+    document.getElementById('opportunityRecordIdInput').value =
+      record.id || '';
+    document.getElementById('opportunityScopeSelect').value =
+      record.scope || defaultScope;
+    document.getElementById('opportunityCategorySelect').value =
+      record.category || 'Career exploration';
+    document.getElementById('opportunityTitleInput').value =
+      record.title || '';
+    document.getElementById('opportunityProviderInput').value =
+      record.provider || '';
+    document.getElementById('opportunityAudienceSelect').value =
+      record.audience || 'Any household member';
+    document.getElementById('opportunityUrlInput').value =
+      record.url || '';
+    document.getElementById('opportunityDomainInput').value =
+      record.domain || opportunityDomainFromUrl_(record.url || '');
+    document.getElementById('opportunitySourceTierInput').value =
+      record.sourceTier || 'Not yet checked';
+    document.getElementById('opportunityVerificationInput').value =
+      record.verificationStatus || 'Not yet checked';
+    document.getElementById('opportunityLastCheckedInput').value =
+      record.lastCheckedAt || '';
+    setText(
+      'opportunityVerificationStatusText',
+      [
+        opportunitySourceTierLabel_(
+          record.sourceTier || opportunityUi().notChecked
+        ),
+        opportunityVerificationLabel_(
+          record.verificationStatus || opportunityUi().notChecked
+        ),
+        record.domain || opportunityDomainFromUrl_(record.url || '')
+      ].filter(Boolean).join(' · ')
+    );
+    document.getElementById('opportunityLocationInput').value =
+      record.locationLabel || '';
+    document.getElementById('opportunityDeadlineInput').value =
+      record.deadline || '';
+    document.getElementById('opportunityStatusSelect').value =
+      record.status || 'Saved';
+    document.getElementById('opportunityPrioritySelect').value =
+      record.priority || 'Interested';
+    document.getElementById('opportunityBenefitsInput').value =
+      record.benefits || '';
+    document.getElementById('opportunityEligibilityInput').value =
+      record.eligibility || '';
+    document.getElementById('opportunityCostInput').value =
+      record.costSummary || '';
+    document.getElementById('opportunityNextActionInput').value =
+      record.nextAction || '';
+    document.getElementById('opportunityNotesInput').value =
+      record.notes || '';
+
+    const requirements = document.getElementById(
+      'opportunityRequirementsEditor'
+    );
+    requirements.innerHTML = '';
+    (record.requirements || []).forEach(function(value) {
+      addOpportunitySimpleRow('requirements', value);
+    });
+
+    const questions = document.getElementById(
+      'opportunityQuestionsEditor'
+    );
+    questions.innerHTML = '';
+    (record.questions || []).forEach(function(value) {
+      addOpportunitySimpleRow('questions', value);
+    });
+
+    const actions = document.getElementById('opportunityActionEditor');
+    actions.innerHTML = '';
+    (record.actionSteps || []).forEach(addOpportunityActionRow);
+
+    show('opportunityBuilderCard');
+    state.opportunityGuideStep = 'plan';
+    openPanel('opportunitiesPanel');
+    activateOpportunityGuideStep('plan');
+    document.getElementById('opportunityBuilderCard').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+
+
+  function closeOpportunityBuilder() {
+    hide('opportunityBuilderCard');
+    if (state.opportunitiesData) activateOpportunityGuideStep('saved', true);
+  }
+
+
+  function addOpportunitySimpleRow(type, value) {
+    const container = document.getElementById(
+      type === 'requirements'
+        ? 'opportunityRequirementsEditor'
+        : 'opportunityQuestionsEditor'
+    );
+    const maximum = type === 'requirements' ? 15 : 12;
+    if (container.children.length >= maximum) {
+      toast(
+        state.language === 'es'
+          ? 'Se alcanzó el número máximo de elementos.'
+          : 'The maximum number of items has been reached.',
+        true
+      );
+      return;
+    }
+
+    const row = document.createElement('div');
+    row.className = 'repeat-row';
+    row.innerHTML =
+      '<input type="text" class="opportunity-' +
+      escapeAttribute(type) +
+      '-input" maxlength="800" spellcheck="true" value="' +
+      escapeAttribute(value || '') + '" placeholder="' +
+      escapeAttribute(
+        type === 'requirements'
+          ? opportunityUi().requirementPlaceholder
+          : opportunityUi().questionPlaceholder
+      ) + '"><button type="button" class="remove-row-button">' +
+      escapeHtml(opportunityUi().remove) + '</button>';
+    row.querySelector('button').addEventListener('click', function() {
+      row.remove();
+    });
+    container.appendChild(row);
+  }
+
+
+  function addOpportunityActionRow(item) {
+    item = item || {};
+    const container = document.getElementById('opportunityActionEditor');
+    if (container.children.length >= 15) {
+      toast(
+        state.language === 'es'
+          ? 'Puede agregar hasta quince acciones.'
+          : 'You can add up to fifteen actions.',
+        true
+      );
+      return;
+    }
+
+    const row = document.createElement('div');
+    row.className = 'opportunity-action-row';
+    row.dataset.actionId = item.id || '';
+    row.innerHTML =
+      '<input type="text" class="opportunity-action-text" maxlength="800" ' +
+      'spellcheck="true" value="' + escapeAttribute(item.text || '') +
+      '" placeholder="' + escapeAttribute(opportunityUi().actionPlaceholder) +
+      '"><label><span>' + escapeHtml(opportunityUi().actionDue) +
+      '</span><input type="date" class="opportunity-action-date" value="' +
+      escapeAttribute(item.dueDate || '') + '"></label>' +
+      '<label class="action-complete-check"><input type="checkbox" ' +
+      'class="opportunity-action-complete"' +
+      (item.status === 'Completed' ? ' checked' : '') +
+      '><span>' + escapeHtml(opportunityUi().actionComplete) +
+      '</span></label><button type="button" class="remove-row-button">' +
+      escapeHtml(opportunityUi().remove) + '</button>';
+    row.querySelector('button').addEventListener('click', function() {
+      row.remove();
+    });
+    container.appendChild(row);
+  }
+
+
+  function collectOpportunitySimpleRows_(selector) {
+    return Array.from(document.querySelectorAll(selector))
+      .map(function(input) { return input.value.trim(); })
+      .filter(Boolean);
+  }
+
+
+  function collectOpportunityActions_() {
+    return Array.from(
+      document.querySelectorAll('#opportunityActionEditor .opportunity-action-row')
+    ).map(function(row) {
+      return {
+        id: row.dataset.actionId || '',
+        text: row.querySelector('.opportunity-action-text').value.trim(),
+        dueDate: row.querySelector('.opportunity-action-date').value,
+        status: row.querySelector('.opportunity-action-complete').checked
+          ? 'Completed'
+          : 'Open'
+      };
+    }).filter(function(item) { return Boolean(item.text); });
+  }
+
+
+  async function saveOpportunityPlan() {
+    const title = document.getElementById('opportunityTitleInput')
+      .value.trim();
+    if (!title) {
+      toast(opportunityUi().titleRequired, true);
+      return;
+    }
+
+    const payload = {
+      id: document.getElementById('opportunityRecordIdInput').value,
+      language: state.language,
+      scope: document.getElementById('opportunityScopeSelect').value,
+      title: title,
+      category: document.getElementById('opportunityCategorySelect').value,
+      provider: document.getElementById('opportunityProviderInput').value,
+      url: document.getElementById('opportunityUrlInput').value,
+      domain: document.getElementById('opportunityDomainInput').value,
+      sourceTier: document.getElementById('opportunitySourceTierInput').value,
+      verificationStatus: document.getElementById(
+        'opportunityVerificationInput'
+      ).value,
+      lastCheckedAt: document.getElementById(
+        'opportunityLastCheckedInput'
+      ).value,
+      audience: document.getElementById('opportunityAudienceSelect').value,
+      locationLabel: document.getElementById(
+        'opportunityLocationInput'
+      ).value,
+      deadline: document.getElementById('opportunityDeadlineInput').value,
+      costSummary: document.getElementById('opportunityCostInput').value,
+      eligibility: document.getElementById(
+        'opportunityEligibilityInput'
+      ).value,
+      benefits: document.getElementById('opportunityBenefitsInput').value,
+      requirements: collectOpportunitySimpleRows_(
+        '#opportunityRequirementsEditor .opportunity-requirements-input'
+      ),
+      status: document.getElementById('opportunityStatusSelect').value,
+      priority: document.getElementById('opportunityPrioritySelect').value,
+      nextAction: document.getElementById(
+        'opportunityNextActionInput'
+      ).value,
+      actionSteps: collectOpportunityActions_(),
+      questions: collectOpportunitySimpleRows_(
+        '#opportunityQuestionsEditor .opportunity-questions-input'
+      ),
+      notes: document.getElementById('opportunityNotesInput').value
+    };
+
+    if (!clientPrivacyCheck(payload)) return;
+
+    const button = document.getElementById('saveOpportunityButton');
+    setBusy(button, true, opportunityUi().saving);
+    try {
+      const result = await callServer('saveOpportunityRecord', payload);
+      state.opportunitiesData = normalizeOpportunityWorkspace_(
+        result.workspace
+      );
+      renderOpportunityWorkspace(state.opportunitiesData);
+      hide('opportunityBuilderCard');
+      activateOpportunityGuideStep('saved', true);
+      toast(opportunityUi().saved);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, opportunityUi().save);
+    }
+  }
+
+
+  function renderOpportunityRecords() {
+    const container = document.getElementById('opportunityRecordList');
+    if (!container || !state.opportunitiesData) return;
+
+    const filter = document.getElementById(
+      'opportunityRecordFilterSelect'
+    ).value || 'CURRENT';
+    const category = document.getElementById(
+      'opportunityCategoryFilterSelect'
+    ).value || 'ALL';
+    const today = opportunityLocalDateKey_(new Date());
+    const records = state.opportunitiesData.sharedRecords.concat(
+      state.opportunitiesData.personalRecords
+    ).filter(function(record) {
+      if (category !== 'ALL' && record.category !== category) return false;
+      if (filter === 'SHARED') return record.scope === 'HOUSEHOLD' &&
+        record.status !== 'Archived';
+      if (filter === 'PERSONAL') return record.scope === 'PERSONAL' &&
+        record.status !== 'Archived';
+      if (filter === 'ARCHIVED') return record.status === 'Archived';
+      if (filter === 'ALL') return true;
+      if (filter === 'ACTION') {
+        return record.status !== 'Archived' &&
+          record.status !== 'Closed' &&
+          (record.priority === 'High priority' ||
+           record.status === 'Preparing' ||
+           Boolean(record.nextAction));
+      }
+      if (filter === 'DEADLINE') {
+        return record.status !== 'Archived' &&
+          record.status !== 'Closed' &&
+          Boolean(record.deadline && record.deadline >= today);
+      }
+      return record.status !== 'Archived' && record.status !== 'Closed';
+    });
+
+    if (!records.length) {
+      container.innerHTML = '<div class="empty-state">' +
+        escapeHtml(
+          state.opportunitiesData.role === 'HOUSEHOLD_LEAD'
+            ? opportunityUi().noRecordsLead
+            : opportunityUi().noRecordsMember
+        ) + '</div>';
+      return;
+    }
+
+    container.innerHTML = records.map(function(record) {
+      const canEdit = !record.readOnly;
+      const overdue = record.deadline &&
+        record.deadline < today &&
+        ['Applied', 'Accepted', 'Not selected', 'Closed', 'Archived']
+          .indexOf(record.status) < 0;
+
+      const actions = [
+        record.url
+          ? '<a class="secondary-button compact-button link-button" ' +
+            'target="_blank" rel="noopener" href="' +
+            escapeAttribute(record.url) + '">' +
+            escapeHtml(opportunityUi().openLink) + '</a>'
+          : '',
+        canEdit
+          ? opportunityRecordActionButton_(
+              'edit',
+              record,
+              opportunityUi().edit
+            )
+          : '',
+        record.readOnly
+          ? opportunityRecordActionButton_(
+              'copy',
+              record,
+              opportunityUi().personalCopy
+            )
+          : '',
+        opportunityRecordActionButton_(
+          'pdf',
+          record,
+          opportunityUi().pdf
+        ),
+        canEdit && record.status !== 'Archived'
+          ? opportunityRecordActionButton_(
+              'archive',
+              record,
+              opportunityUi().archive,
+              true
+            )
+          : ''
+      ].join('');
+
+      return '<article class="opportunity-record-card' +
+        (overdue ? ' opportunity-overdue' : '') + '">' +
+        '<div class="opportunity-record-top"><div>' +
+        '<span class="goal-badge">' +
+        escapeHtml(opportunityCategoryLabel_(record.category)) +
+        '</span><span class="goal-badge ' +
+        (record.scope === 'HOUSEHOLD' ? 'shared-scope-badge' : 'personal-scope-badge') +
+        '">' +
+        escapeHtml(record.scope === 'HOUSEHOLD'
+          ? opportunityUi().sharedBadge
+          : opportunityUi().personalBadge) +
+        '</span>' +
+        (record.readOnly
+          ? '<span class="goal-badge muted">' +
+            escapeHtml(opportunityUi().readOnly) + '</span>'
+          : '') +
+        '<h3>' + escapeHtml(record.title) + '</h3>' +
+        '<p class="opportunity-provider">' +
+        escapeHtml(record.provider || record.domain || '') +
+        '</p></div><span class="meeting-status-badge">' +
+        escapeHtml(opportunityStatusLabel_(record.status)) +
+        '</span></div>' +
+        '<div class="goal-meta"><span>' +
+        escapeHtml(opportunityPriorityLabel_(record.priority)) +
+        '</span><span>' +
+        escapeHtml(opportunityAudienceLabel_(record.audience)) +
+        '</span>' +
+        (record.locationLabel
+          ? '<span>' + escapeHtml(record.locationLabel) + '</span>'
+          : '') +
+        '</div>' +
+        (record.benefits
+          ? '<p>' + escapeHtml(record.benefits) + '</p>'
+          : '') +
+        '<div class="opportunity-record-details"><span>' +
+        escapeHtml(record.deadline
+          ? opportunityUi().due + ': ' +
+            opportunityFormatDate_(record.deadline)
+          : opportunityUi().noDeadline) +
+        '</span><span>' +
+        Number((record.requirements || []).length) + ' ' +
+        escapeHtml(opportunityUi().requirements) +
+        '</span><span>' +
+        Number((record.actionSteps || []).length) + ' ' +
+        escapeHtml(opportunityUi().actions) +
+        '</span></div>' +
+        (record.nextAction
+          ? '<div class="next-action-box"><strong>' +
+            escapeHtml(opportunityUi().next) + ':</strong> ' +
+            escapeHtml(record.nextAction) + '</div>'
+          : '') +
+        '<div class="source-verification-line">' +
+        escapeHtml([
+          opportunitySourceTierLabel_(record.sourceTier || ''),
+          opportunityVerificationLabel_(record.verificationStatus || ''),
+          record.domain || ''
+        ].filter(Boolean).join(' · ')) +
+        '</div><div class="button-row">' + actions + '</div></article>';
+    }).join('');
+  }
+
+
+  function opportunityRecordActionButton_(action, record, label, danger) {
+    return '<button type="button" class="' +
+      (danger
+        ? 'text-button danger-text'
+        : 'secondary-button compact-button') +
+      '" data-opportunity-action="' + escapeAttribute(action) +
+      '" data-opportunity-id="' + escapeAttribute(record.id) +
+      '" data-opportunity-scope="' + escapeAttribute(record.scope) +
+      '">' + escapeHtml(label) + '</button>';
+  }
+
+
+  async function handleOpportunityRecordAction(event) {
+    const button = event.target.closest(
+      'button[data-opportunity-action]'
+    );
+    if (!button) return;
+    const record = findOpportunityRecord_(
+      button.dataset.opportunityId,
+      button.dataset.opportunityScope
+    );
+    if (!record) return;
+
+    if (button.dataset.opportunityAction === 'edit') {
+      openOpportunityBuilder(record);
+    }
+    if (button.dataset.opportunityAction === 'copy') {
+      await copyOpportunityToPersonal(record, button);
+    }
+    if (button.dataset.opportunityAction === 'pdf') {
+      await generateOpportunityPdf(record, button);
+    }
+    if (button.dataset.opportunityAction === 'archive') {
+      await archiveOpportunity(record);
+    }
+  }
+
+
+  function findOpportunityRecord_(id, scope) {
+    const records = scope === 'HOUSEHOLD'
+      ? state.opportunitiesData.sharedRecords
+      : state.opportunitiesData.personalRecords;
+    return records.find(function(record) {
+      return record.id === id;
+    }) || null;
+  }
+
+
+  async function copyOpportunityToPersonal(record, button) {
+    setBusy(button, true, opportunityUi().creating);
+    try {
+      const result = await callServer(
+        'copySharedOpportunityToPersonal',
+        record.id,
+        state.language
+      );
+      state.opportunitiesData = normalizeOpportunityWorkspace_(
+        result.workspace
+      );
+      renderOpportunityWorkspace(state.opportunitiesData);
+      toast(opportunityUi().copied);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    }
+  }
+
+
+  async function archiveOpportunity(record) {
+    if (!window.confirm(opportunityUi().confirmArchive)) return;
+    try {
+      const result = await callServer('archiveOpportunityRecord', {
+        recordId: record.id,
+        scope: record.scope,
+        language: state.language
+      });
+      state.opportunitiesData = normalizeOpportunityWorkspace_(
+        result.workspace
+      );
+      renderOpportunityWorkspace(state.opportunitiesData);
+      toast(opportunityUi().archivedMessage);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    }
+  }
+
+
+  async function generateOpportunityPdf(record, button) {
+    const original = button.textContent;
+    setBusy(button, true, opportunityUi().creating);
+    try {
+      const result = await callServer(
+        'generateOpportunityDocument',
+        record.scope,
+        record.id,
+        state.language
+      );
+      downloadBase64File(
+        result.filename,
+        'application/pdf',
+        result.base64Content
+      );
+      toast(result.message);
+      if (result.driveFileUrl) {
+        window.open(result.driveFileUrl, '_blank', 'noopener');
+      }
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, original);
+    }
+  }
+
+
+  function renderOpportunityDashboard() {
+    if (!state.opportunitiesData) return;
+    const summary = state.opportunitiesData.summary || {};
+    setText(
+      'dashboardOpportunitySharedCount',
+      String(summary.shared || 0)
+    );
+    setText(
+      'dashboardOpportunityPersonalCount',
+      String(summary.personal || 0)
+    );
+    setText(
+      'dashboardOpportunityActionCount',
+      String(summary.actionNeeded || 0)
+    );
+    setText(
+      'dashboardOpportunityOverdueCount',
+      String(summary.overdue || 0)
+    );
+
+    const container = document.getElementById(
+      'dashboardOpportunityDeadlineList'
+    );
+    const records = Array.isArray(summary.upcomingDeadlines)
+      ? summary.upcomingDeadlines
+      : [];
+
+    if (!records.length) {
+      container.innerHTML = '<div class="empty-state">' +
+        escapeHtml(opportunityUi().dashboardEmpty) + '</div>';
+      return;
+    }
+
+    container.innerHTML = records.map(function(record) {
+      return '<article class="dashboard-opportunity-item"><div>' +
+        '<span class="goal-badge">' +
+        escapeHtml(opportunityCategoryLabel_(record.category)) +
+        '</span><h4>' + escapeHtml(record.title) + '</h4><p>' +
+        escapeHtml(record.provider || record.locationLabel || '') +
+        '</p></div><div class="dashboard-opportunity-date"><span>' +
+        escapeHtml(opportunityUi().due) + '</span><strong>' +
+        escapeHtml(opportunityFormatDate_(record.deadline)) +
+        '</strong></div></article>';
+    }).join('');
+  }
+
+
+  const OPPORTUNITY_GUIDE_STEPS = ['learn', 'find', 'link', 'plan', 'saved'];
+
+
+  function opportunityGuideGroups_() {
+    return {
+      learn: ['mobilityLearningCard'],
+      find: ['opportunityFinderCard'],
+      link: ['opportunityLinkCard'],
+      plan: ['opportunityBuilderCard'],
+      saved: ['opportunitySavedSection']
+    };
+  }
+
+
+  function activateOpportunityGuideStep(step, scroll) {
+    if (OPPORTUNITY_GUIDE_STEPS.indexOf(step) < 0) step = 'learn';
+    state.opportunityGuideStep = step;
+    const groups = opportunityGuideGroups_();
+    const allIds = [];
+    Object.keys(groups).forEach(function(key) {
+      groups[key].forEach(function(id) {
+        if (allIds.indexOf(id) < 0) allIds.push(id);
+      });
+    });
+
+    allIds.forEach(function(id) {
+      const element = document.getElementById(id);
+      if (element) element.classList.add('guided-section-hidden');
+    });
+    (groups[step] || []).forEach(function(id) {
+      const element = document.getElementById(id);
+      if (element) element.classList.remove('guided-section-hidden');
+    });
+
+    // The plan step begins with a blank guided planner when no record is open.
+    if (step === 'plan') {
+      const builder = document.getElementById('opportunityBuilderCard');
+      if (builder && builder.classList.contains('hidden')) {
+        openOpportunityBuilder({});
+        return;
+      }
+    }
+
+    document.querySelectorAll('[data-opportunity-step]').forEach(function(button) {
+      button.classList.toggle('active', button.dataset.opportunityStep === step);
+    });
+    const text = opportunityUi();
+    const index = OPPORTUNITY_GUIDE_STEPS.indexOf(step);
+    setText(
+      'opportunityGuideStatus',
+      (state.language === 'es' ? 'Paso ' : 'Step ') +
+        (index + 1) + (state.language === 'es' ? ' de ' : ' of ') +
+        OPPORTUNITY_GUIDE_STEPS.length + ' · ' + text.guideLabels[step]
+    );
+    setText('opportunityGuideInstruction', text.guideInstructions[step]);
+    document.getElementById('opportunityPreviousStepButton').disabled = index === 0;
+    document.getElementById('opportunityNextStepButton').disabled =
+      index === OPPORTUNITY_GUIDE_STEPS.length - 1;
+
+    if (scroll) {
+      document.getElementById('opportunityStepNav').scrollIntoView({
+        behavior: 'smooth', block: 'start'
+      });
+    }
+    if (typeof attachSupportToFields_ === 'function') attachSupportToFields_();
+  }
+
+
+  function moveOpportunityGuideStep(direction) {
+    const index = OPPORTUNITY_GUIDE_STEPS.indexOf(
+      state.opportunityGuideStep || 'learn'
+    );
+    const next = Math.max(
+      0,
+      Math.min(OPPORTUNITY_GUIDE_STEPS.length - 1, index + Number(direction || 0))
+    );
+    activateOpportunityGuideStep(OPPORTUNITY_GUIDE_STEPS[next], true);
+  }
+
+
+  function opportunitySourceTierLabel_(value) {
+    if (state.language !== 'es') return value;
+    return {
+      'Official government source': 'Fuente oficial del gobierno',
+      'Government-sponsored source': 'Fuente patrocinada por el gobierno',
+      'Research and public-data source': 'Fuente de investigación y datos públicos',
+      'Organization website': 'Sitio de la organización',
+      'Public link checked': 'Enlace público revisado',
+      'Secure public HTTPS address': 'Dirección pública HTTPS segura',
+      'Not yet checked': 'Todavía no revisado'
+    }[value] || value;
+  }
+
+
+  function opportunityVerificationLabel_(value) {
+    if (state.language !== 'es') return value;
+    return {
+      'Official domain checked': 'Dominio oficial revisado',
+      'Government-sponsored domain checked': 'Dominio patrocinado revisado',
+      'Secure HTTPS format checked': 'Formato HTTPS seguro revisado',
+      'Link checked': 'Enlace revisado',
+      'Check failed': 'No se pudo revisar',
+      'Not yet checked': 'Todavía no revisado',
+      'Official or research resource listed by FamilyPD':
+        'Recurso oficial o de investigación incluido por FamilyPD'
+    }[value] || value;
+  }
+
+
+  function opportunityOptionLabel_(group, value) {
+    const options = state.opportunitiesData &&
+      state.opportunitiesData.options &&
+      state.opportunitiesData.options[group] || [];
+    const match = options.find(function(option) {
+      return option.value === value;
+    });
+    return match ? match.label : value;
+  }
+
+
+  function opportunityCategoryLabel_(value) {
+    return opportunityOptionLabel_('categories', value);
+  }
+
+
+  function opportunityAudienceLabel_(value) {
+    return opportunityOptionLabel_('audiences', value);
+  }
+
+
+  function opportunityStatusLabel_(value) {
+    return opportunityOptionLabel_('statuses', value);
+  }
+
+
+  function opportunityPriorityLabel_(value) {
+    return opportunityOptionLabel_('priorities', value);
+  }
+
+
+  function opportunityDomainFromUrl_(value) {
+    const match = String(value || '').match(/^https:\/\/([^/:?#]+)/i);
+    return match
+      ? match[1].replace(/^www\./i, '').toLowerCase()
+      : '';
+  }
+
+
+  function opportunityFormatDate_(value) {
+    if (!value) return '';
+    const date = new Date(value + 'T12:00:00');
+    if (Number.isNaN(date.getTime())) return value;
+    return new Intl.DateTimeFormat(
+      state.language === 'es' ? 'es-US' : 'en-US',
+      { month: 'short', day: 'numeric', year: 'numeric' }
+    ).format(date);
+  }
+
+
+  function opportunityLocalDateKey_(date) {
+    return [
+      date.getFullYear(),
+      String(date.getMonth() + 1).padStart(2, '0'),
+      String(date.getDate()).padStart(2, '0')
+    ].join('-');
+  }
+</script>

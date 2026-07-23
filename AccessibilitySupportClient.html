@@ -1,0 +1,1222 @@
+<script>
+  const ACCESS_SUPPORT_UI = {
+    en: {
+      topButton: 'Quick help',
+      drawerEyebrow: 'READING & WRITING SUPPORT',
+      drawerTitle: 'Help with this question',
+      noFieldTitle: 'Choose a field or section',
+      noFieldText: 'Click a Choices button beside any question. FamilyPD will explain the question, read it aloud, and provide editable examples.',
+      question: 'What is being asked?',
+      explanation: 'What this means',
+      examples: 'Choose a starting answer',
+      choices: 'Available choices',
+      readQuestion: 'Read question',
+      readAnswer: 'Read my answer',
+      readSection: 'Read current section',
+      stop: 'Stop reading',
+      close: 'Close support',
+      clear: 'Clear answer',
+      use: 'Use this answer',
+      choose: 'Choose this option',
+      add: 'Add this idea',
+      choicesButton: 'Help & choices',
+      editableNote: 'Every example is a starting point. Change it so it is accurate and sounds natural for the household.',
+      noExamples: 'This field already has choices or accepts a short personal answer. Use the explanation and read-aloud tools for support.',
+      selected: 'Selected',
+      answerEmpty: 'No answer has been entered yet.',
+      browserNoSpeech: 'This browser does not provide read-aloud support.',
+      genericHelp: 'Enter a short, general answer. Do not include confidential or sensitive information.',
+      selectHelp: 'Choose the option that is closest. It can usually be changed later.',
+      dateHelp: 'Choose a date only when it is useful. Leave it blank when the form allows a draft.',
+      urlHelp: 'Paste the complete public HTTPS page beginning with https://. Do not paste a private account or sign-in page.',
+      numberHelp: 'Use a reasonable general estimate. Exact private records are not required.'
+    },
+    es: {
+      topButton: 'Ayuda rápida',
+      drawerEyebrow: 'APOYO PARA LEER Y ESCRIBIR',
+      drawerTitle: 'Ayuda con esta pregunta',
+      noFieldTitle: 'Elija un campo o sección',
+      noFieldText: 'Haga clic en Opciones junto a cualquier pregunta. FamilyPD explicará la pregunta, la leerá en voz alta y ofrecerá ejemplos editables.',
+      question: '¿Qué se está preguntando?',
+      explanation: '¿Qué significa?',
+      examples: 'Elija una respuesta para comenzar',
+      choices: 'Opciones disponibles',
+      readQuestion: 'Leer pregunta',
+      readAnswer: 'Leer mi respuesta',
+      readSection: 'Leer sección actual',
+      stop: 'Detener lectura',
+      close: 'Cerrar apoyo',
+      clear: 'Borrar respuesta',
+      use: 'Usar esta respuesta',
+      choose: 'Elegir esta opción',
+      add: 'Agregar esta idea',
+      choicesButton: 'Ayuda y opciones',
+      editableNote: 'Cada ejemplo es un punto de partida. Cámbielo para que sea correcto y suene natural para el hogar.',
+      noExamples: 'Este campo ya tiene opciones o acepta una respuesta personal corta. Use la explicación y la lectura en voz alta.',
+      selected: 'Seleccionada',
+      answerEmpty: 'Todavía no se ha escrito una respuesta.',
+      browserNoSpeech: 'Este navegador no ofrece lectura en voz alta.',
+      genericHelp: 'Escriba una respuesta corta y general. No incluya información confidencial o sensible.',
+      selectHelp: 'Elija la opción más cercana. Normalmente se puede cambiar después.',
+      dateHelp: 'Elija una fecha solamente cuando sea útil. Déjela en blanco cuando se permita un borrador.',
+      urlHelp: 'Pegue la página pública HTTPS completa que comienza con https://. No pegue una cuenta privada ni una página de acceso.',
+      numberHelp: 'Use una estimación general razonable. No se requieren registros privados exactos.'
+    }
+  };
+
+  const FIELD_SUPPORT_EXAMPLES = {
+    en: {
+      identityLabelInput: [
+        'Our Household',
+        'The Growth Team',
+        'Our FamilyPD Household'
+      ],
+      visionInput: [
+        'A supportive household where every member has opportunities to learn, contribute, and grow.',
+        'A safe, organized, and encouraging home that prepares members for healthy relationships and future success.',
+        'A household that communicates respectfully, plans together, and keeps improving.'
+      ],
+      missionInput: [
+        'We practice honest communication, shared responsibility, continued learning, and regular goal check-ins.',
+        'We support one another by planning, learning useful skills, and taking small actions consistently.',
+        'We create routines that strengthen health, relationships, education, finances, and goals.'
+      ],
+      mottoInput: [
+        'Grow together.',
+        'Plan. Practice. Progress.',
+        'Stronger at home.'
+      ],
+      profileAccessibilityInput: [
+        'Give me extra time to read and respond.',
+        'Use short instructions and show one step at a time.',
+        'Let me hear the question aloud before I answer.',
+        'Provide examples and allow voice typing when possible.'
+      ],
+      customRoleTitleInput: [
+        'Calendar Coordinator',
+        'Meal Planning Helper',
+        'Technology Support Lead',
+        'Celebration Coordinator'
+      ],
+      goalTitleInput: [
+        'Create a weekly family check-in routine',
+        'Complete one career-training research plan',
+        'Improve our shared calendar system',
+        'Build a consistent study routine'
+      ],
+      goalTargetInput: [
+        'Complete one small action each week and review progress monthly.',
+        'Create a simple routine that the household can use consistently.',
+        'Research three trustworthy options and choose one next step.',
+        'Practice the new skill twice each week for one month.'
+      ],
+      goalWhyInput: [
+        'This matters because it will reduce confusion and help us support one another.',
+        'This goal can improve our future options and make progress easier to see.',
+        'This will help the household build a useful habit instead of reacting at the last minute.'
+      ],
+      checkpointProgressNoteInput: [
+        'We completed the first step and identified what comes next.',
+        'We practiced the routine twice and learned what needs to change.',
+        'We researched options and saved the most promising one.'
+      ],
+      checkpointBarrierInput: [
+        'We needed clearer instructions.',
+        'Our schedule changed and we did not choose a new time.',
+        'We need more information before making a decision.',
+        'The step was too large and needs to be divided.'
+      ],
+      checkpointSupportInput: [
+        'A reminder and a shorter next step would help.',
+        'We need one person to demonstrate the process.',
+        'We need a trustworthy resource or community contact.',
+        'We need to choose a time when more members can participate.'
+      ],
+      checkpointNextActionInput: [
+        'Schedule the next check-in.',
+        'Complete the first unfinished step.',
+        'Open the official resource and confirm the requirements.',
+        'Ask one household member what support would help.'
+      ],
+      meetingTitleInput: [
+        'Weekly Family Check-In',
+        'Monthly Goals and Calendar Review',
+        'Learning and Opportunity Discussion',
+        'Household Systems Review'
+      ],
+      meetingLocationInput: [
+        'Common household space',
+        'Video meeting',
+        'Phone call',
+        'Quiet public meeting space'
+      ],
+      meetingOpeningInput: [
+        'Thank you for making time. The purpose of this meeting is to share updates, listen, and choose a few useful next steps.',
+        'We are here to solve problems together, not blame anyone. Everyone may ask questions or request clarification.',
+        'Let us begin with one positive update before we review today’s topics.'
+      ],
+      meetingRecapInput: [
+        'At the previous meeting, we agreed to complete the first action step and check back today.',
+        'We made progress on the shared goal, but one item still needs a responsible role and date.',
+        'The earlier decision is still useful, but the timeline needs to be adjusted.'
+      ],
+      meetingMealInput: [
+        'Water and a simple snack',
+        'Family meal before the meeting',
+        'No refreshments needed',
+        'Light snacks and drinks'
+      ],
+      meetingClosingInput: [
+        'Thank you for participating. Before we finish, let us repeat the decisions and each person’s next action.',
+        'We made progress today. Our next check-in will focus on what worked and what support is still needed.',
+        'Let us close by sharing one encouragement or appreciation.'
+      ],
+      meetingNotesInput: [
+        'Members shared updates, clarified the main concern, and agreed on the next actions.',
+        'The discussion identified one strength, one barrier, and one resource to research.',
+        'The household agreed to revisit this topic at the next scheduled meeting.'
+      ],
+      memberPrepQuestionsInput: [
+        'What decision needs to be made?',
+        'What information should I review before the meeting?',
+        'What support is available?',
+        'How will we know the plan is working?'
+      ],
+      memberPrepTopicInput: [
+        'I would like to discuss a goal that needs a smaller next step.',
+        'I found a resource that may help the household.',
+        'I would like us to review how responsibilities are being shared.'
+      ],
+      memberPrepSupportInput: [
+        'Please read the question aloud and give me time to think.',
+        'Please share the agenda before the meeting.',
+        'I would like to write my response instead of speaking first.',
+        'Please explain unfamiliar words in plain language.'
+      ],
+      learningTitleInput: [
+        'How to recognize and avoid online scams',
+        'Understanding career training and credentials',
+        'Building a respectful conflict-repair routine',
+        'Learning how household budgeting works'
+      ],
+      learningObjectiveInput: [
+        'Participants will be able to explain the main idea and complete one practical step.',
+        'Participants will compare trustworthy options and identify one next action.',
+        'Participants will practice the skill using a short example or scenario.'
+      ],
+      learningWhyInput: [
+        'This matters because the skill can reduce risk and improve household decisions.',
+        'Learning this can expand education, career, or financial options.',
+        'This topic can help members communicate and solve problems more effectively.'
+      ],
+      learningActionInput: [
+        'Practice the skill once this week and discuss what happened.',
+        'Open one official resource and write down one useful fact.',
+        'Teach the main idea to another household member.',
+        'Add one related action to a household goal.'
+      ],
+      learningReflectionInput: [
+        'The most useful idea was…',
+        'One thing that surprised us was…',
+        'We still need to learn more about…',
+        'The next action we will try is…'
+      ],
+      learningNotesInput: [
+        'Use short sections, examples, and time for questions.',
+        'Provide a visual example and allow participants to practice.',
+        'Review unfamiliar words before beginning.'
+      ],
+      learningKeyLearningInput: [
+        'The most important thing I learned was…',
+        'I can now explain…',
+        'A mistake I will avoid is…'
+      ],
+      learningQuestionsInput: [
+        'What part should be explained again?',
+        'Where can I find an official source?',
+        'How does this apply to our household?'
+      ],
+      learningPersonalActionInput: [
+        'I will practice this skill once before the next check-in.',
+        'I will open the official resource and complete the first step.',
+        'I will ask for help with the part I do not understand.'
+      ],
+      opportunitySearchKeywordInput: [
+        'cybersecurity',
+        'healthcare',
+        'construction apprenticeship',
+        'small business training',
+        'college scholarship'
+      ],
+      opportunitySearchLocationInput: [
+        'Las Vegas, Nevada',
+        'Nevada',
+        'Remote',
+        'ZIP code only'
+      ],
+      opportunityTitleInput: [
+        'Career-training program to compare',
+        'Scholarship opportunity',
+        'Registered apprenticeship option',
+        'Community workforce resource'
+      ],
+      opportunityProviderInput: [
+        'Official government agency',
+        'College or training provider',
+        'Community nonprofit organization',
+        'Employer or apprenticeship sponsor'
+      ],
+      opportunityLocationInput: [
+        'Las Vegas area',
+        'Nevada',
+        'Remote or online',
+        'Location must be confirmed'
+      ],
+      opportunityBenefitsInput: [
+        'May provide training, career preparation, and a recognized credential.',
+        'May provide financial aid or reduce the cost of education.',
+        'May provide paid work experience, mentoring, and advancement opportunities.',
+        'May connect the household with local support and referrals.'
+      ],
+      opportunityEligibilityInput: [
+        'Eligibility must be confirmed on the current official page.',
+        'General age, education, location, or income requirements may apply.',
+        'The provider may require an application, interview, orientation, or supporting documents.'
+      ],
+      opportunityCostInput: [
+        'Cost has not been confirmed.',
+        'The program appears free, but fees and required materials must be confirmed.',
+        'The opportunity may provide pay, aid, or a stipend; current amounts must be verified.'
+      ],
+      opportunityNextActionInput: [
+        'Open the official page and confirm the deadline and eligibility.',
+        'Compare this opportunity with two alternatives.',
+        'Write down the required documents, but store documents outside FamilyPD.',
+        'Contact the provider using information from the official website.'
+      ],
+      opportunityNotesInput: [
+        'Questions remain about the schedule, cost, and application process.',
+        'This opportunity appears promising but needs current verification.',
+        'Discuss transportation, time, and support needs before applying.'
+      ],
+      systemTitleInput: [
+        'Weekly Shared Calendar Review',
+        'Respectful Communication Agreement',
+        'Online Safety Check Routine',
+        'Household Responsibility Rotation'
+      ],
+      systemPurposeInput: [
+        'This system matters because it will reduce repeated confusion and make responsibilities clear.',
+        'This agreement will help members know what to expect and how to ask for support.',
+        'This checklist can reduce missed steps and make the process easier to teach.'
+      ],
+      systemStatementInput: [
+        'We will use this process consistently, communicate changes, and review whether it is working.',
+        'We will follow the agreed steps without insults, shame, or unnecessary blame.',
+        'We will use general role labels and keep sensitive information outside FamilyPD.'
+      ],
+      systemNotesInput: [
+        'Teach the process one step at a time and allow practice.',
+        'Review after one month and adjust any step that is unclear.',
+        'Use a visual checklist or reminder when helpful.'
+      ]
+    },
+    es: {
+      identityLabelInput: ['Nuestro hogar', 'El equipo de crecimiento', 'Nuestro hogar FamilyPD'],
+      visionInput: [
+        'Un hogar solidario donde cada miembro tenga oportunidades para aprender, contribuir y crecer.',
+        'Un hogar seguro, organizado y alentador que prepare a los miembros para relaciones saludables y éxito futuro.',
+        'Un hogar que se comunica con respeto, planifica unido y sigue mejorando.'
+      ],
+      missionInput: [
+        'Practicamos comunicación honesta, responsabilidad compartida, aprendizaje continuo y revisiones regulares de metas.',
+        'Nos apoyamos planificando, aprendiendo habilidades útiles y tomando acciones pequeñas con constancia.',
+        'Creamos rutinas que fortalecen salud, relaciones, educación, finanzas y metas.'
+      ],
+      mottoInput: ['Crecer unidos.', 'Planificar. Practicar. Progresar.', 'Más fuertes en casa.'],
+      profileAccessibilityInput: [
+        'Deme tiempo adicional para leer y responder.',
+        'Use instrucciones cortas y muestre un paso a la vez.',
+        'Permítame escuchar la pregunta antes de responder.',
+        'Proporcione ejemplos y permita dictado por voz cuando sea posible.'
+      ],
+      customRoleTitleInput: ['Coordinador del calendario', 'Ayudante de comidas', 'Apoyo tecnológico', 'Coordinador de celebraciones'],
+      goalTitleInput: [
+        'Crear una revisión familiar semanal',
+        'Completar una investigación de capacitación profesional',
+        'Mejorar nuestro calendario compartido',
+        'Crear una rutina constante de estudio'
+      ],
+      goalTargetInput: [
+        'Completar una acción pequeña cada semana y revisar el progreso mensualmente.',
+        'Crear una rutina sencilla que el hogar pueda usar con constancia.',
+        'Investigar tres opciones confiables y elegir un próximo paso.',
+        'Practicar la habilidad dos veces por semana durante un mes.'
+      ],
+      goalWhyInput: [
+        'Esto importa porque reducirá la confusión y nos ayudará a apoyarnos.',
+        'Esta meta puede mejorar nuestras opciones futuras y hacer visible el progreso.',
+        'Esto ayudará a crear un hábito útil en vez de reaccionar al último momento.'
+      ],
+      checkpointProgressNoteInput: [
+        'Completamos el primer paso e identificamos lo que sigue.',
+        'Practicamos la rutina dos veces y aprendimos qué debe cambiar.',
+        'Investigamos opciones y guardamos la más prometedora.'
+      ],
+      checkpointBarrierInput: [
+        'Necesitábamos instrucciones más claras.',
+        'Cambió el horario y no elegimos una nueva hora.',
+        'Necesitamos más información antes de decidir.',
+        'El paso era demasiado grande y debe dividirse.'
+      ],
+      checkpointSupportInput: [
+        'Ayudarían un recordatorio y un paso más corto.',
+        'Necesitamos que una persona demuestre el proceso.',
+        'Necesitamos un recurso confiable o contacto comunitario.',
+        'Necesitamos elegir una hora que permita mayor participación.'
+      ],
+      checkpointNextActionInput: [
+        'Programar la próxima revisión.',
+        'Completar el primer paso pendiente.',
+        'Abrir el recurso oficial y confirmar los requisitos.',
+        'Preguntar a un miembro qué apoyo ayudaría.'
+      ],
+      meetingTitleInput: ['Revisión familiar semanal', 'Revisión mensual de metas y calendario', 'Conversación de aprendizaje y oportunidades', 'Revisión de sistemas del hogar'],
+      meetingLocationInput: ['Espacio común del hogar', 'Reunión por video', 'Llamada telefónica', 'Espacio público tranquilo'],
+      meetingOpeningInput: [
+        'Gracias por hacer tiempo. El propósito es compartir actualizaciones, escuchar y elegir próximos pasos útiles.',
+        'Estamos aquí para resolver problemas juntos, no para culpar. Todos pueden hacer preguntas o pedir aclaración.',
+        'Comencemos con una actualización positiva antes de revisar los temas.'
+      ],
+      meetingRecapInput: [
+        'En la reunión anterior acordamos completar la primera acción y revisar hoy.',
+        'Avanzamos en la meta compartida, pero un elemento todavía necesita un rol y fecha.',
+        'La decisión anterior sigue siendo útil, pero debemos ajustar el tiempo.'
+      ],
+      meetingMealInput: ['Agua y una merienda sencilla', 'Comida familiar antes de la reunión', 'No se necesitan refrigerios', 'Meriendas y bebidas ligeras'],
+      meetingClosingInput: [
+        'Gracias por participar. Antes de terminar, repitamos las decisiones y la próxima acción de cada persona.',
+        'Avanzamos hoy. La próxima revisión se enfocará en lo que funcionó y el apoyo necesario.',
+        'Terminemos compartiendo un ánimo o aprecio.'
+      ],
+      meetingNotesInput: [
+        'Los miembros compartieron actualizaciones, aclararon la preocupación principal y acordaron acciones.',
+        'La conversación identificó una fortaleza, una barrera y un recurso para investigar.',
+        'El hogar acordó revisar este tema en la próxima reunión.'
+      ],
+      memberPrepQuestionsInput: ['¿Qué decisión debe tomarse?', '¿Qué información debo revisar?', '¿Qué apoyo está disponible?', '¿Cómo sabremos si funciona el plan?'],
+      memberPrepTopicInput: ['Quiero conversar sobre una meta que necesita un paso más pequeño.', 'Encontré un recurso que podría ayudar.', 'Quiero revisar cómo se comparten las responsabilidades.'],
+      memberPrepSupportInput: ['Lea la pregunta en voz alta y deme tiempo para pensar.', 'Comparta la agenda antes de la reunión.', 'Quiero escribir mi respuesta antes de hablar.', 'Explique palabras desconocidas en lenguaje sencillo.'],
+      learningTitleInput: ['Cómo reconocer y evitar estafas en línea', 'Comprender capacitación y credenciales', 'Crear una rutina para reparar conflictos', 'Aprender cómo funciona un presupuesto'],
+      learningObjectiveInput: ['Los participantes podrán explicar la idea principal y completar un paso práctico.', 'Los participantes compararán opciones confiables e identificarán una acción.', 'Los participantes practicarán la habilidad con un ejemplo corto.'],
+      learningWhyInput: ['Esto importa porque puede reducir riesgos y mejorar decisiones.', 'Aprender esto puede ampliar opciones educativas, profesionales o financieras.', 'Este tema puede ayudar a comunicarse y resolver problemas mejor.'],
+      learningActionInput: ['Practicar la habilidad una vez esta semana y conversar sobre el resultado.', 'Abrir un recurso oficial y escribir un dato útil.', 'Enseñar la idea principal a otro miembro.', 'Agregar una acción relacionada a una meta.'],
+      learningReflectionInput: ['La idea más útil fue…', 'Algo que nos sorprendió fue…', 'Todavía necesitamos aprender…', 'La próxima acción que probaremos es…'],
+      learningNotesInput: ['Use secciones cortas, ejemplos y tiempo para preguntas.', 'Proporcione un ejemplo visual y permita practicar.', 'Revise palabras desconocidas antes de comenzar.'],
+      learningKeyLearningInput: ['Lo más importante que aprendí fue…', 'Ahora puedo explicar…', 'Un error que evitaré es…'],
+      learningQuestionsInput: ['¿Qué parte debe explicarse otra vez?', '¿Dónde encuentro una fuente oficial?', '¿Cómo se aplica esto a nuestro hogar?'],
+      learningPersonalActionInput: ['Practicaré esta habilidad antes de la próxima revisión.', 'Abriré el recurso oficial y completaré el primer paso.', 'Pediré ayuda con la parte que no comprendo.'],
+      opportunitySearchKeywordInput: ['ciberseguridad', 'salud', 'aprendizaje de construcción', 'capacitación de pequeños negocios', 'beca universitaria'],
+      opportunitySearchLocationInput: ['Las Vegas, Nevada', 'Nevada', 'Remoto', 'Solo código postal'],
+      opportunityTitleInput: ['Programa de capacitación para comparar', 'Oportunidad de beca', 'Opción de aprendizaje registrado', 'Recurso comunitario de empleo'],
+      opportunityProviderInput: ['Agencia oficial del gobierno', 'Universidad o proveedor de capacitación', 'Organización comunitaria sin fines de lucro', 'Empleador o patrocinador'],
+      opportunityLocationInput: ['Área de Las Vegas', 'Nevada', 'Remoto o en línea', 'La ubicación debe confirmarse'],
+      opportunityBenefitsInput: ['Puede proporcionar capacitación, preparación profesional y una credencial.', 'Puede proporcionar ayuda financiera o reducir el costo educativo.', 'Puede proporcionar experiencia pagada, mentoría y oportunidades de avance.', 'Puede conectar al hogar con apoyo y referencias locales.'],
+      opportunityEligibilityInput: ['La elegibilidad debe confirmarse en la página oficial actual.', 'Pueden aplicar requisitos generales de edad, educación, ubicación o ingresos.', 'El proveedor puede requerir solicitud, entrevista, orientación o documentos.'],
+      opportunityCostInput: ['El costo no ha sido confirmado.', 'El programa parece gratuito, pero deben confirmarse cuotas y materiales.', 'La oportunidad puede proporcionar pago, ayuda o estipendio; confirme los montos actuales.'],
+      opportunityNextActionInput: ['Abrir la página oficial y confirmar fecha y elegibilidad.', 'Comparar esta oportunidad con dos alternativas.', 'Anotar los documentos requeridos, pero guardarlos fuera de FamilyPD.', 'Contactar al proveedor usando información del sitio oficial.'],
+      opportunityNotesInput: ['Quedan preguntas sobre horario, costo y proceso.', 'La oportunidad parece prometedora, pero necesita verificación actual.', 'Conversar sobre transporte, tiempo y apoyo antes de solicitar.'],
+      systemTitleInput: ['Revisión semanal del calendario', 'Acuerdo de comunicación respetuosa', 'Rutina de seguridad en línea', 'Rotación de responsabilidades'],
+      systemPurposeInput: ['Este sistema importa porque reducirá confusión y aclarará responsabilidades.', 'Este acuerdo ayudará a saber qué esperar y cómo pedir apoyo.', 'Esta lista puede reducir pasos olvidados y facilitar la enseñanza.'],
+      systemStatementInput: ['Usaremos este proceso con constancia, comunicaremos cambios y revisaremos si funciona.', 'Seguiremos los pasos acordados sin insultos, vergüenza ni culpa innecesaria.', 'Usaremos etiquetas generales y mantendremos información sensible fuera de FamilyPD.'],
+      systemNotesInput: ['Enseñe el proceso un paso a la vez y permita practicar.', 'Revise después de un mes y ajuste pasos poco claros.', 'Use una lista visual o recordatorio cuando ayude.']
+    }
+  };
+
+  const PANEL_FALLBACK_EXAMPLES = {
+    en: {
+      identityPanel: [
+        'We will communicate respectfully and support one another.',
+        'We will review this agreement and change it when the household learns something new.'
+      ],
+      goalsPanel: [
+        'Complete one small step before the next check-in.',
+        'Review progress, identify one barrier, and choose the next action.'
+      ],
+      meetingsPanel: [
+        'What is working well?',
+        'What needs attention or support?',
+        'What is one decision or next action we can complete?'
+      ],
+      learningPanel: [
+        'Watch or read one short resource, discuss the main idea, and practice one step.',
+        'Use an official source, explain the idea in your own words, and choose one action.'
+      ],
+      opportunitiesPanel: [
+        'Confirm the current requirements on the official provider page.',
+        'Compare at least two options before deciding.',
+        'Choose one realistic next action and a date to review progress.'
+      ],
+      systemsPanel: [
+        'Explain the process, practice the steps, and review what needs improvement.',
+        'Assign a general role and choose when the system will be reviewed.'
+      ]
+    },
+    es: {
+      identityPanel: ['Nos comunicaremos con respeto y nos apoyaremos.', 'Revisaremos este acuerdo y lo cambiaremos cuando aprendamos algo nuevo.'],
+      goalsPanel: ['Completar un paso pequeño antes de la próxima revisión.', 'Revisar progreso, identificar una barrera y elegir la próxima acción.'],
+      meetingsPanel: ['¿Qué está funcionando bien?', '¿Qué necesita atención o apoyo?', '¿Qué decisión o acción podemos completar?'],
+      learningPanel: ['Ver o leer un recurso corto, conversar sobre la idea y practicar un paso.', 'Usar una fuente oficial, explicar la idea y elegir una acción.'],
+      opportunitiesPanel: ['Confirmar requisitos actuales en la página oficial.', 'Comparar al menos dos opciones antes de decidir.', 'Elegir una próxima acción y una fecha de revisión.'],
+      systemsPanel: ['Explicar el proceso, practicar los pasos y revisar qué debe mejorar.', 'Asignar un rol general y elegir cuándo revisar el sistema.']
+    }
+  };
+
+  const FIELD_SUPPORT_CONTEXT = {
+    en: {
+      identityExamplePillarSelect: 'A FamilyPD pillar is an area of household growth. Health includes physical, emotional, mental, and spiritual wellbeing; Relationships includes communication and trust; Education includes knowledge and skills; Finances includes money habits and stability; Goals includes priorities and progress.',
+      identityExampleTypeSelect: 'Choose whether you need a mission, vision, or value example. A vision describes the future you are building. A mission describes what the household practices. Values describe how members agree to behave.',
+      builderFeelingSelect: 'Choose the feeling members should usually experience at home. This does not mean every day will feel perfect. It describes the environment the household will work to create.',
+      builderTreatmentSelect: 'Choose the behavior that should guide how members speak, listen, make decisions, and repair conflict.',
+      builderFocusSelect: 'Choose the area that most needs attention now. Health and wellness can include sleep, food, movement, emotional wellbeing, stress, preventive care, and asking for appropriate help.',
+      builderFutureSelect: 'Choose a word that describes the kind of household you are trying to become over time.',
+      builderPracticeSelect: 'Choose one repeated action the household can actually practice. FamilyPD uses it to create editable mission wording.',
+      profileRoleSelect: 'Choose a general participation label. This describes how you usually contribute; it does not change Google permissions or give access to another person’s account.',
+      profileAgeSelect: 'Choose a broad life-stage group only. FamilyPD does not need an exact age or birth date.',
+      profileLearningSelect: 'Choose the format that usually makes new information easiest to understand. Example: Hands-on activity means learning by practicing or demonstrating a task.',
+      profileRhythmSelect: 'Choose how often a reminder or progress conversation is usually helpful. This is a preference, not an automatic requirement.',
+      profileSharingSelect: 'Choose how FamilyPD should approach sharing your work. Household sharing should still show a preview and require an intentional action.',
+      roleTemplateSelect: 'A role identifies who coordinates a responsibility area. Choose the closest role; review the description and edit the suggested responsibilities before saving.',
+      roleAssignedLabelSelect: 'Choose a privacy-safe label for the person who will coordinate the role. Example: Teen Member A or Adult Member B. A legal name is not required.',
+      goalScopeSelect: 'Household goals are shared priorities managed by the Household Lead. Personal goals remain private in the current member’s workspace.',
+      goalPillarSelect: 'Choose the FamilyPD area most connected to the goal. This helps organize goals; a goal may still affect more than one pillar.',
+      goalTimeframeSelect: 'Choose a realistic planning window. The timeframe helps FamilyPD suggest useful steps and review dates.',
+      goalMeasureSelect: 'Choose how progress will be noticed. A measure can be a count, routine, date, completed task, skill demonstration, or general progress rating.',
+      quickMeetingTemplateSelect: 'Choose the purpose of the meeting. FamilyPD will suggest a title, length, facilitator type, and topics that can all be edited.',
+      meetingTypeSelect: 'Choose the meeting’s main purpose. This helps organize suggested topics and the final meeting document.',
+      meetingStatusSelect: 'Draft means the meeting is still being planned. Scheduled means a date is set. Completed means decisions and notes have been recorded.',
+      learningScopeSelect: 'A household learning plan is shared. A personal learning plan stays in the current member’s workspace.',
+      learningPillarSelect: 'Choose the household-growth area most connected to this learning activity.',
+      learningTopicSelect: 'Choose a guided topic to receive an editable title, objective, discussion prompts, practice ideas, and action suggestions.',
+      learningFormatSelect: 'Choose how the learning will happen, such as reading, video, discussion, demonstration, or hands-on practice.',
+      opportunitySearchCategorySelect: 'Category means the kind of opportunity you are looking for. Jobs are current paid openings. Training and credentials are courses, certifications, or licenses. Career exploration helps you learn what work involves before choosing a program or job.',
+      opportunityCategorySelect: 'Category organizes the saved opportunity by its main purpose. Choose the closest match; the opportunity can support more than one area.',
+      opportunitySearchAudienceSelect: 'Choose the general life stage or situation of the person exploring. This helps FamilyPD suggest a better official starting point without asking for an exact age.',
+      opportunityAudienceSelect: 'Choose who the opportunity generally fits. Confirm the provider’s actual eligibility rules before applying.',
+      opportunityScopeSelect: 'Household means the opportunity can be shared through Family Sharing. Personal means only this workspace keeps the plan.',
+      opportunityStatusSelect: 'Status shows where the opportunity is in the process: saved, researching, preparing, applied, accepted, not selected, closed, or archived.',
+      opportunityPrioritySelect: 'Priority helps decide what needs attention first. High priority should be used when the opportunity is important and has a near deadline or immediate next action.',
+      opportunityLinkInput: 'This checker reviews whether the address is a complete public HTTPS link and may test whether the page responds. It does not verify nonprofit status, reputation, factual accuracy, malware safety, eligibility, or whether the opportunity is still open.',
+      opportunityUrlInput: 'Paste the exact public page for the opportunity—not a private account, search-results page, sign-in page, or document containing personal information. FamilyPD checks the secure HTTPS format and may test the page response.',
+      quickArticleUrlInput: 'Paste the exact public HTTPS article selected for the meeting. The checker can review the link format and response, but it does not prove that the article is accurate.',
+      meetingArticleUrlInput: 'Paste the exact public HTTPS article or resource page. Use the article itself rather than a private account or general search page.',
+      systemPillarSelect: 'Choose the FamilyPD area the policy, routine, checklist, or safety plan supports most directly.',
+      systemTemplateSelect: 'A template provides editable purpose, agreement, steps, role, and review suggestions. Keep only what fits the household.',
+      systemTypeSelect: 'Policy describes an agreed expectation. System describes a repeatable process. Checklist lists steps to confirm. Safety Plan gives general preparation and response reminders.',
+      systemStatusSelect: 'Draft is still being developed. Active is currently used. Review needed means it should be discussed or updated. Archived keeps the record without using it as a current system.',
+      systemOwnerSelect: 'Choose the general role that coordinates the system. Other members may still participate or help.',
+      systemFrequencySelect: 'Choose how often the household should check whether the system is still useful, clear, and fair.'
+    },
+    es: {
+      identityExamplePillarSelect: 'Un pilar de FamilyPD es un área de crecimiento. Salud incluye bienestar físico, emocional, mental y espiritual; Relaciones incluye comunicación y confianza; Educación incluye conocimientos y habilidades; Finanzas incluye hábitos y estabilidad; Metas incluye prioridades y progreso.',
+      identityExampleTypeSelect: 'Elija si necesita un ejemplo de misión, visión o valor. La visión describe el futuro. La misión describe lo que practica el hogar. Los valores describen cómo acuerdan comportarse.',
+      builderFeelingSelect: 'Elija cómo deben sentirse normalmente los miembros en el hogar. No significa que cada día será perfecto; describe el ambiente que desean crear.',
+      builderTreatmentSelect: 'Elija la conducta que debe guiar cómo hablan, escuchan, deciden y reparan conflictos.',
+      builderFocusSelect: 'Elija el área que necesita más atención ahora. Salud y bienestar puede incluir sueño, alimentación, movimiento, emociones, estrés, prevención y pedir ayuda apropiada.',
+      builderFutureSelect: 'Elija una palabra que describa el tipo de hogar que desean construir con el tiempo.',
+      builderPracticeSelect: 'Elija una acción repetida que el hogar realmente pueda practicar. FamilyPD la usa para crear palabras editables para la misión.',
+      profileRoleSelect: 'Elija una etiqueta general de participación. Describe cómo contribuye; no cambia permisos de Google ni da acceso a la cuenta de otra persona.',
+      profileAgeSelect: 'Elija solamente una etapa general. FamilyPD no necesita edad exacta ni fecha de nacimiento.',
+      profileLearningSelect: 'Elija el formato que facilita comprender información nueva. Ejemplo: Actividad práctica significa aprender practicando o demostrando una tarea.',
+      profileRhythmSelect: 'Elija con qué frecuencia suele ayudar un recordatorio o conversación de progreso. Es una preferencia, no un requisito automático.',
+      profileSharingSelect: 'Elija cómo FamilyPD debe acercarse a compartir su trabajo. Compartir debe mostrar una vista previa y requerir una acción intencional.',
+      roleTemplateSelect: 'Un rol identifica quién coordina un área. Elija el rol más cercano, lea la explicación y edite las responsabilidades antes de guardar.',
+      roleAssignedLabelSelect: 'Elija una etiqueta que proteja la privacidad, como Miembro adolescente A o Miembro adulto B. No se requiere nombre legal.',
+      goalScopeSelect: 'Las metas del hogar son prioridades compartidas. Las metas personales permanecen privadas en el espacio del miembro.',
+      goalPillarSelect: 'Elija el área de FamilyPD más relacionada con la meta. La meta todavía puede afectar varios pilares.',
+      goalTimeframeSelect: 'Elija un periodo realista. Ayuda a FamilyPD a sugerir pasos y fechas de revisión.',
+      goalMeasureSelect: 'Elija cómo se notará el progreso: cantidad, rutina, fecha, tarea completada, demostración de habilidad o valoración general.',
+      quickMeetingTemplateSelect: 'Elija el propósito. FamilyPD sugerirá título, duración, tipo de facilitador y temas editables.',
+      meetingTypeSelect: 'Elija el propósito principal. Esto organiza los temas sugeridos y el documento final.',
+      meetingStatusSelect: 'Borrador significa que todavía se planifica. Programada tiene fecha. Completada tiene decisiones y notas.',
+      learningScopeSelect: 'Un plan de aprendizaje del hogar es compartido. Un plan personal permanece en el espacio del miembro.',
+      learningPillarSelect: 'Elija el área de crecimiento más relacionada con la actividad.',
+      learningTopicSelect: 'Elija un tema guiado para recibir título, objetivo, preguntas, práctica y acciones editables.',
+      learningFormatSelect: 'Elija cómo ocurrirá el aprendizaje: lectura, video, conversación, demostración o práctica.',
+      opportunitySearchCategorySelect: 'Categoría significa el tipo de oportunidad. Empleos son puestos pagados actuales. Capacitación y credenciales incluye cursos, certificaciones o licencias. Exploración profesional ayuda a conocer el trabajo antes de elegir.',
+      opportunityCategorySelect: 'La categoría organiza la oportunidad por su propósito principal. Elija la opción más cercana.',
+      opportunitySearchAudienceSelect: 'Elija la etapa o situación general de quien explora. Ayuda a sugerir un punto oficial sin pedir edad exacta.',
+      opportunityAudienceSelect: 'Elija para quién parece adecuada. Confirme las reglas reales de elegibilidad con el proveedor.',
+      opportunityScopeSelect: 'Hogar significa que se puede compartir mediante Compartir con la familia. Personal significa que solamente este espacio conserva el plan.',
+      opportunityStatusSelect: 'El estado muestra la etapa: guardada, investigando, preparando, solicitada, aceptada, no seleccionada, cerrada o archivada.',
+      opportunityPrioritySelect: 'La prioridad ayuda a decidir qué atender primero. Use Prioridad alta cuando sea importante y tenga una fecha cercana o acción inmediata.',
+      opportunityLinkInput: 'El revisor confirma que sea un enlace público HTTPS completo y puede probar si responde. No verifica reputación, estado sin fines de lucro, exactitud, seguridad, elegibilidad ni disponibilidad.',
+      opportunityUrlInput: 'Pegue la página pública exacta de la oportunidad, no una cuenta privada, resultados de búsqueda, acceso ni documento con datos personales.',
+      quickArticleUrlInput: 'Pegue el artículo público HTTPS exacto. La revisión del enlace no demuestra que el artículo sea correcto.',
+      meetingArticleUrlInput: 'Pegue el artículo o recurso público HTTPS exacto, no una cuenta privada ni página general de búsqueda.',
+      systemPillarSelect: 'Elija el área de FamilyPD que más apoya la política, rutina, lista o plan.',
+      systemTemplateSelect: 'La plantilla proporciona propósito, acuerdo, pasos, rol y revisión editables. Conserve solamente lo útil.',
+      systemTypeSelect: 'Política describe una expectativa. Sistema describe un proceso repetible. Lista confirma pasos. Plan de seguridad ofrece recordatorios generales.',
+      systemStatusSelect: 'Borrador todavía se desarrolla. Activo se usa ahora. Necesita revisión debe actualizarse. Archivado conserva el registro.',
+      systemOwnerSelect: 'Elija el rol general que coordina el sistema. Otros miembros todavía pueden participar.',
+      systemFrequencySelect: 'Elija con qué frecuencia revisar si el sistema sigue siendo útil, claro y justo.'
+    }
+  };
+
+
+  const SELECT_OPTION_HELP = {
+    en: {
+      builderFeelingSelect: {
+        peaceful: 'A home where conflict is handled calmly and people have space to settle down.',
+        safe: 'A home where members can speak up, ask for help, and expect reasonable physical and emotional protection.',
+        supportive: 'A home where members encourage progress and offer practical help.',
+        respectful: 'A home where people listen, avoid humiliation, and treat boundaries seriously.',
+        organized: 'A home with clear routines, shared information, and fewer last-minute surprises.',
+        hopeful: 'A home that notices possibilities and keeps trying after setbacks.',
+        connected: 'A home where members make time to communicate and participate.'
+      },
+      builderFocusSelect: {
+        health: 'Choose this for sleep, food, movement, emotional wellbeing, stress, preventive care, or healthy routines.',
+        relationships: 'Choose this for trust, communication, boundaries, connection, or conflict repair.',
+        education: 'Choose this for school, reading, technology, credentials, career skills, or lifelong learning.',
+        finances: 'Choose this for budgeting, saving, credit, income, consumer decisions, or financial preparation.',
+        goals: 'Choose this for priorities, routines, deadlines, progress reviews, or completing important steps.',
+        safety: 'Choose this for preparedness, online safety, scams, household procedures, or help-seeking.',
+        growth: 'Choose this when several FamilyPD pillars need balanced attention.'
+      },
+      opportunityCategorySelect: {
+        'Career exploration': 'Learn what occupations involve, which skills they use, and what education or credentials may be needed.',
+        Jobs: 'Search for current paid work and prepare for applications or interviews.',
+        'Training & credentials': 'Courses, certificates, licenses, short-term training, or skill programs.',
+        Apprenticeships: 'Paid work-based learning that combines employment with structured training.',
+        'Scholarships & financial aid': 'Funding that may reduce education or training costs; eligibility and deadlines must be confirmed.',
+        'College & career school': 'Compare colleges, technical schools, programs, costs, outcomes, and requirements.',
+        'Workforce help': 'Job-search, résumé, training, career-coaching, or employment-support services.',
+        'Benefits & community support': 'Programs that may support food, housing, health, transportation, child care, or other stability needs.',
+        'Small business & entrepreneurship': 'Planning, mentoring, financing education, and official support for starting or growing a business.',
+        'Service & experience': 'Volunteer or service opportunities that build skills, networks, experience, or education benefits.'
+      },
+      opportunityScopeSelect: {
+        HOUSEHOLD: 'The Household Lead may include this approved opportunity in a Family Sharing File.',
+        PERSONAL: 'This opportunity remains private in the current workspace.'
+      },
+      systemTypeSelect: {
+        Policy: 'A clear household expectation or agreement. Example: Respectful Communication Policy.',
+        System: 'A repeatable process. Example: Weekly Calendar Review System.',
+        Checklist: 'A list used to confirm important steps were completed.',
+        'Safety Plan': 'General preparation and response steps; private emergency details stay elsewhere.'
+      }
+    },
+    es: {
+      builderFeelingSelect: {
+        peaceful: 'Un hogar donde los conflictos se manejan con calma y hay espacio para tranquilizarse.',
+        safe: 'Un hogar donde se puede hablar, pedir ayuda y esperar protección razonable.',
+        supportive: 'Un hogar donde se anima el progreso y se ofrece ayuda práctica.',
+        respectful: 'Un hogar donde se escucha, se evita humillar y se respetan límites.',
+        organized: 'Un hogar con rutinas claras, información compartida y menos sorpresas.',
+        hopeful: 'Un hogar que nota posibilidades y continúa después de dificultades.',
+        connected: 'Un hogar donde los miembros hacen tiempo para comunicarse y participar.'
+      },
+      builderFocusSelect: {
+        health: 'Elija para sueño, alimentación, movimiento, bienestar emocional, estrés, prevención o rutinas saludables.',
+        relationships: 'Elija para confianza, comunicación, límites, conexión o reparación de conflictos.',
+        education: 'Elija para escuela, lectura, tecnología, credenciales, habilidades profesionales o aprendizaje continuo.',
+        finances: 'Elija para presupuesto, ahorro, crédito, ingresos, decisiones de consumo o preparación financiera.',
+        goals: 'Elija para prioridades, rutinas, fechas, revisión de progreso o pasos importantes.',
+        safety: 'Elija para preparación, seguridad en línea, estafas, procedimientos o pedir ayuda.',
+        growth: 'Elija cuando varios pilares necesitan atención equilibrada.'
+      },
+      opportunityCategorySelect: {
+        'Career exploration': 'Conozca ocupaciones, habilidades y educación o credenciales posibles.',
+        Jobs: 'Busque trabajo pagado actual y prepárese para solicitar o entrevistar.',
+        'Training & credentials': 'Cursos, certificados, licencias, capacitación corta o programas de habilidades.',
+        Apprenticeships: 'Aprendizaje pagado que combina empleo y capacitación estructurada.',
+        'Scholarships & financial aid': 'Fondos que pueden reducir costos; confirme elegibilidad y fechas.',
+        'College & career school': 'Compare instituciones, programas, costos, resultados y requisitos.',
+        'Workforce help': 'Apoyo para empleo, currículum, capacitación, orientación o búsqueda.',
+        'Benefits & community support': 'Programas para alimentación, vivienda, salud, transporte, cuidado infantil u otras necesidades.',
+        'Small business & entrepreneurship': 'Planificación, mentoría y apoyo oficial para iniciar o mejorar un negocio.',
+        'Service & experience': 'Servicio o voluntariado para desarrollar habilidades, redes, experiencia o beneficios educativos.'
+      },
+      opportunityScopeSelect: {
+        HOUSEHOLD: 'El Líder puede incluir esta oportunidad aprobada en un Archivo para compartir.',
+        PERSONAL: 'La oportunidad permanece privada en el espacio actual.'
+      },
+      systemTypeSelect: {
+        Policy: 'Una expectativa o acuerdo claro. Ejemplo: Política de comunicación respetuosa.',
+        System: 'Un proceso repetible. Ejemplo: Sistema semanal de calendario.',
+        Checklist: 'Una lista para confirmar que se completaron pasos importantes.',
+        'Safety Plan': 'Pasos generales de preparación; los detalles privados permanecen fuera.'
+      }
+    }
+  };
+
+
+  let currentSupportField = null;
+  let supportObserver = null;
+  let speechQueue = [];
+  let speechQueueIndex = 0;
+
+
+  function supportUi_() {
+    return ACCESS_SUPPORT_UI[state.language] || ACCESS_SUPPORT_UI.en;
+  }
+
+
+  function bindAccessibilitySupport() {
+    document.getElementById('quickSupportButton').addEventListener(
+      'click',
+      function() {
+        if (currentSupportField && document.body.contains(currentSupportField)) {
+          openFieldSupport(currentSupportField);
+        } else {
+          openGeneralSupport();
+        }
+      }
+    );
+    document.getElementById('closeFieldSupportButton').addEventListener(
+      'click',
+      closeFieldSupport
+    );
+    document.getElementById('supportReadQuestionButton').addEventListener(
+      'click',
+      readCurrentSupportQuestion
+    );
+    document.getElementById('supportReadAnswerButton').addEventListener(
+      'click',
+      readCurrentSupportAnswer
+    );
+    document.getElementById('supportReadSectionButton').addEventListener(
+      'click',
+      function() {
+        const panel = document.querySelector('.workspace-panel.active') ||
+          document.querySelector('main');
+        readElementAloud(panel);
+      }
+    );
+    document.getElementById('supportStopReadingButton').addEventListener(
+      'click',
+      stopReadAloud
+    );
+    document.getElementById('supportClearAnswerButton').addEventListener(
+      'click',
+      clearCurrentSupportAnswer
+    );
+    document.getElementById('fieldSupportExamples').addEventListener(
+      'click',
+      handleSupportExampleClick
+    );
+
+    document.addEventListener('focusin', function(event) {
+      const field = supportableField_(event.target);
+      if (!field) return;
+      currentSupportField = field;
+      updateSupportTriggerState_();
+    });
+
+    attachSupportToFields_();
+    supportObserver = new MutationObserver(function() {
+      attachSupportToFields_();
+    });
+    supportObserver.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+    applyAccessibilitySupportLanguage();
+    updateSpeechControls_();
+  }
+
+
+  function applyAccessibilitySupportLanguage() {
+    const text = supportUi_();
+    setText('quickSupportButtonText', text.topButton);
+    setText('fieldSupportEyebrow', text.drawerEyebrow);
+    setText('fieldSupportTitle', text.drawerTitle);
+    setText('fieldSupportQuestionHeading', text.question);
+    setText('fieldSupportExplanationHeading', text.explanation);
+    setText('fieldSupportExamplesHeading', text.examples);
+    setText('supportReadQuestionButton', text.readQuestion);
+    setText('supportReadAnswerButton', text.readAnswer);
+    setText('supportReadSectionButton', text.readSection);
+    setText('supportStopReadingButton', text.stop);
+    setText('supportClearAnswerButton', text.clear);
+    document.getElementById('closeFieldSupportButton').setAttribute(
+      'aria-label',
+      text.close
+    );
+
+    document.querySelectorAll('.field-help-trigger').forEach(function(button) {
+      button.textContent = '💡 ' + text.choicesButton;
+      button.setAttribute('aria-label', text.choicesButton);
+    });
+
+    if (currentSupportField && !document.getElementById('fieldSupportDrawer')
+      .classList.contains('hidden')) {
+      renderFieldSupport_(currentSupportField);
+    }
+    updateSpeechControls_();
+  }
+
+
+  function attachSupportToFields_() {
+    const selector = [
+      '.workspace-panel input:not([type="hidden"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"])',
+      '.workspace-panel textarea:not([readonly])',
+      '.workspace-panel select'
+    ].join(',');
+
+    document.querySelectorAll(selector).forEach(function(field) {
+      if (!supportableField_(field) || field.dataset.fpdSupportBound === 'yes') {
+        return;
+      }
+      field.dataset.fpdSupportBound = 'yes';
+
+      const wrapper = field.closest('.field') || field.closest('label') ||
+        field.parentElement;
+      if (!wrapper || wrapper.querySelector(':scope > .field-help-trigger')) {
+        return;
+      }
+
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'field-help-trigger';
+      button.textContent = '💡 ' + supportUi_().choicesButton;
+      button.setAttribute('aria-label', supportUi_().choicesButton);
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+        currentSupportField = field;
+        openFieldSupport(field);
+      });
+      wrapper.appendChild(button);
+    });
+  }
+
+
+  function supportableField_(field) {
+    if (!field || !field.matches) return null;
+    if (!field.matches('input,textarea,select')) return null;
+    if (field.disabled || field.readOnly) return null;
+    if (field.closest('#fieldSupportDrawer')) return null;
+    if (['hidden', 'file', 'checkbox', 'radio', 'button', 'submit']
+      .indexOf(String(field.type || '').toLowerCase()) >= 0) return null;
+    return field;
+  }
+
+
+  function openGeneralSupport() {
+    currentSupportField = null;
+    const text = supportUi_();
+    show('fieldSupportDrawer');
+    document.getElementById('fieldSupportDrawer').classList.add('open');
+    setText('fieldSupportQuestionText', text.noFieldTitle);
+    setText('fieldSupportExplanationText', text.noFieldText);
+    setText('fieldSupportExamplesHeading', text.examples);
+    document.getElementById('fieldSupportExamples').innerHTML =
+      '<div class="support-empty">' + escapeHtml(text.editableNote) + '</div>';
+    document.getElementById('supportReadQuestionButton').disabled = false;
+    document.getElementById('supportReadAnswerButton').disabled = true;
+    document.getElementById('supportClearAnswerButton').disabled = true;
+    document.getElementById('closeFieldSupportButton').focus();
+  }
+
+
+  function openFieldSupport(field) {
+    currentSupportField = field;
+    show('fieldSupportDrawer');
+    document.getElementById('fieldSupportDrawer').classList.add('open');
+    renderFieldSupport_(field);
+  }
+
+
+  function closeFieldSupport() {
+    const drawer = document.getElementById('fieldSupportDrawer');
+    drawer.classList.remove('open');
+    hide('fieldSupportDrawer');
+    if (currentSupportField && document.body.contains(currentSupportField)) {
+      currentSupportField.focus();
+    }
+  }
+
+
+  function renderFieldSupport_(field) {
+    const context = fieldContext_(field);
+    const text = supportUi_();
+    setText('fieldSupportQuestionText', context.label);
+    setText('fieldSupportExplanationText', context.help);
+    setText(
+      'fieldSupportExamplesHeading',
+      field.tagName === 'SELECT' ? text.choices : text.examples
+    );
+
+    const container = document.getElementById('fieldSupportExamples');
+    if (field.tagName === 'SELECT') {
+      const options = Array.from(field.options)
+        .filter(function(option) { return Boolean(option.value); })
+        .slice(0, 20);
+      container.innerHTML = options.length
+        ? options.map(function(option, index) {
+            const description = optionDescription_(field, option);
+            return '<button type="button" class="support-example-button support-choice-card" ' +
+              'data-support-choice-index="' + index + '"><span>' +
+              escapeHtml(option.textContent.trim()) + '</span>' +
+              (description ? '<p>' + escapeHtml(description) + '</p>' : '') +
+              '<small>' +
+              escapeHtml(option.selected ? text.selected : text.choose) +
+              '</small></button>';
+          }).join('')
+        : '<div class="support-empty">' + escapeHtml(text.noExamples) + '</div>';
+      container.dataset.supportMode = 'select';
+    } else {
+      const examples = context.examples || [];
+      container.innerHTML = examples.length
+        ? '<p class="support-editable-note">' +
+          escapeHtml(text.editableNote) + '</p>' +
+          examples.map(function(example, index) {
+            return '<button type="button" class="support-example-button" ' +
+              'data-support-example-index="' + index + '"><span>' +
+              escapeHtml(example) + '</span><small>' +
+              escapeHtml(field.value.trim() ? text.add : text.use) +
+              '</small></button>';
+          }).join('')
+        : '<div class="support-empty">' + escapeHtml(text.noExamples) + '</div>';
+      container.dataset.supportMode = 'text';
+      container.dataset.supportExamples = JSON.stringify(examples);
+    }
+
+    document.getElementById('supportReadQuestionButton').disabled = false;
+    document.getElementById('supportReadAnswerButton').disabled = false;
+    document.getElementById('supportClearAnswerButton').disabled = false;
+    updateSupportTriggerState_();
+  }
+
+
+  function fieldContext_(field) {
+    const label = fieldLabel_(field);
+    const help = fieldHelp_(field);
+    const examples = fieldExamples_(field);
+    return { label: label, help: help, examples: examples };
+  }
+
+
+  function fieldLabel_(field) {
+    const label = field.closest('label');
+    if (label) {
+      const labelSpan = label.querySelector(':scope > span');
+      if (labelSpan && labelSpan.textContent.trim()) {
+        return labelSpan.textContent.trim();
+      }
+    }
+    const aria = field.getAttribute('aria-label');
+    if (aria) return aria;
+    const placeholder = field.getAttribute('placeholder');
+    if (placeholder) return placeholder;
+    return state.language === 'es' ? 'Respuesta' : 'Response';
+  }
+
+
+  function fieldHelp_(field) {
+    const text = supportUi_();
+    const language = state.language === 'es' ? 'es' : 'en';
+    const detailed = FIELD_SUPPORT_CONTEXT[language] &&
+      FIELD_SUPPORT_CONTEXT[language][field.id];
+    if (detailed) return detailed;
+    const label = field.closest('label');
+    if (label) {
+      const small = label.querySelector('small');
+      if (small && small.textContent.trim()) return small.textContent.trim();
+    }
+    if (field.dataset.help) return field.dataset.help;
+    if (field.tagName === 'SELECT') return text.selectHelp;
+    if (field.type === 'date' || field.type === 'time') return text.dateHelp;
+    if (field.type === 'url') return text.urlHelp;
+    if (field.type === 'number' || field.type === 'range') return text.numberHelp;
+    const nearby = field.closest('.planner-step, .edit-card, .form-card');
+    if (nearby) {
+      const intro = nearby.querySelector('.section-heading-row p, .planner-step-content > p');
+      if (intro && intro.textContent.trim()) return intro.textContent.trim();
+    }
+    return text.genericHelp;
+  }
+
+
+  function fieldExamples_(field) {
+    const language = state.language === 'es' ? 'es' : 'en';
+    if (['url', 'date', 'time', 'number', 'range'].indexOf(
+      String(field.type || '').toLowerCase()
+    ) >= 0) return [];
+    const specific = FIELD_SUPPORT_EXAMPLES[language][field.id];
+    if (specific && specific.length) return specific.slice();
+
+    const classes = String(field.className || '').toLowerCase();
+    const id = String(field.id || '').toLowerCase();
+    const combined = id + ' ' + classes + ' ' +
+      String(field.placeholder || '').toLowerCase();
+
+    const patterns = language === 'es' ? {
+      question: ['¿Qué información necesitamos confirmar?', '¿Qué apoyo ayudaría?', '¿Qué acción debemos tomar después?'],
+      action: ['Completar el primer paso.', 'Confirmar la información en una fuente oficial.', 'Programar una revisión y asignar un rol general.'],
+      responsibility: ['Explicar o demostrar los pasos.', 'Recordar la fecha de revisión.', 'Comunicar cambios y pedir apoyo.'],
+      commitment: ['Nos comunicaremos con respeto.', 'Compartiremos responsabilidades de manera justa.', 'Revisaremos el progreso y ajustaremos el plan.'],
+      note: ['No hay notas adicionales todavía.', 'Revisar este elemento en la próxima reunión.', 'Se necesita más información antes de decidir.'],
+      title: ['Revisión familiar', 'Plan de próximos pasos', 'Rutina del hogar'],
+      purpose: ['Esto importa porque reducirá confusión y apoyará el progreso.', 'El propósito es aprender, decidir y elegir una acción realista.']
+    } : {
+      question: ['What information do we need to confirm?', 'What support would help?', 'What action should happen next?'],
+      action: ['Complete the first step.', 'Confirm the information using an official source.', 'Schedule a review and assign a general role.'],
+      responsibility: ['Explain or demonstrate the steps.', 'Provide a reminder before the review date.', 'Communicate changes and ask for support.'],
+      commitment: ['We will communicate respectfully.', 'We will share responsibilities fairly.', 'We will review progress and adjust the plan.'],
+      note: ['No additional notes yet.', 'Review this item at the next meeting.', 'More information is needed before deciding.'],
+      title: ['Household Review', 'Next-Step Plan', 'Household Routine'],
+      purpose: ['This matters because it will reduce confusion and support progress.', 'The purpose is to learn, decide, and choose one realistic action.']
+    };
+
+    if (/question|prompt/.test(combined)) return patterns.question;
+    if (/action|next|step/.test(combined)) return patterns.action;
+    if (/responsib|assigned/.test(combined)) return patterns.responsibility;
+    if (/commitment|agreement|statement/.test(combined)) return patterns.commitment;
+    if (/note|reflection|recap|description/.test(combined)) return patterns.note;
+    if (/title|label/.test(combined)) return patterns.title;
+    if (/purpose|why|matter|objective|outcome/.test(combined)) return patterns.purpose;
+
+    const panel = field.closest('.workspace-panel');
+    const panelExamples = panel &&
+      PANEL_FALLBACK_EXAMPLES[language][panel.id];
+    return panelExamples ? panelExamples.slice() : [];
+  }
+
+
+  function optionDescription_(field, option) {
+    const language = state.language === 'es' ? 'es' : 'en';
+    const fieldMap = SELECT_OPTION_HELP[language] &&
+      SELECT_OPTION_HELP[language][field.id];
+    if (fieldMap && fieldMap[option.value]) return fieldMap[option.value];
+
+    // The source finder and saved-plan category fields share the same values.
+    if ((field.id === 'opportunitySearchCategorySelect' ||
+         field.id === 'opportunityCategoryFilterSelect') &&
+        SELECT_OPTION_HELP[language].opportunityCategorySelect) {
+      const description = SELECT_OPTION_HELP[language]
+        .opportunityCategorySelect[option.value];
+      if (description) return description;
+    }
+
+    const label = option.textContent.trim();
+    if (!label) return '';
+    return language === 'es'
+      ? 'Elija esta opción cuando “' + label + '” sea la descripción más cercana. Puede cambiarla después.'
+      : 'Choose this when “' + label + '” is the closest description. You can change it later.';
+  }
+
+
+  function handleSupportExampleClick(event) {
+    const button = event.target.closest('.support-example-button');
+    if (!button || !currentSupportField) return;
+    const container = document.getElementById('fieldSupportExamples');
+
+    if (container.dataset.supportMode === 'select') {
+      const options = Array.from(currentSupportField.options)
+        .filter(function(option) { return Boolean(option.value); })
+        .slice(0, 20);
+      const option = options[Number(button.dataset.supportChoiceIndex)];
+      if (!option) return;
+      currentSupportField.value = option.value;
+      currentSupportField.dispatchEvent(new Event('change', { bubbles: true }));
+      renderFieldSupport_(currentSupportField);
+      return;
+    }
+
+    let examples = [];
+    try {
+      examples = JSON.parse(container.dataset.supportExamples || '[]');
+    } catch (error) {
+      examples = [];
+    }
+    const example = examples[Number(button.dataset.supportExampleIndex)];
+    if (!example) return;
+
+    const current = String(currentSupportField.value || '').trim();
+    currentSupportField.value = current
+      ? current + (currentSupportField.tagName === 'TEXTAREA' ? '\n' : ' ') + example
+      : example;
+    currentSupportField.dispatchEvent(new Event('input', { bubbles: true }));
+    currentSupportField.dispatchEvent(new Event('change', { bubbles: true }));
+    currentSupportField.focus();
+    renderFieldSupport_(currentSupportField);
+  }
+
+
+  function clearCurrentSupportAnswer() {
+    if (!currentSupportField) return;
+    if (currentSupportField.tagName === 'SELECT') {
+      currentSupportField.selectedIndex = 0;
+      currentSupportField.dispatchEvent(new Event('change', { bubbles: true }));
+    } else {
+      currentSupportField.value = '';
+      currentSupportField.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    renderFieldSupport_(currentSupportField);
+  }
+
+
+  function readCurrentSupportQuestion() {
+    if (!currentSupportField) {
+      readTextAloud(
+        supportUi_().noFieldTitle + '. ' + supportUi_().noFieldText
+      );
+      return;
+    }
+    const context = fieldContext_(currentSupportField);
+    let text = context.label + '. ' + context.help;
+    if (currentSupportField.tagName === 'SELECT') {
+      const choices = Array.from(currentSupportField.options)
+        .filter(function(option) { return Boolean(option.value); })
+        .slice(0, 12)
+        .map(function(option) {
+          const description = optionDescription_(currentSupportField, option);
+          return option.textContent.trim() +
+            (description ? ': ' + description : '');
+        });
+      if (choices.length) {
+        text += '. ' + supportUi_().choices + ': ' + choices.join('. ');
+      }
+    }
+    readTextAloud(text);
+  }
+
+
+  function readCurrentSupportAnswer() {
+    if (!currentSupportField) return;
+    const value = currentSupportField.tagName === 'SELECT'
+      ? currentSupportField.options[currentSupportField.selectedIndex] &&
+        currentSupportField.options[currentSupportField.selectedIndex].textContent
+      : currentSupportField.value;
+    readTextAloud(
+      value && String(value).trim()
+        ? String(value).trim()
+        : supportUi_().answerEmpty
+    );
+  }
+
+
+  function updateSupportTriggerState_() {
+    document.querySelectorAll('.field-help-trigger').forEach(function(button) {
+      const wrapper = button.parentElement;
+      const field = wrapper && wrapper.querySelector('input,textarea,select');
+      button.classList.toggle('current-field', field === currentSupportField);
+    });
+  }
+
+
+  function stopReadAloud() {
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    speechQueue = [];
+    speechQueueIndex = 0;
+    state.speechActive = false;
+    setText('readPageButtonText', ui().readAloud);
+    const stopButton = document.getElementById('supportStopReadingButton');
+    if (stopButton) stopButton.disabled = true;
+  }
+
+
+  function updateSpeechControls_() {
+    const stopButton = document.getElementById('supportStopReadingButton');
+    if (stopButton) stopButton.disabled = !state.speechActive;
+    setText(
+      'readPageButtonText',
+      state.speechActive ? ui().stopReading : ui().readAloud
+    );
+  }
+
+
+  function readElementAloud(elementOrId) {
+    const element = typeof elementOrId === 'string'
+      ? document.getElementById(elementOrId)
+      : elementOrId;
+    if (!element) return;
+
+    const pieces = [];
+    const seen = new Set();
+    element.querySelectorAll(
+      'h1,h2,h3,h4,p,small,summary,label > span,input,textarea,select'
+    ).forEach(function(node) {
+      if (node.offsetParent === null || node.closest('#fieldSupportDrawer')) return;
+      let value = '';
+      if (node.matches('input,textarea')) {
+        if (['hidden', 'checkbox', 'radio', 'file'].indexOf(node.type) >= 0) return;
+        value = String(node.value || '').trim();
+      } else if (node.matches('select')) {
+        const option = node.options[node.selectedIndex];
+        value = option ? option.textContent.trim() : '';
+      } else {
+        value = node.textContent.trim();
+      }
+      value = value.replace(/\s+/g, ' ');
+      if (!value || seen.has(value)) return;
+      seen.add(value);
+      pieces.push(value);
+    });
+
+    readTextAloud(pieces.join('. ').substring(0, 14000));
+  }
+
+
+  function readTextAloud(text) {
+    if (!('speechSynthesis' in window)) {
+      toast(supportUi_().browserNoSpeech, true);
+      return;
+    }
+
+    const clean = String(text || '').replace(/\s+/g, ' ').trim();
+    if (!clean) return;
+
+    window.speechSynthesis.cancel();
+    speechQueue = splitSpeechText_(clean, 1100);
+    speechQueueIndex = 0;
+    state.speechActive = true;
+    updateSpeechControls_();
+    speakNextSupportChunk_();
+  }
+
+
+  function speakNextSupportChunk_() {
+    if (!state.speechActive || speechQueueIndex >= speechQueue.length) {
+      state.speechActive = false;
+      updateSpeechControls_();
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(
+      speechQueue[speechQueueIndex]
+    );
+    utterance.lang = state.language === 'es' ? 'es-US' : 'en-US';
+    utterance.rate = 0.92;
+    utterance.onend = function() {
+      speechQueueIndex += 1;
+      speakNextSupportChunk_();
+    };
+    utterance.onerror = function() {
+      state.speechActive = false;
+      updateSpeechControls_();
+    };
+    window.speechSynthesis.speak(utterance);
+  }
+
+
+  function splitSpeechText_(text, maximum) {
+    const sentences = String(text || '').match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+    const chunks = [];
+    let current = '';
+    sentences.forEach(function(sentence) {
+      const clean = sentence.trim();
+      if (!clean) return;
+      if (current && (current + ' ' + clean).length > maximum) {
+        chunks.push(current);
+        current = clean;
+      } else {
+        current = current ? current + ' ' + clean : clean;
+      }
+    });
+    if (current) chunks.push(current);
+    return chunks;
+  }
+</script>

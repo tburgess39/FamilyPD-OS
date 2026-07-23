@@ -1,0 +1,22 @@
+<script>
+(function(){
+  let hub={resources:[],prompts:{},reviewed:''}, filtered=[];
+  const $=id=>document.getElementById(id);
+  const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function unique(values){return [...new Set(values.filter(Boolean).map(v=>String(v).trim()))].sort((a,b)=>a.localeCompare(b));}
+  function fill(select,values,first){ if(!select)return; const current=select.value; select.innerHTML='<option value="">'+esc(first)+'</option>'+values.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join(''); if(values.includes(current))select.value=current; }
+  function updateTopics(){ const cat=$('resourceHubCategory').value; const rows=hub.resources.filter(r=>!cat||r.category===cat); fill($('resourceHubTopic'),unique(rows.map(r=>r.topic)),'All topics'); updateAudiences(); }
+  function updateAudiences(){ const cat=$('resourceHubCategory').value, topic=$('resourceHubTopic').value; const rows=hub.resources.filter(r=>(!cat||r.category===cat)&&(!topic||r.topic===topic)); fill($('resourceHubAudience'),unique(rows.map(r=>r.audience)),'Everyone'); apply(); }
+  function apply(){
+    const q=($('resourceHubSearch').value||'').trim().toLowerCase(), cat=$('resourceHubCategory').value, topic=$('resourceHubTopic').value, audience=$('resourceHubAudience').value, free=$('resourceHubFree').checked;
+    filtered=hub.resources.filter(r=>(!cat||r.category===cat)&&(!topic||r.topic===topic)&&(!audience||r.audience===audience)&&(!free||String(r.cost).toLowerCase().startsWith('free'))&&(!q||[r.title,r.category,r.topic,r.audience,r.description].join(' ').toLowerCase().includes(q)));
+    $('resourceHubStatus').textContent=filtered.length+' resource'+(filtered.length===1?'':'s')+' ready to review';
+    $('resourceHubGrid').innerHTML=filtered.map(r=>`<article class="resource-hub-card"><div class="resource-hub-card-top"><span class="resource-hub-category">${esc(r.category)}</span><span class="resource-hub-cost">${esc(r.cost)}</span></div><h4>${esc(r.title)}</h4><p>${esc(r.description)}</p><dl><div><dt>Topic</dt><dd>${esc(r.topic)}</dd></div><div><dt>For</dt><dd>${esc(r.audience)}</dd></div></dl><div class="button-row"><a class="primary-button resource-open-link" href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">Open Resource</a><button class="secondary-button resource-copy-link" data-url="${esc(r.url)}" type="button">Copy Link</button></div></article>`).join('')||'<div class="empty-state"><h4>No exact matches</h4><p>Select “Show Everything” or choose a broader topic.</p></div>';
+    document.querySelectorAll('.resource-copy-link').forEach(b=>b.addEventListener('click',()=>copy(b.dataset.url,'Resource link copied.')));
+  }
+  function copy(text,msg){ navigator.clipboard.writeText(text).then(()=>window.toast?toast(msg):null).catch(()=>{}); }
+  function initData(data){ hub=data||hub; fill($('resourceHubCategory'),unique(hub.resources.map(r=>r.category)),'All areas'); $('resourceHubReviewed').textContent='Catalog reviewed '+hub.reviewed+' · '+hub.resources.length+' trusted starting resources'; $('resourcePromptUniversal').value=hub.prompts.universal||''; $('resourcePromptSchool').value=hub.prompts.school||''; $('resourcePromptIep').value=hub.prompts.iep||''; updateTopics(); }
+  function bind(){ if(!$('resourceHubRoot')||$('resourceHubRoot').dataset.bound)return; $('resourceHubRoot').dataset.bound='1'; $('resourceHubCategory').addEventListener('change',updateTopics); $('resourceHubTopic').addEventListener('change',updateAudiences); $('resourceHubAudience').addEventListener('change',apply); $('resourceHubFree').addEventListener('change',apply); $('resourceHubSearch').addEventListener('input',apply); $('resourceHubClear').addEventListener('click',()=>{$('resourceHubCategory').value='';$('resourceHubTopic').value='';$('resourceHubAudience').value='';$('resourceHubSearch').value='';$('resourceHubFree').checked=false;updateTopics();}); document.querySelectorAll('[data-copy-prompt]').forEach(b=>b.addEventListener('click',()=>copy($(b.dataset.copyPrompt).value,'Prompt copied.'))); google.script.run.withSuccessHandler(initData).withFailureHandler(e=>{$('resourceHubStatus').textContent='The resource catalog could not load. '+(e&&e.message?e.message:'');}).fpdGetResourceHubData(); }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
+})();
+</script>

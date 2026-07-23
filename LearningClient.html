@@ -1,0 +1,1093 @@
+<script>
+  const LEARNING_UI = {
+    en: {
+      nav: 'Learning & Discussions',
+      eyebrow: 'LEARN · DISCUSS · PRACTICE · APPLY',
+      title: 'Learning, Research & Discussions',
+      intro: 'Choose a topic, use a guided plan, add trustworthy resources, discuss what matters, and turn the lesson into one realistic action.',
+      newPlan: 'Create a Learning Plan',
+      guidanceTitle: 'Learning belongs in the household too',
+      guidanceText: 'FamilyPD encourages continued learning inside and outside the home. Members can teach, practice, research, ask questions, and reflect together.',
+      privacyTitle: 'Use examples and general descriptions',
+      builderEyebrow: 'GUIDED LEARNING PLAN',
+      builderTitle: 'Create or edit a learning plan',
+      builderIntro: 'Start with a suggested topic or create your own. All suggested wording is editable.',
+      cancel: 'Cancel',
+      basics: 'Choose the learning purpose',
+      scope: 'Who is this plan for?',
+      household: 'The household',
+      personal: 'My private workspace',
+      scopeHelp: 'Household plans enter verified Update Packs. Personal plans remain private.',
+      pillar: 'FamilyPD learning area',
+      pillarHelp: 'Choose the pillar or household-organization area.',
+      topic: 'Suggested topic',
+      topicHelp: 'Select a topic to prepopulate an objective, activity, discussion questions, and action step.',
+      useTopic: 'Use Selected Topic',
+      planTitle: 'Learning-plan title',
+      planTitleHelp: 'Use a short title that is easy to recognize later.',
+      status: 'Status',
+      format: 'Preferred format',
+      formatHelp: 'Choose the format that makes the topic easiest to understand.',
+      difficulty: 'Starting level',
+      difficultyHelp: 'Select a general level. The plan can support mixed abilities.',
+      duration: 'Estimated time',
+      facilitator: 'Facilitator or teacher role',
+      facilitatorHelp: 'Any capable member—including a teen or young adult—may teach or facilitate with support.',
+      audience: 'Participant labels',
+      audienceHelp: 'Select general role labels. Legal names are not required.',
+      objective: 'What should participants understand or be able to do?',
+      why: 'Why does this matter?',
+      sourcesHeading: 'Add and review sources',
+      sourceCheckTitle: 'A checked link is not the same as a fact-checked source',
+      sourceCheckText: 'FamilyPD can confirm that a public HTTPS link responds and identify its domain. You still need to review the author, date, purpose, evidence, and possible bias.',
+      resources: 'Learning resources',
+      resourcesHelp: 'Add articles, videos, books, courses, podcasts, guides, or community resources.',
+      addResource: '+ Add Resource',
+      experience: 'Plan the learning experience',
+      activities: 'Activities or practice',
+      activitiesHelp: 'Add steps that help members do something with the information.',
+      addActivity: '+ Add Activity',
+      prompts: 'Discussion questions',
+      promptsHelp: 'Use open questions that support thinking, not one-word answers.',
+      addQuestion: '+ Add Question',
+      action: 'What should happen after the learning?',
+      actionHelp: 'Choose one realistic action, practice, decision, or follow-up.',
+      reflectionPrompt: 'Reflection prompt',
+      notes: 'General notes',
+      aiHeading: 'Use AI as a tool—not a replacement for thinking',
+      aiIntro: 'FamilyPD can create a safe, copy-ready prompt using the topic and objective. Do not add private information. Review the response and compare important claims with trustworthy sources.',
+      aiPrompt: 'Copy-ready AI prompt',
+      buildPrompt: 'Build Prompt',
+      copyPrompt: 'Copy Prompt',
+      save: 'Save Learning Plan',
+      reflectionEyebrow: 'PRIVATE REFLECTION',
+      reflectionTitle: 'Reflect on the learning',
+      keyLearning: 'What did I learn?',
+      questionsRemain: 'What questions remain?',
+      personalAction: 'What will I do with this information?',
+      completed: 'I completed this learning activity.',
+      saveReflection: 'Save Private Reflection',
+      sharedHeading: 'Household learning plans',
+      sharedHelp: 'Household Lead workspaces can edit these plans. Family Members receive them through verified Update Packs.',
+      personalHeading: 'My personal learning plans',
+      personalHelp: 'These plans and reflections stay private in this workspace.',
+      helpTitle: 'Learning & Research quick guide',
+      helpChooseTitle: 'Choose one useful topic',
+      helpChooseText: 'Start with what the household needs now. You do not need to learn everything at once.',
+      helpSourceTitle: 'Check the source',
+      helpSourceText: 'Look for the author or organization, date, purpose, evidence, and a working link.',
+      helpPracticeTitle: 'Practice and discuss',
+      helpPracticeText: 'Use an activity, demonstration, question, or short discussion so members do more than read.',
+      helpApplyTitle: 'Apply one lesson',
+      helpApplyText: 'End with one realistic action and a reflection on what was learned.',
+      selectTopic: 'Select a suggested topic',
+      selectFacilitator: 'Select a facilitator role',
+      noShared: 'No household learning plans have been added or imported yet.',
+      noPersonal: 'No personal learning plans have been added yet.',
+      resourceTitle: 'Resource title',
+      authorPublisher: 'Author or organization',
+      year: 'Year',
+      resourceUrl: 'Public HTTPS link',
+      resourceNotes: 'Why this resource may be useful',
+      checkLink: 'Check Link',
+      linkNotChecked: 'Not checked',
+      linkChecked: 'Link checked',
+      linkFailed: 'Check failed',
+      remove: 'Remove',
+      activityPlaceholder: 'Learning activity or practice step',
+      promptPlaceholder: 'Open discussion question',
+      edit: 'Edit',
+      reflect: 'Reflect',
+      pdf: 'PDF',
+      archive: 'Archive',
+      privateBadge: 'Private',
+      householdBadge: 'Household',
+      readonlyBadge: 'Read only',
+      resourcesCount: 'resources',
+      activitiesCount: 'activities',
+      saved: 'Learning plan saved.',
+      archived: 'Learning plan archived.',
+      confirmArchive: 'Archive this learning plan? It will remain in workspace history.',
+      reflectionSaved: 'Private reflection saved.',
+      topicAdded: 'The suggested learning plan was added. Edit anything that does not fit.',
+      promptBuilt: 'The AI prompt is ready. Review it before copying.',
+      promptCopied: 'Prompt copied.',
+      sourceCheckDisclaimer: 'Link check only—not a fact-check.',
+      openResource: 'Open resource',
+      checking: 'Checking…',
+      saving: 'Saving…',
+      creating: 'Creating…',
+      titleRequired: 'Enter a short learning-plan title.',
+      topicRequired: 'Select a suggested topic first.'
+    },
+    es: {
+      nav: 'Aprendizaje y conversaciones',
+      eyebrow: 'APRENDER · CONVERSAR · PRACTICAR · APLICAR',
+      title: 'Aprendizaje, investigación y conversaciones',
+      intro: 'Elija un tema, use un plan guiado, agregue recursos confiables, converse y convierta la lección en una acción realista.',
+      newPlan: 'Crear un plan de aprendizaje',
+      guidanceTitle: 'El aprendizaje también pertenece al hogar',
+      guidanceText: 'FamilyPD promueve aprendizaje continuo dentro y fuera del hogar. Los miembros pueden enseñar, practicar, investigar, preguntar y reflexionar juntos.',
+      privacyTitle: 'Use ejemplos y descripciones generales',
+      builderEyebrow: 'PLAN GUIADO DE APRENDIZAJE',
+      builderTitle: 'Crear o editar un plan de aprendizaje',
+      builderIntro: 'Comience con un tema sugerido o cree el suyo. Todas las palabras sugeridas se pueden editar.',
+      cancel: 'Cancelar',
+      basics: 'Elegir el propósito del aprendizaje',
+      scope: '¿Para quién es este plan?',
+      household: 'El hogar',
+      personal: 'Mi espacio privado',
+      scopeHelp: 'Los planes del hogar entran en paquetes verificados. Los planes personales permanecen privados.',
+      pillar: 'Área de aprendizaje de FamilyPD',
+      pillarHelp: 'Elija un pilar o el área de organización del hogar.',
+      topic: 'Tema sugerido',
+      topicHelp: 'Seleccione un tema para completar un objetivo, actividad, preguntas y acción.',
+      useTopic: 'Usar tema seleccionado',
+      planTitle: 'Título del plan',
+      planTitleHelp: 'Use un título corto que sea fácil de reconocer después.',
+      status: 'Estado',
+      format: 'Formato preferido',
+      formatHelp: 'Elija el formato que facilite la comprensión.',
+      difficulty: 'Nivel inicial',
+      difficultyHelp: 'Seleccione un nivel general. El plan puede apoyar habilidades diferentes.',
+      duration: 'Tiempo estimado',
+      facilitator: 'Rol del facilitador o maestro',
+      facilitatorHelp: 'Cualquier miembro capaz, incluso un adolescente o adulto joven, puede enseñar o facilitar con apoyo.',
+      audience: 'Etiquetas de participantes',
+      audienceHelp: 'Seleccione etiquetas generales. No se requieren nombres legales.',
+      objective: '¿Qué deben comprender o poder hacer los participantes?',
+      why: '¿Por qué importa?',
+      sourcesHeading: 'Agregar y revisar fuentes',
+      sourceCheckTitle: 'Un enlace revisado no es lo mismo que una fuente comprobada',
+      sourceCheckText: 'FamilyPD puede confirmar que un enlace HTTPS público responde e identificar el dominio. Todavía debe revisar autor, fecha, propósito, evidencia y posible sesgo.',
+      resources: 'Recursos de aprendizaje',
+      resourcesHelp: 'Agregue artículos, videos, libros, cursos, podcasts, guías o recursos comunitarios.',
+      addResource: '+ Agregar recurso',
+      experience: 'Planificar la experiencia de aprendizaje',
+      activities: 'Actividades o práctica',
+      activitiesHelp: 'Agregue pasos que ayuden a usar la información.',
+      addActivity: '+ Agregar actividad',
+      prompts: 'Preguntas para conversar',
+      promptsHelp: 'Use preguntas abiertas que apoyen el pensamiento.',
+      addQuestion: '+ Agregar pregunta',
+      action: '¿Qué debe ocurrir después del aprendizaje?',
+      actionHelp: 'Elija una acción, práctica, decisión o seguimiento realista.',
+      reflectionPrompt: 'Pregunta de reflexión',
+      notes: 'Notas generales',
+      aiHeading: 'Use la IA como herramienta, no como reemplazo del pensamiento',
+      aiIntro: 'FamilyPD puede crear una sugerencia segura usando el tema y el objetivo. No agregue información privada. Revise la respuesta y compare afirmaciones importantes con fuentes confiables.',
+      aiPrompt: 'Sugerencia lista para copiar',
+      buildPrompt: 'Crear sugerencia',
+      copyPrompt: 'Copiar sugerencia',
+      save: 'Guardar plan',
+      reflectionEyebrow: 'REFLEXIÓN PRIVADA',
+      reflectionTitle: 'Reflexionar sobre el aprendizaje',
+      keyLearning: '¿Qué aprendí?',
+      questionsRemain: '¿Qué preguntas quedan?',
+      personalAction: '¿Qué haré con esta información?',
+      completed: 'Completé esta actividad de aprendizaje.',
+      saveReflection: 'Guardar reflexión privada',
+      sharedHeading: 'Planes de aprendizaje del hogar',
+      sharedHelp: 'El Líder puede editar estos planes. Los miembros los reciben mediante paquetes verificados.',
+      personalHeading: 'Mis planes personales',
+      personalHelp: 'Estos planes y reflexiones permanecen privados.',
+      helpTitle: 'Guía rápida de aprendizaje e investigación',
+      helpChooseTitle: 'Elija un tema útil',
+      helpChooseText: 'Comience con lo que el hogar necesita ahora. No tiene que aprender todo a la vez.',
+      helpSourceTitle: 'Revise la fuente',
+      helpSourceText: 'Busque el autor u organización, fecha, propósito, evidencia y un enlace que funcione.',
+      helpPracticeTitle: 'Practique y converse',
+      helpPracticeText: 'Use una actividad, demostración, pregunta o conversación corta.',
+      helpApplyTitle: 'Aplique una lección',
+      helpApplyText: 'Termine con una acción realista y una reflexión.',
+      selectTopic: 'Seleccione un tema sugerido',
+      selectFacilitator: 'Seleccione un rol facilitador',
+      noShared: 'Todavía no se han agregado o importado planes del hogar.',
+      noPersonal: 'Todavía no se han agregado planes personales.',
+      resourceTitle: 'Título del recurso',
+      authorPublisher: 'Autor u organización',
+      year: 'Año',
+      resourceUrl: 'Enlace HTTPS público',
+      resourceNotes: 'Por qué puede ser útil',
+      checkLink: 'Revisar enlace',
+      linkNotChecked: 'No revisado',
+      linkChecked: 'Enlace revisado',
+      linkFailed: 'No se pudo revisar',
+      remove: 'Quitar',
+      activityPlaceholder: 'Actividad o paso de práctica',
+      promptPlaceholder: 'Pregunta abierta',
+      edit: 'Editar',
+      reflect: 'Reflexionar',
+      pdf: 'PDF',
+      archive: 'Archivar',
+      privateBadge: 'Privado',
+      householdBadge: 'Hogar',
+      readonlyBadge: 'Solo lectura',
+      resourcesCount: 'recursos',
+      activitiesCount: 'actividades',
+      saved: 'Plan de aprendizaje guardado.',
+      archived: 'Plan de aprendizaje archivado.',
+      confirmArchive: '¿Archivar este plan? Permanecerá en el historial.',
+      reflectionSaved: 'Reflexión privada guardada.',
+      topicAdded: 'Se agregó el plan sugerido. Edite lo que no se adapte.',
+      promptBuilt: 'La sugerencia de IA está lista. Revísela antes de copiar.',
+      promptCopied: 'Sugerencia copiada.',
+      sourceCheckDisclaimer: 'Solo revisión del enlace, no comprobación de hechos.',
+      openResource: 'Abrir recurso',
+      checking: 'Revisando…',
+      saving: 'Guardando…',
+      creating: 'Creando…',
+      titleRequired: 'Escriba un título corto para el plan.',
+      topicRequired: 'Primero seleccione un tema sugerido.'
+    }
+  };
+
+
+  function learningUi() {
+    return LEARNING_UI[state.language] || LEARNING_UI.en;
+  }
+
+
+  function bindLearningEvents() {
+    document.getElementById('newLearningPlanButton').addEventListener('click', function() {
+      openLearningBuilder();
+    });
+    document.getElementById('cancelLearningEditButton').addEventListener('click', closeLearningBuilder);
+    document.getElementById('learningPillarSelect').addEventListener('change', populateLearningTopics);
+    document.getElementById('useLearningTopicButton').addEventListener('click', useSelectedLearningTopic);
+    document.getElementById('addLearningResourceButton').addEventListener('click', function() {
+      addLearningResourceRow({});
+    });
+    document.getElementById('addLearningActivityButton').addEventListener('click', function() {
+      addLearningListRow('learningActivitiesEditor', '', 'activity');
+    });
+    document.getElementById('addLearningPromptButton').addEventListener('click', function() {
+      addLearningListRow('learningPromptsEditor', '', 'prompt');
+    });
+    document.getElementById('buildLearningAiPromptButton').addEventListener('click', buildLearningAiPrompt);
+    document.getElementById('copyLearningAiPromptButton').addEventListener('click', copyLearningAiPrompt);
+    document.getElementById('saveLearningPlanButton').addEventListener('click', saveLearningPlan);
+    document.getElementById('sharedLearningList').addEventListener('click', handleLearningListClick);
+    document.getElementById('personalLearningList').addEventListener('click', handleLearningListClick);
+    document.getElementById('cancelLearningReflectionButton').addEventListener('click', closeLearningReflection);
+    document.getElementById('saveLearningReflectionButton').addEventListener('click', saveLearningReflection);
+  }
+
+
+  function applyLearningLanguage() {
+    const text = learningUi();
+    const mapping = {
+      learningEyebrow: text.eyebrow,
+      learningPanelTitle: text.title,
+      learningPanelIntro: text.intro,
+      newLearningPlanButton: text.newPlan,
+      learningGuidanceTitle: text.guidanceTitle,
+      learningGuidanceText: text.guidanceText,
+      learningPrivacyTitle: text.privacyTitle,
+      learningBuilderEyebrow: text.builderEyebrow,
+      learningBuilderTitle: text.builderTitle,
+      learningBuilderIntro: text.builderIntro,
+      cancelLearningEditButton: text.cancel,
+      learningBasicsHeading: text.basics,
+      learningScopeLabel: text.scope,
+      learningScopeHelp: text.scopeHelp,
+      learningPillarLabel: text.pillar,
+      learningPillarHelp: text.pillarHelp,
+      learningTopicLabel: text.topic,
+      learningTopicHelp: text.topicHelp,
+      useLearningTopicButton: text.useTopic,
+      learningTitleLabel: text.planTitle,
+      learningTitleHelp: text.planTitleHelp,
+      learningStatusLabel: text.status,
+      learningFormatLabel: text.format,
+      learningFormatHelp: text.formatHelp,
+      learningDifficultyLabel: text.difficulty,
+      learningDifficultyHelp: text.difficultyHelp,
+      learningDurationLabel: text.duration,
+      learningFacilitatorLabel: text.facilitator,
+      learningFacilitatorHelp: text.facilitatorHelp,
+      learningAudienceLabel: text.audience,
+      learningAudienceHelp: text.audienceHelp,
+      learningObjectiveLabel: text.objective,
+      learningWhyLabel: text.why,
+      learningSourcesHeading: text.sourcesHeading,
+      sourceCheckTitle: text.sourceCheckTitle,
+      sourceCheckText: text.sourceCheckText,
+      learningResourcesLabel: text.resources,
+      learningResourcesHelp: text.resourcesHelp,
+      addLearningResourceButton: text.addResource,
+      learningExperienceHeading: text.experience,
+      learningActivitiesLabel: text.activities,
+      learningActivitiesHelp: text.activitiesHelp,
+      addLearningActivityButton: text.addActivity,
+      learningPromptsLabel: text.prompts,
+      learningPromptsHelp: text.promptsHelp,
+      addLearningPromptButton: text.addQuestion,
+      learningActionLabel: text.action,
+      learningActionHelp: text.actionHelp,
+      learningReflectionLabel: text.reflectionPrompt,
+      learningNotesLabel: text.notes,
+      learningAiHeading: text.aiHeading,
+      learningAiIntro: text.aiIntro,
+      learningAiPromptLabel: text.aiPrompt,
+      buildLearningAiPromptButton: text.buildPrompt,
+      copyLearningAiPromptButton: text.copyPrompt,
+      saveLearningPlanButton: text.save,
+      learningReflectionEyebrow: text.reflectionEyebrow,
+      learningReflectionTitle: text.reflectionTitle,
+      cancelLearningReflectionButton: text.cancel,
+      learningKeyLearningLabel: text.keyLearning,
+      learningQuestionsLabel: text.questionsRemain,
+      learningPersonalActionLabel: text.personalAction,
+      learningCompletedLabel: text.completed,
+      saveLearningReflectionButton: text.saveReflection,
+      sharedLearningHeading: text.sharedHeading,
+      sharedLearningHelp: text.sharedHelp,
+      personalLearningHeading: text.personalHeading,
+      personalLearningHelp: text.personalHelp,
+      learningHelpTitle: text.helpTitle,
+      learningHelpChooseTitle: text.helpChooseTitle,
+      learningHelpChooseText: text.helpChooseText,
+      learningHelpSourceTitle: text.helpSourceTitle,
+      learningHelpSourceText: text.helpSourceText,
+      learningHelpPracticeTitle: text.helpPracticeTitle,
+      learningHelpPracticeText: text.helpPracticeText,
+      learningHelpApplyTitle: text.helpApplyTitle,
+      learningHelpApplyText: text.helpApplyText
+    };
+    Object.keys(mapping).forEach(function(id) {
+      setText(id, mapping[id]);
+    });
+
+    const scope = document.getElementById('learningScopeSelect');
+    if (scope && scope.options.length >= 2) {
+      scope.options[0].textContent = text.household;
+      scope.options[1].textContent = text.personal;
+    }
+
+    if (state.learningData) {
+      populateLearningSelects();
+      renderLearningLists();
+      renderLearningResourceLanguage();
+    }
+  }
+
+
+  async function loadLearningWorkspace() {
+    try {
+      const data = await callServer('getLearningWorkspace', state.language);
+      state.learningData = data;
+      renderLearningWorkspace(data);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    }
+  }
+
+
+  function renderLearningWorkspace(data) {
+    state.learningData = data;
+    const isLead = data.role === 'HOUSEHOLD_LEAD';
+    document.getElementById('learningScopeField').classList.toggle('hidden', !isLead);
+    if (!isLead) document.getElementById('learningScopeSelect').value = 'PERSONAL';
+
+    setText('learningGuidanceCitation',
+      data.citation && data.citation.inTextCitation || '(Hall, 2025, pp. 20–23)');
+    setText('learningPrivacyText',
+      data.guidance && data.guidance.privacyMessage || '');
+
+    applyLearningLanguage();
+    populateLearningSelects();
+    renderLearningLists();
+  }
+
+
+  function populateLearningSelects() {
+    if (!state.learningData) return;
+    const guidance = state.learningData.guidance || {};
+    fillOptionSelect('learningPillarSelect', guidance.groups || []);
+    fillOptionSelect('learningStatusSelect', guidance.statuses || []);
+    fillOptionSelect('learningFormatSelect', guidance.formats || []);
+    fillOptionSelect('learningDifficultySelect', guidance.difficulties || []);
+    fillOptionSelect('learningDurationSelect', guidance.durations || []);
+    populateLearningTopics();
+    populateLearningFacilitator();
+    renderLearningAudience();
+  }
+
+
+  function populateLearningTopics() {
+    const select = document.getElementById('learningTopicSelect');
+    if (!select || !state.learningData) return;
+    const pillar = document.getElementById('learningPillarSelect').value || 'Education';
+    const topics = state.learningData.guidance &&
+      state.learningData.guidance.topics &&
+      state.learningData.guidance.topics[pillar] || [];
+    select.innerHTML = '<option value="">' + escapeHtml(learningUi().selectTopic) +
+      '</option>' + topics.map(function(topic) {
+        return '<option value="' + escapeAttribute(topic.id) + '">' +
+          escapeHtml(topic.title) + '</option>';
+      }).join('');
+  }
+
+
+  function learningRoleLabel(value) {
+    if (state.language !== 'es') return value;
+    return {
+      'Household Lead': 'Líder del hogar',
+      'Co-Lead': 'Colíder',
+      'Family Member': 'Miembro de la familia',
+      'Adult Member': 'Miembro adulto',
+      'Young Adult Member': 'Miembro adulto joven',
+      'Teen Member': 'Miembro adolescente',
+      'Child Member': 'Miembro menor',
+      'Older Adult Member': 'Miembro adulto mayor',
+      'Meeting Facilitator': 'Facilitador de reuniones',
+      'Goal & Progress Coordinator': 'Coordinador de metas y progreso',
+      'Learning Coordinator': 'Coordinador de aprendizaje',
+      'Household Operations Coordinator': 'Coordinador de operaciones del hogar',
+      'Safety Coordinator': 'Coordinador de seguridad'
+    }[value] || value;
+  }
+
+
+  function populateLearningFacilitator() {
+    const select = document.getElementById('learningFacilitatorSelect');
+    if (!select || !state.learningData) return;
+    const current = select.value;
+    const options = state.learningData.roleOptions || [];
+    select.innerHTML = '<option value="">' +
+      escapeHtml(learningUi().selectFacilitator) + '</option>' +
+      options.map(function(value) {
+        return '<option value="' + escapeAttribute(value) + '">' +
+          escapeHtml(learningRoleLabel(value)) + '</option>';
+      }).join('');
+    if (options.indexOf(current) >= 0) select.value = current;
+  }
+
+
+  function renderLearningAudience(selected) {
+    const container = document.getElementById('learningAudienceOptions');
+    if (!container || !state.learningData) return;
+    const selectedValues = Array.isArray(selected)
+      ? selected
+      : Array.from(container.querySelectorAll('input:checked'))
+        .map(function(input) { return input.value; });
+    const options = state.learningData.roleOptions || [];
+    container.innerHTML = options.map(function(value) {
+      return '<label class="choice-chip"><input type="checkbox" value="' +
+        escapeAttribute(value) + '"' +
+        (selectedValues.indexOf(value) >= 0 ? ' checked' : '') +
+        '><span>' + escapeHtml(learningRoleLabel(value)) + '</span></label>';
+    }).join('');
+  }
+
+
+  function openLearningBuilder(plan, scope) {
+    plan = plan || {};
+    const isLead = state.workspace && state.workspace.role === 'HOUSEHOLD_LEAD';
+    state.editingLearningPlanId = plan.id || '';
+
+    document.getElementById('learningPlanIdInput').value = plan.id || '';
+    document.getElementById('learningScopeSelect').value =
+      isLead ? (scope || plan.scope || 'HOUSEHOLD') : 'PERSONAL';
+    document.getElementById('learningPillarSelect').value = plan.pillar || 'Education';
+    populateLearningTopics();
+    document.getElementById('learningTopicSelect').value = '';
+    document.getElementById('learningTitleInput').value = plan.title || '';
+    document.getElementById('learningStatusSelect').value = plan.status || 'Draft';
+    document.getElementById('learningFormatSelect').value = plan.format || 'Mixed format';
+    document.getElementById('learningDifficultySelect').value =
+      plan.difficulty || 'Mixed levels';
+    document.getElementById('learningDurationSelect').value =
+      String(plan.estimatedMinutes || 30);
+    populateLearningFacilitator();
+    document.getElementById('learningFacilitatorSelect').value =
+      plan.facilitatorRole || '';
+    renderLearningAudience(plan.audienceRoles || []);
+    document.getElementById('learningObjectiveInput').value = plan.objective || '';
+    document.getElementById('learningWhyInput').value = plan.why || '';
+    document.getElementById('learningActionInput').value = plan.actionStep || '';
+    document.getElementById('learningReflectionInput').value =
+      plan.reflectionPrompt || '';
+    document.getElementById('learningNotesInput').value = plan.notes || '';
+    document.getElementById('learningAiPromptOutput').value = '';
+
+    document.getElementById('learningResourcesEditor').innerHTML = '';
+    (plan.resources || []).forEach(addLearningResourceRow);
+
+    document.getElementById('learningActivitiesEditor').innerHTML = '';
+    (plan.activities || []).forEach(function(value) {
+      addLearningListRow('learningActivitiesEditor', value, 'activity');
+    });
+
+    document.getElementById('learningPromptsEditor').innerHTML = '';
+    (plan.discussionPrompts || []).forEach(function(value) {
+      addLearningListRow('learningPromptsEditor', value, 'prompt');
+    });
+
+    show('learningBuilderCard');
+    openPanel('learningPanel');
+    document.getElementById('learningBuilderCard').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+
+
+  function closeLearningBuilder() {
+    hide('learningBuilderCard');
+    state.editingLearningPlanId = '';
+  }
+
+
+  async function useSelectedLearningTopic() {
+    const lessonId = document.getElementById('learningTopicSelect').value;
+    if (!lessonId) {
+      toast(learningUi().topicRequired, true);
+      return;
+    }
+
+    const button = document.getElementById('useLearningTopicButton');
+    setBusy(button, true, state.language === 'es' ? 'Agregando…' : 'Adding…');
+    try {
+      const result = await callServer('generateGuidedLearningPlan', {
+        language: state.language,
+        pillar: document.getElementById('learningPillarSelect').value,
+        lessonId: lessonId
+      });
+      document.getElementById('learningTitleInput').value = result.title || '';
+      document.getElementById('learningObjectiveInput').value = result.objective || '';
+      document.getElementById('learningWhyInput').value = state.language === 'es'
+        ? 'Este tema apoya el crecimiento práctico del hogar y puede aplicarse con pasos pequeños.'
+        : 'This topic supports practical household growth and can be applied through small steps.';
+      document.getElementById('learningActivitiesEditor').innerHTML = '';
+      if (result.activity) {
+        addLearningListRow('learningActivitiesEditor', result.activity, 'activity');
+      }
+      document.getElementById('learningPromptsEditor').innerHTML = '';
+      (result.discussionPrompts || []).forEach(function(value) {
+        addLearningListRow('learningPromptsEditor', value, 'prompt');
+      });
+      document.getElementById('learningActionInput').value = result.actionStep || '';
+      document.getElementById('learningReflectionInput').value =
+        result.reflectionPrompt || '';
+      toast(learningUi().topicAdded);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, learningUi().useTopic);
+    }
+  }
+
+
+  function addLearningResourceRow(resource) {
+    resource = resource || {};
+    const container = document.getElementById('learningResourcesEditor');
+    if (container.children.length >= 10) {
+      toast(state.language === 'es'
+        ? 'Puede agregar hasta diez recursos.'
+        : 'You can add up to ten resources.', true);
+      return;
+    }
+
+    const typeOptions = (state.learningData &&
+      state.learningData.guidance &&
+      state.learningData.guidance.resourceTypes || [])
+      .map(function(option) {
+        return '<option value="' + escapeAttribute(option.value) + '"' +
+          (option.value === (resource.type || 'Article or webpage') ? ' selected' : '') +
+          '>' + escapeHtml(option.label) + '</option>';
+      }).join('');
+
+    const card = document.createElement('article');
+    card.className = 'learning-resource-card';
+    card.dataset.id = resource.id || '';
+    card.dataset.domain = resource.domain || '';
+    card.dataset.verificationStatus = resource.verificationStatus || 'Not checked';
+    card.dataset.httpStatus = String(resource.httpStatus || 0);
+    card.dataset.lastCheckedAt = resource.lastCheckedAt || '';
+
+    card.innerHTML =
+      '<div class="section-heading-row"><div><span class="resource-status-badge">' +
+      escapeHtml(verificationLabel_(card.dataset.verificationStatus)) +
+      '</span><small class="resource-domain">' +
+      escapeHtml(resource.domain || learningUi().sourceCheckDisclaimer) +
+      '</small></div><button type="button" class="text-button danger-text remove-learning-resource">' +
+      escapeHtml(learningUi().remove) + '</button></div>' +
+      '<div class="form-grid"><label class="field"><span>' +
+      escapeHtml(state.language === 'es' ? 'Tipo de recurso' : 'Resource type') +
+      '</span><select class="learning-resource-type">' + typeOptions + '</select></label>' +
+      '<label class="field"><span>' + escapeHtml(learningUi().year) +
+      '</span><input class="learning-resource-year" type="text" maxlength="4" inputmode="numeric" value="' +
+      escapeAttribute(resource.year || '') + '"></label>' +
+      '<label class="field full"><span>' + escapeHtml(learningUi().resourceTitle) +
+      '</span><input class="learning-resource-title" type="text" maxlength="500" spellcheck="true" value="' +
+      escapeAttribute(resource.title || '') + '"></label>' +
+      '<label class="field full"><span>' + escapeHtml(learningUi().authorPublisher) +
+      '</span><input class="learning-resource-author" type="text" maxlength="240" spellcheck="true" value="' +
+      escapeAttribute(resource.authorOrPublisher || '') + '"></label>' +
+      '<label class="field full"><span>' + escapeHtml(learningUi().resourceUrl) +
+      '</span><input class="learning-resource-url" type="url" maxlength="2000" value="' +
+      escapeAttribute(resource.url || '') + '" placeholder="https://"></label>' +
+      '<label class="field full"><span>' + escapeHtml(learningUi().resourceNotes) +
+      '</span><textarea class="learning-resource-notes" rows="2" maxlength="1000" spellcheck="true">' +
+      escapeHtml(resource.notes || '') + '</textarea></label></div>' +
+      '<div class="button-row"><button type="button" class="secondary-button compact-button check-learning-resource">' +
+      escapeHtml(learningUi().checkLink) + '</button>' +
+      (resource.url ? '<a class="secondary-button compact-button link-button open-learning-resource" target="_blank" rel="noopener" href="' +
+        escapeAttribute(resource.url) + '">' + escapeHtml(learningUi().openResource) + '</a>' : '') +
+      '</div>';
+
+    card.querySelector('.remove-learning-resource').addEventListener('click', function() {
+      card.remove();
+    });
+    card.querySelector('.check-learning-resource').addEventListener('click', function(event) {
+      checkLearningResource(card, event.currentTarget);
+    });
+    container.appendChild(card);
+  }
+
+
+  function renderLearningResourceLanguage() {
+    const existing = collectLearningResources();
+    const container = document.getElementById('learningResourcesEditor');
+    if (!container) return;
+    container.innerHTML = '';
+    existing.forEach(addLearningResourceRow);
+  }
+
+
+  async function checkLearningResource(card, button) {
+    const url = card.querySelector('.learning-resource-url').value.trim();
+    setBusy(button, true, learningUi().checking);
+    try {
+      const result = await callServer('checkLearningResourceLink', url);
+      card.dataset.domain = result.domain || '';
+      card.dataset.verificationStatus = result.verificationStatus || 'Check failed';
+      card.dataset.httpStatus = String(result.httpStatus || 0);
+      card.dataset.lastCheckedAt = result.lastCheckedAt || '';
+      card.querySelector('.resource-status-badge').textContent =
+        verificationLabel_(card.dataset.verificationStatus);
+      card.querySelector('.resource-domain').textContent =
+        (result.domain || '') + (result.httpStatus ? ' · HTTP ' + result.httpStatus : '');
+      let open = card.querySelector('.open-learning-resource');
+      if (!open && result.url) {
+        open = document.createElement('a');
+        open.className = 'secondary-button compact-button link-button open-learning-resource';
+        open.target = '_blank';
+        open.rel = 'noopener';
+        button.parentElement.appendChild(open);
+      }
+      if (open) {
+        open.href = result.url;
+        open.textContent = learningUi().openResource;
+      }
+      toast(result.message, !result.success);
+    } catch (error) {
+      card.dataset.verificationStatus = 'Check failed';
+      card.querySelector('.resource-status-badge').textContent =
+        verificationLabel_('Check failed');
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, learningUi().checkLink);
+    }
+  }
+
+
+  function verificationLabel_(value) {
+    const text = String(value || '');
+    if (text === 'Check failed' || /failed/i.test(text)) {
+      return learningUi().linkFailed;
+    }
+    if (text === 'Link checked' ||
+        /secure https|page response checked|address checked/i.test(text)) {
+      return learningUi().linkChecked;
+    }
+    return learningUi().linkNotChecked;
+  }
+
+
+  function collectLearningResources() {
+    return Array.from(document.querySelectorAll('#learningResourcesEditor .learning-resource-card'))
+      .map(function(card) {
+        return {
+          id: card.dataset.id || '',
+          type: card.querySelector('.learning-resource-type').value,
+          title: card.querySelector('.learning-resource-title').value.trim(),
+          authorOrPublisher: card.querySelector('.learning-resource-author').value.trim(),
+          year: card.querySelector('.learning-resource-year').value.trim(),
+          url: card.querySelector('.learning-resource-url').value.trim(),
+          notes: card.querySelector('.learning-resource-notes').value.trim(),
+          domain: card.dataset.domain || '',
+          verificationStatus: card.dataset.verificationStatus || 'Not checked',
+          httpStatus: Number(card.dataset.httpStatus || 0),
+          lastCheckedAt: card.dataset.lastCheckedAt || ''
+        };
+      })
+      .filter(function(item) { return item.title || item.url; });
+  }
+
+
+  function addLearningListRow(containerId, value, kind) {
+    const container = document.getElementById(containerId);
+    const max = kind === 'prompt' ? 8 : 10;
+    if (container.children.length >= max) return;
+    const row = document.createElement('div');
+    row.className = 'repeat-row';
+    row.innerHTML = '<input class="learning-list-input" type="text" maxlength="' +
+      (kind === 'prompt' ? '700' : '1000') + '" spellcheck="true" value="' +
+      escapeAttribute(value || '') + '" placeholder="' +
+      escapeAttribute(kind === 'prompt'
+        ? learningUi().promptPlaceholder
+        : learningUi().activityPlaceholder) + '">' +
+      '<button type="button" class="remove-row-button">' +
+      escapeHtml(learningUi().remove) + '</button>';
+    row.querySelector('button').addEventListener('click', function() {
+      row.remove();
+    });
+    container.appendChild(row);
+  }
+
+
+  function collectLearningList(containerId) {
+    return Array.from(document.querySelectorAll('#' + containerId + ' .learning-list-input'))
+      .map(function(input) { return input.value.trim(); })
+      .filter(Boolean);
+  }
+
+
+  function buildLearningAiPrompt() {
+    const title = document.getElementById('learningTitleInput').value.trim() ||
+      (state.language === 'es' ? 'este tema' : 'this topic');
+    const objective = document.getElementById('learningObjectiveInput').value.trim();
+    const format = document.getElementById('learningFormatSelect').value;
+    const prompt = state.language === 'es'
+      ? [
+          'Ayúdame a crear una explicación sencilla y una actividad breve sobre: ' + title + '.',
+          '',
+          'Objetivo: ' + (objective || 'Ayudar a una familia a comprender y aplicar el tema.'),
+          'Formato preferido: ' + format + '.',
+          '',
+          'Requisitos:',
+          '- Usa palabras claras para lectores de diferentes niveles.',
+          '- Incluye una explicación corta, un ejemplo cotidiano y tres preguntas abiertas.',
+          '- Incluye una actividad práctica y una acción pequeña para esta semana.',
+          '- Señala cualquier afirmación importante que deba verificarse.',
+          '- Sugiere dos tipos de fuentes confiables para comprobar la información.',
+          '- No solicites nombres, direcciones, información médica, escolar, financiera ni privada.',
+          '',
+          'Voy a revisar y editar tu respuesta antes de usarla.'
+        ].join('\n')
+      : [
+          'Help me create a simple explanation and short activity about: ' + title + '.',
+          '',
+          'Objective: ' + (objective || 'Help a family understand and apply the topic.'),
+          'Preferred format: ' + format + '.',
+          '',
+          'Requirements:',
+          '- Use clear language for readers at different levels.',
+          '- Include a short explanation, an everyday example, and three open questions.',
+          '- Include one hands-on activity and one small action for this week.',
+          '- Flag important claims that should be verified.',
+          '- Suggest two trustworthy source types for checking the information.',
+          '- Do not ask for names, addresses, medical, school, financial, or private information.',
+          '',
+          'I will review and edit the response before using it.'
+        ].join('\n');
+
+    document.getElementById('learningAiPromptOutput').value = prompt;
+    toast(learningUi().promptBuilt);
+  }
+
+
+  async function copyLearningAiPrompt() {
+    const output = document.getElementById('learningAiPromptOutput');
+    if (!output.value) buildLearningAiPrompt();
+    try {
+      await navigator.clipboard.writeText(output.value);
+      toast(learningUi().promptCopied);
+    } catch (error) {
+      output.select();
+      document.execCommand('copy');
+      toast(learningUi().promptCopied);
+    }
+  }
+
+
+  async function saveLearningPlan() {
+    const title = document.getElementById('learningTitleInput').value.trim();
+    if (!title) {
+      toast(learningUi().titleRequired, true);
+      return;
+    }
+
+    const payload = {
+      id: document.getElementById('learningPlanIdInput').value,
+      language: state.language,
+      scope: state.workspace && state.workspace.role === 'HOUSEHOLD_LEAD'
+        ? document.getElementById('learningScopeSelect').value
+        : 'PERSONAL',
+      title: title,
+      pillar: document.getElementById('learningPillarSelect').value,
+      status: document.getElementById('learningStatusSelect').value,
+      format: document.getElementById('learningFormatSelect').value,
+      difficulty: document.getElementById('learningDifficultySelect').value,
+      estimatedMinutes: Number(document.getElementById('learningDurationSelect').value || 30),
+      facilitatorRole: document.getElementById('learningFacilitatorSelect').value,
+      audienceRoles: Array.from(
+        document.querySelectorAll('#learningAudienceOptions input:checked')
+      ).map(function(input) { return input.value; }),
+      objective: document.getElementById('learningObjectiveInput').value,
+      why: document.getElementById('learningWhyInput').value,
+      resources: collectLearningResources(),
+      activities: collectLearningList('learningActivitiesEditor'),
+      discussionPrompts: collectLearningList('learningPromptsEditor'),
+      actionStep: document.getElementById('learningActionInput').value,
+      reflectionPrompt: document.getElementById('learningReflectionInput').value,
+      notes: document.getElementById('learningNotesInput').value
+    };
+
+    const privacyPayload = JSON.parse(JSON.stringify(payload));
+    privacyPayload.resources = (privacyPayload.resources || []).map(function(resource) {
+      resource.url = '';
+      return resource;
+    });
+    if (!clientPrivacyCheck(privacyPayload)) return;
+
+    const button = document.getElementById('saveLearningPlanButton');
+    setBusy(button, true, learningUi().saving);
+    try {
+      const result = await callServer('saveLearningPlanRecord', payload);
+      state.learningData = result.workspace;
+      renderLearningWorkspace(state.learningData);
+      closeLearningBuilder();
+      toast(learningUi().saved);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, learningUi().save);
+    }
+  }
+
+
+  function renderLearningLists() {
+    if (!state.learningData) return;
+    renderLearningList(
+      'sharedLearningList',
+      (state.learningData.sharedPlans || []).filter(function(plan) {
+        return plan.status !== 'Archived';
+      }),
+      'HOUSEHOLD'
+    );
+    renderLearningList(
+      'personalLearningList',
+      (state.learningData.personalPlans || []).filter(function(plan) {
+        return plan.status !== 'Archived';
+      }),
+      'PERSONAL'
+    );
+  }
+
+
+  function renderLearningList(containerId, plans, scope) {
+    const container = document.getElementById(containerId);
+    if (!plans.length) {
+      container.innerHTML = '<div class="empty-state">' +
+        escapeHtml(scope === 'HOUSEHOLD'
+          ? learningUi().noShared : learningUi().noPersonal) + '</div>';
+      return;
+    }
+
+    const editable = scope === 'PERSONAL' ||
+      (state.workspace && state.workspace.role === 'HOUSEHOLD_LEAD');
+    container.innerHTML = plans.map(function(plan) {
+      const response = (state.learningData.responses || []).find(function(item) {
+        return item.planId === plan.id;
+      });
+      const resources = (plan.resources || []).slice(0, 3).map(function(resource) {
+        if (!resource.url) return '';
+        return '<a target="_blank" rel="noopener" href="' +
+          escapeAttribute(resource.url) + '">' +
+          escapeHtml(resource.title || resource.domain || learningUi().openResource) +
+          '</a>';
+      }).filter(Boolean).join('');
+
+      const actions = [
+        editable ? learningButton_('edit', plan.id, scope, learningUi().edit) : '',
+        learningButton_('reflect', plan.id, scope, learningUi().reflect),
+        learningButton_('pdf', plan.id, scope, learningUi().pdf),
+        editable ? learningButton_('archive', plan.id, scope, learningUi().archive, true) : ''
+      ].join('');
+
+      return '<article class="learning-plan-card"><div class="learning-card-top"><div>' +
+        '<span class="goal-badge">' +
+        escapeHtml(scope === 'HOUSEHOLD'
+          ? learningUi().householdBadge : learningUi().privateBadge) +
+        '</span>' + (!editable ? '<span class="goal-badge muted">' +
+          escapeHtml(learningUi().readonlyBadge) + '</span>' : '') +
+        '<h3>' + escapeHtml(plan.title) + '</h3></div>' +
+        '<span class="meeting-status-badge">' +
+        escapeHtml(learningLabelFor('statuses', plan.status)) + '</span></div>' +
+        '<div class="goal-meta"><span>' +
+        escapeHtml(learningLabelFor('groups', plan.pillar)) + '</span><span>' +
+        escapeHtml(learningLabelFor('formats', plan.format)) + '</span><span>' +
+        escapeHtml(learningLabelFor('difficulties', plan.difficulty)) + '</span><span>' +
+        Number(plan.estimatedMinutes || 30) +
+        (state.language === 'es' ? ' minutos' : ' minutes') + '</span></div>' +
+        (plan.objective ? '<p>' + escapeHtml(plan.objective) + '</p>' : '') +
+        '<div class="learning-counts"><span>' +
+        Number((plan.resources || []).length) + ' ' +
+        escapeHtml(learningUi().resourcesCount) + '</span><span>' +
+        Number((plan.activities || []).length) + ' ' +
+        escapeHtml(learningUi().activitiesCount) + '</span></div>' +
+        (resources ? '<div class="learning-resource-links">' + resources + '</div>' : '') +
+        (response && response.completed
+          ? '<div class="completion-note">✓ ' +
+            escapeHtml(state.language === 'es'
+              ? 'Reflexión marcada como completada'
+              : 'Reflection marked complete') + '</div>' : '') +
+        '<div class="button-row">' + actions + '</div></article>';
+    }).join('');
+  }
+
+
+  function learningButton_(action, id, scope, label, danger) {
+    return '<button type="button" class="' +
+      (danger ? 'text-button danger-text' : 'secondary-button compact-button') +
+      '" data-learning-action="' + escapeAttribute(action) +
+      '" data-learning-id="' + escapeAttribute(id) +
+      '" data-learning-scope="' + escapeAttribute(scope) + '">' +
+      escapeHtml(label) + '</button>';
+  }
+
+
+  function learningLabelFor(group, value) {
+    const options = state.learningData &&
+      state.learningData.guidance &&
+      state.learningData.guidance[group] || [];
+    const match = options.find(function(option) { return option.value === value; });
+    return match ? match.label : value;
+  }
+
+
+  function findLearningPlan(scope, id) {
+    const list = scope === 'HOUSEHOLD'
+      ? state.learningData.sharedPlans || []
+      : state.learningData.personalPlans || [];
+    return list.find(function(plan) { return plan.id === id; }) || null;
+  }
+
+
+  async function handleLearningListClick(event) {
+    const button = event.target.closest('button[data-learning-action]');
+    if (!button) return;
+    const action = button.dataset.learningAction;
+    const scope = button.dataset.learningScope;
+    const plan = findLearningPlan(scope, button.dataset.learningId);
+    if (!plan) return;
+
+    if (action === 'edit') openLearningBuilder(plan, scope);
+    if (action === 'reflect') openLearningReflection(plan);
+    if (action === 'archive') await archiveLearningPlan(plan, scope);
+    if (action === 'pdf') await generateLearningPdf(plan, scope, button);
+  }
+
+
+  async function archiveLearningPlan(plan, scope) {
+    if (!window.confirm(learningUi().confirmArchive)) return;
+    try {
+      const result = await callServer('archiveLearningPlanRecord', {
+        planId: plan.id,
+        scope: scope,
+        language: state.language
+      });
+      state.learningData = result.workspace;
+      renderLearningWorkspace(state.learningData);
+      toast(learningUi().archived);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    }
+  }
+
+
+  async function generateLearningPdf(plan, scope, button) {
+    const original = button.textContent;
+    setBusy(button, true, learningUi().creating);
+    try {
+      const result = await callServer(
+        'generateLearningPlanDocument',
+        scope,
+        plan.id,
+        state.language
+      );
+      downloadBase64File(result.filename, 'application/pdf', result.base64Content);
+      toast(result.message);
+      if (result.driveFileUrl) {
+        window.open(result.driveFileUrl, '_blank', 'noopener');
+      }
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, original);
+    }
+  }
+
+
+  function openLearningReflection(plan) {
+    const response = (state.learningData.responses || []).find(function(item) {
+      return item.planId === plan.id;
+    }) || {};
+
+    document.getElementById('learningResponseIdInput').value = response.id || '';
+    document.getElementById('learningResponsePlanIdInput').value = plan.id;
+    document.getElementById('learningReflectionPlanName').textContent = plan.title;
+    document.getElementById('learningKeyLearningInput').value =
+      response.keyLearning || '';
+    document.getElementById('learningQuestionsInput').value =
+      response.questions || '';
+    document.getElementById('learningPersonalActionInput').value =
+      response.action || '';
+    document.getElementById('learningCompletedInput').checked =
+      Boolean(response.completed);
+
+    show('learningReflectionCard');
+    openPanel('learningPanel');
+    document.getElementById('learningReflectionCard').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+
+
+  function closeLearningReflection() {
+    hide('learningReflectionCard');
+  }
+
+
+  async function saveLearningReflection() {
+    const payload = {
+      id: document.getElementById('learningResponseIdInput').value,
+      planId: document.getElementById('learningResponsePlanIdInput').value,
+      keyLearning: document.getElementById('learningKeyLearningInput').value,
+      questions: document.getElementById('learningQuestionsInput').value,
+      action: document.getElementById('learningPersonalActionInput').value,
+      completed: document.getElementById('learningCompletedInput').checked,
+      language: state.language
+    };
+    if (!clientPrivacyCheck(payload)) return;
+
+    const button = document.getElementById('saveLearningReflectionButton');
+    setBusy(button, true, learningUi().saving);
+    try {
+      const result = await callServer('saveLearningReflection', payload);
+      state.learningData = result.workspace;
+      renderLearningWorkspace(state.learningData);
+      closeLearningReflection();
+      toast(learningUi().reflectionSaved);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, learningUi().saveReflection);
+    }
+  }
+</script>

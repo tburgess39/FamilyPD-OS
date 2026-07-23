@@ -1,0 +1,2262 @@
+<script>
+  const MEETING_UI = {
+    en: {
+      nav: 'Meetings',
+      eyebrow: 'PLANNED · INCLUSIVE · ACTION-FOCUSED',
+      title: 'Family Meetings',
+      intro: 'Plan the conversation before the meeting, make room for participation, record decisions, and carry unfinished work forward.',
+      newMeeting: 'Open Full Planner',
+      guidanceTitle: 'Use structure without making meetings rigid',
+      guidanceText: 'Choose a date, facilitator, topics, questions, materials, and intended outcomes. Keep the meeting focused and save some topics for another time.',
+      privacyTitle: 'Plan with general labels',
+      builderEyebrow: 'GUIDED MEETING PLANNER',
+      builderTitle: 'Create or edit a meeting',
+      builderIntro: 'Use the dropdowns and suggested topics for a fast start. Everything can be edited.',
+      cancel: 'Cancel',
+      basics: 'Meeting basics',
+      meetingTitle: 'Meeting title',
+      meetingTitleHelp: 'Use a short title that helps members understand the purpose.',
+      type: 'Meeting type',
+      typeHelp: 'Select the closest starting point.',
+      status: 'Status',
+      statusHelp: 'Draft while planning, Scheduled when ready, and Completed after notes are added.',
+      date: 'Date',
+      dateHelp: 'A date is optional while the meeting is a draft.',
+      time: 'Time',
+      timeHelp: 'Choose a time that supports participation.',
+      duration: 'Planned length',
+      durationHelp: 'Most meetings should stay focused and avoid unnecessary length.',
+      format: 'Format',
+      formatHelp: 'Choose in person, video, phone, hybrid, or other.',
+      location: 'General location note',
+      locationHelp: 'Do not enter an exact street address or private access code.',
+      facilitator: 'Facilitator role',
+      facilitatorHelp: 'Any capable member—including a teen or young adult—may facilitate.',
+      attendees: 'Participant labels',
+      attendeesHelp: 'Select general role labels. Legal names are not required.',
+      topicsHeading: 'Choose and edit agenda topics',
+      libraryHeading: 'Suggested FamilyPD topics',
+      libraryIntro: 'Choose a pillar or household-organization area, then select a topic.',
+      topicArea: 'Topic area',
+      suggestedTopic: 'Suggested topic',
+      addSuggested: 'Add Suggested Topic',
+      customHeading: 'Custom topic',
+      customIntro: 'Add your own topic and use the editable boxes to explain it.',
+      addCustom: 'Add Custom Topic',
+      newsHeading: 'Recent news discussion',
+      newsIntro: 'Find a recent story connected to a FamilyPD pillar and discuss what households can learn or do proactively.',
+      newsArea: 'News area',
+      findStories: 'Find Recent Stories',
+      newsHelp: 'FamilyPD checks title, source, date, and link. Open the article and review it before adding it.',
+      selectedTopics: 'Selected agenda topics',
+      selectedTopicsHelp: 'Edit the wording, questions, desired outcome, and planned time.',
+      preparationHeading: 'Prepare the meeting experience',
+      opening: 'Opening message',
+      openingHelp: 'Set a welcoming tone and explain what members can expect.',
+      previousMeeting: 'Review a previous meeting',
+      previousMeetingHelp: 'Choose a meeting to carry unfinished action items forward.',
+      carryForward: 'Carry forward',
+      addPreviousItems: 'Add Previous Open Items',
+      carryHelp: 'This adds a recap starter and copies unfinished action items into this draft.',
+      recap: 'Previous-meeting recap',
+      recapHelp: 'Summarize decisions, progress, reminders, or unfinished work.',
+      meal: 'Meal or refreshments (optional)',
+      mealHelp: 'Use general menu information only. Do not enter medical or dietary records.',
+      materials: 'Materials and supplies',
+      materialsHelp: 'Examples: laptop or tablet, writing utensil, printed agenda, activity supplies.',
+      addMaterial: '+ Add Material',
+      closing: 'Closing message',
+      closingHelp: 'Summarize the purpose and encourage one positive next action.',
+      followupHeading: 'Record notes, decisions, and next actions',
+      notes: 'General meeting notes',
+      notesHelp: 'Record non-sensitive highlights. Avoid confidential personal details.',
+      decisions: 'Decisions',
+      decisionsHelp: 'Write the decisions the household agreed on.',
+      addDecision: '+ Add Decision',
+      actions: 'Action items',
+      actionsHelp: 'Assign each action to a general role and add a target date when useful.',
+      addAction: '+ Add Action',
+      save: 'Save Meeting',
+      prepEyebrow: 'PRIVATE MEETING PREPARATION',
+      prepTitle: 'Prepare for the meeting',
+      prepQuestions: 'Questions I want to ask',
+      prepTopic: 'A topic or idea I want to suggest',
+      prepSupport: 'Support that would help me participate',
+      prepSupportHelp: 'Keep this general. Do not enter medical, school, legal, or other confidential records.',
+      savePrep: 'Save Private Preparation',
+      activeHeading: 'Draft and upcoming meetings',
+      activeHelp: 'Open a meeting to review the agenda, prepare, edit, duplicate, or print.',
+      completedHeading: 'Completed meetings',
+      completedHelp: 'Revisit decisions, action items, notes, and meeting minutes.',
+      helpTitle: 'Meeting Planner quick guide',
+      helpPlanTitle: 'Plan first',
+      helpPlanText: 'Choose the purpose, date, facilitator, participants, materials, and a realistic length.',
+      helpTopicsTitle: 'Use guided topics',
+      helpTopicsText: 'Select prewritten FamilyPD topics or add your own. Edit every question so it fits the household.',
+      helpLeadTitle: 'Share leadership',
+      helpLeadText: 'Any capable member—including a teen or young adult—may facilitate with support.',
+      helpFollowTitle: 'Record the next step',
+      helpFollowText: 'Save decisions and assign clear action items so the conversation leads to action.',
+      noActive: 'No draft or upcoming meetings have been added yet.',
+      noCompleted: 'No meetings have been completed yet.',
+      selectTopic: 'Select a suggested topic',
+      selectPrevious: 'Select a previous meeting',
+      selectFacilitator: 'Select a facilitator role',
+      customTopicTitle: 'New discussion topic',
+      customTopicPurpose: 'Explain why this topic matters to the household.',
+      customOutcome: 'Decide what the household should understand, decide, or do next.',
+      purpose: 'Purpose',
+      prompts: 'Discussion questions',
+      addPrompt: '+ Add Question',
+      outcome: 'Desired outcome',
+      plannedTime: 'Planned time',
+      removeTopic: 'Remove Topic',
+      promptPlaceholder: 'Question for the household',
+      materialPlaceholder: 'Material or supply',
+      decisionPlaceholder: 'Decision the household agreed on',
+      actionPlaceholder: 'Next action',
+      assignedRole: 'Responsible role',
+      targetDate: 'Target date',
+      completed: 'Completed',
+      remove: 'Remove',
+      edit: 'Edit',
+      prepare: 'Prepare',
+      duplicate: 'Duplicate',
+      agendaPdf: 'Agenda PDF',
+      minutesPdf: 'Minutes PDF',
+      archive: 'Archive',
+      topics: 'topics',
+      actionsOpen: 'open actions',
+      facilitatorShort: 'Facilitator',
+      mealShort: 'Meal',
+      article: 'Article',
+      openArticle: 'Open Article',
+      addArticle: 'Add to Agenda',
+      newsLoading: 'Finding recent stories…',
+      newsEmpty: 'No suitable recent stories were returned. Try another topic area later.',
+      newsFallbackTitle: 'Automatic story search is temporarily unavailable',
+      newsFallbackText: 'Open one of these recent-news searches, choose a specific article, and paste the article link into FamilyPD.',
+      openSearch: 'Open Recent-News Search',
+      newsAdded: 'The news topic was added. Review and edit the questions before saving.',
+      saved: 'Meeting saved.',
+      duplicated: 'Meeting duplicated as a new draft.',
+      archived: 'Meeting archived.',
+      confirmArchive: 'Archive this meeting? It will remain in the workspace history.',
+      carried: 'The recap starter and unfinished action items were added.',
+      choosePrevious: 'Choose a previous meeting first.',
+      prepSaved: 'Private meeting preparation saved.',
+      pdfCreating: 'Creating…',
+      saving: 'Saving…',
+      generalRole: 'General role',
+      householdBadge: 'Household meeting',
+      readonlyBadge: 'Read only',
+      newsNotice: 'Review the article before using it. A result is not a FamilyPD endorsement or full fact-check.',
+      previousItemsNone: 'That meeting has no unfinished action items.',
+      titleRequired: 'Enter a short meeting title.',
+      scheduledDateRequired: 'Choose a date before marking the meeting Scheduled or Completed.',
+      dashboardEyebrow: 'WHAT IS COMING UP',
+      dashboardTitle: 'Upcoming meetings',
+      dashboardHelp: 'See the next scheduled household meetings without opening the full planner.',
+      dashboardQuick: 'Quick Meeting',
+      dashboardOpen: 'Open Meetings',
+      dashboardEmptyLead: 'No meetings are scheduled yet. Create one in about two minutes.',
+      dashboardEmptyMember: 'No upcoming meetings have been shared yet.',
+      today: 'Today',
+      tomorrow: 'Tomorrow',
+      quickEyebrow: 'CREATE A MEETING IN ABOUT TWO MINUTES',
+      quickTitle: 'Quick Meeting',
+      quickIntro: 'Choose a meeting type, date, facilitator, and suggested topics. FamilyPD fills in the rest, and you can edit the full meeting later.',
+      quickTemplate: 'Meeting type',
+      quickTemplateHelp: 'The meeting type automatically suggests a title, length, and topics.',
+      quickDate: 'Date',
+      quickDateHelp: 'Leave blank to save it as a draft.',
+      quickTime: 'Time',
+      quickDuration: 'Length',
+      quickFacilitator: 'Facilitator role',
+      quickFacilitatorHelp: 'Any capable member—including a teen or young adult—may facilitate.',
+      quickTopics: 'Selected topics',
+      quickTopicsHelp: 'FamilyPD suggests topics based on the meeting type. Keep, remove, or add up to three.',
+      quickTopicArea: 'Topic area',
+      quickTopic: 'Topic',
+      quickAddTopic: 'Add Topic',
+      quickArticleSummary: 'Optional: add one article or link',
+      quickArticleIntro: 'Select a recent story or paste one public HTTPS link. No author, year, or other source fields are required.',
+      quickRecentTitle: 'Find a recent story',
+      quickRecentArea: 'FamilyPD area',
+      quickFindStories: 'Find Stories',
+      quickCheckTitle: 'Check a link I already have',
+      quickUrl: 'Public article link',
+      quickCheckAdd: 'Check and Add Link',
+      quickCreate: 'Create Quick Meeting',
+      quickContinue: 'Continue in Full Planner',
+      quickCreated: 'Quick meeting created. You can open it later to add more detail.',
+      quickTopicLimit: 'Quick Meetings can include up to three topics.',
+      quickArticleSelected: 'Selected article',
+      quickRemoveArticle: 'Remove article',
+      quickNoTopic: 'Select a topic first.',
+      directLinkLabel: 'Or paste one public article link',
+      linkCheckedAdded: 'The checked link was added as an editable agenda topic.',
+      checkAndAdd: 'Check and Add Link',
+      checkingLink: 'Checking link…'
+    },
+    es: {
+      nav: 'Reuniones',
+      eyebrow: 'PLANIFICADAS · INCLUSIVAS · ENFOCADAS EN ACCIONES',
+      title: 'Reuniones familiares',
+      intro: 'Planifique la conversación antes de la reunión, facilite la participación, registre decisiones y continúe el trabajo pendiente.',
+      newMeeting: 'Abrir planificador completo',
+      guidanceTitle: 'Use estructura sin hacer que la reunión sea rígida',
+      guidanceText: 'Elija fecha, facilitador, temas, preguntas, materiales y resultados deseados. Mantenga el enfoque y guarde algunos temas para otra ocasión.',
+      privacyTitle: 'Planifique con etiquetas generales',
+      builderEyebrow: 'PLANIFICADOR GUIADO DE REUNIONES',
+      builderTitle: 'Crear o editar una reunión',
+      builderIntro: 'Use los menús y temas sugeridos para comenzar rápido. Todo se puede editar.',
+      cancel: 'Cancelar',
+      basics: 'Información básica de la reunión',
+      meetingTitle: 'Título de la reunión',
+      meetingTitleHelp: 'Use un título corto que ayude a comprender el propósito.',
+      type: 'Tipo de reunión',
+      typeHelp: 'Seleccione el punto de partida más cercano.',
+      status: 'Estado',
+      statusHelp: 'Use Borrador mientras planifica, Programada cuando esté lista y Completada después de agregar notas.',
+      date: 'Fecha',
+      dateHelp: 'La fecha es opcional mientras la reunión sea un borrador.',
+      time: 'Hora',
+      timeHelp: 'Elija una hora que facilite la participación.',
+      duration: 'Duración planificada',
+      durationHelp: 'La mayoría de las reuniones deben mantenerse enfocadas y evitar una duración innecesaria.',
+      format: 'Formato',
+      formatHelp: 'Elija en persona, video, teléfono, híbrida u otro.',
+      location: 'Nota general de ubicación',
+      locationHelp: 'No ingrese una dirección exacta ni un código privado de acceso.',
+      facilitator: 'Rol del facilitador',
+      facilitatorHelp: 'Cualquier miembro capaz, incluso un adolescente o adulto joven, puede facilitar.',
+      attendees: 'Etiquetas de participantes',
+      attendeesHelp: 'Seleccione etiquetas generales. No se requieren nombres legales.',
+      topicsHeading: 'Elegir y editar temas de la agenda',
+      libraryHeading: 'Temas sugeridos de FamilyPD',
+      libraryIntro: 'Elija un pilar o un área de organización del hogar y luego seleccione un tema.',
+      topicArea: 'Área del tema',
+      suggestedTopic: 'Tema sugerido',
+      addSuggested: 'Agregar tema sugerido',
+      customHeading: 'Tema personalizado',
+      customIntro: 'Agregue su propio tema y use los cuadros editables para explicarlo.',
+      addCustom: 'Agregar tema personalizado',
+      newsHeading: 'Conversación sobre noticias recientes',
+      newsIntro: 'Busque una historia reciente conectada con un pilar y converse sobre lo que los hogares pueden aprender o hacer de forma preventiva.',
+      newsArea: 'Área de noticias',
+      findStories: 'Buscar historias recientes',
+      newsHelp: 'FamilyPD revisa que exista título, fuente, fecha y enlace. Abra y revise el artículo antes de agregarlo.',
+      selectedTopics: 'Temas seleccionados',
+      selectedTopicsHelp: 'Edite las palabras, preguntas, resultado deseado y tiempo planificado.',
+      preparationHeading: 'Preparar la experiencia de la reunión',
+      opening: 'Mensaje de apertura',
+      openingHelp: 'Establezca un tono acogedor y explique qué pueden esperar los miembros.',
+      previousMeeting: 'Revisar una reunión anterior',
+      previousMeetingHelp: 'Elija una reunión para continuar acciones pendientes.',
+      carryForward: 'Continuar trabajo',
+      addPreviousItems: 'Agregar acciones pendientes',
+      carryHelp: 'Agrega un inicio para el resumen y copia las acciones sin completar al borrador.',
+      recap: 'Resumen de la reunión anterior',
+      recapHelp: 'Resuma decisiones, progreso, recordatorios o trabajo pendiente.',
+      meal: 'Comida o refrigerios (opcional)',
+      mealHelp: 'Use información general del menú. No ingrese expedientes médicos ni dietéticos.',
+      materials: 'Materiales y suministros',
+      materialsHelp: 'Ejemplos: computadora o tableta, utensilio para escribir, agenda impresa o materiales para actividades.',
+      addMaterial: '+ Agregar material',
+      closing: 'Mensaje de cierre',
+      closingHelp: 'Resuma el propósito y anime una próxima acción positiva.',
+      followupHeading: 'Registrar notas, decisiones y próximas acciones',
+      notes: 'Notas generales',
+      notesHelp: 'Registre puntos importantes no sensibles. Evite detalles personales confidenciales.',
+      decisions: 'Decisiones',
+      decisionsHelp: 'Escriba las decisiones que el hogar acordó.',
+      addDecision: '+ Agregar decisión',
+      actions: 'Acciones',
+      actionsHelp: 'Asigne cada acción a un rol general y agregue una fecha objetivo cuando sea útil.',
+      addAction: '+ Agregar acción',
+      save: 'Guardar reunión',
+      prepEyebrow: 'PREPARACIÓN PRIVADA PARA LA REUNIÓN',
+      prepTitle: 'Prepararse para la reunión',
+      prepQuestions: 'Preguntas que quiero hacer',
+      prepTopic: 'Tema o idea que quiero sugerir',
+      prepSupport: 'Apoyo que me ayudaría a participar',
+      prepSupportHelp: 'Mantenga la información general. No ingrese expedientes médicos, escolares, legales ni confidenciales.',
+      savePrep: 'Guardar preparación privada',
+      activeHeading: 'Borradores y reuniones próximas',
+      activeHelp: 'Abra una reunión para revisar, prepararse, editar, duplicar o imprimir.',
+      completedHeading: 'Reuniones completadas',
+      completedHelp: 'Revise decisiones, acciones, notas y actas.',
+      helpTitle: 'Guía rápida del Planificador de reuniones',
+      helpPlanTitle: 'Planifique primero',
+      helpPlanText: 'Elija el propósito, fecha, facilitador, participantes, materiales y una duración realista.',
+      helpTopicsTitle: 'Use temas guiados',
+      helpTopicsText: 'Seleccione temas de FamilyPD ya escritos o agregue los suyos. Edite cada pregunta para que se adapte al hogar.',
+      helpLeadTitle: 'Comparta el liderazgo',
+      helpLeadText: 'Cualquier miembro capaz, incluso un adolescente o adulto joven, puede facilitar con apoyo.',
+      helpFollowTitle: 'Registre la próxima acción',
+      helpFollowText: 'Guarde decisiones y asigne acciones claras para convertir la conversación en progreso.',
+      noActive: 'Todavía no se han agregado borradores ni reuniones próximas.',
+      noCompleted: 'Todavía no se ha completado ninguna reunión.',
+      selectTopic: 'Seleccione un tema sugerido',
+      selectPrevious: 'Seleccione una reunión anterior',
+      selectFacilitator: 'Seleccione un rol facilitador',
+      customTopicTitle: 'Nuevo tema de conversación',
+      customTopicPurpose: 'Explique por qué este tema importa al hogar.',
+      customOutcome: 'Decida qué debe comprender, decidir o hacer el hogar después.',
+      purpose: 'Propósito',
+      prompts: 'Preguntas para conversar',
+      addPrompt: '+ Agregar pregunta',
+      outcome: 'Resultado deseado',
+      plannedTime: 'Tiempo planificado',
+      removeTopic: 'Quitar tema',
+      promptPlaceholder: 'Pregunta para el hogar',
+      materialPlaceholder: 'Material o suministro',
+      decisionPlaceholder: 'Decisión que el hogar acordó',
+      actionPlaceholder: 'Próxima acción',
+      assignedRole: 'Rol responsable',
+      targetDate: 'Fecha objetivo',
+      completed: 'Completada',
+      remove: 'Quitar',
+      edit: 'Editar',
+      prepare: 'Prepararse',
+      duplicate: 'Duplicar',
+      agendaPdf: 'PDF de agenda',
+      minutesPdf: 'PDF de actas',
+      archive: 'Archivar',
+      topics: 'temas',
+      actionsOpen: 'acciones pendientes',
+      facilitatorShort: 'Facilitador',
+      mealShort: 'Comida',
+      article: 'Artículo',
+      openArticle: 'Abrir artículo',
+      addArticle: 'Agregar a la agenda',
+      newsLoading: 'Buscando historias recientes…',
+      newsEmpty: 'No se encontraron historias recientes adecuadas. Pruebe otra área más tarde.',
+      newsAdded: 'El tema de noticias fue agregado. Revise y edite las preguntas antes de guardar.',
+      saved: 'Reunión guardada.',
+      duplicated: 'La reunión fue duplicada como un nuevo borrador.',
+      archived: 'Reunión archivada.',
+      confirmArchive: '¿Archivar esta reunión? Permanecerá en el historial del espacio.',
+      carried: 'Se agregaron el inicio del resumen y las acciones pendientes.',
+      choosePrevious: 'Primero seleccione una reunión anterior.',
+      prepSaved: 'Se guardó la preparación privada.',
+      pdfCreating: 'Creando…',
+      saving: 'Guardando…',
+      generalRole: 'Rol general',
+      householdBadge: 'Reunión del hogar',
+      readonlyBadge: 'Solo lectura',
+      newsNotice: 'Revise el artículo antes de usarlo. Un resultado no es un respaldo ni una comprobación completa de FamilyPD.',
+      previousItemsNone: 'Esa reunión no tiene acciones pendientes.',
+      titleRequired: 'Escriba un título corto para la reunión.',
+      scheduledDateRequired: 'Elija una fecha antes de marcar la reunión como Programada o Completada.',
+      dashboardEyebrow: 'PRÓXIMAS ACTIVIDADES',
+      dashboardTitle: 'Próximas reuniones',
+      dashboardHelp: 'Vea las próximas reuniones programadas sin abrir el planificador completo.',
+      dashboardQuick: 'Reunión rápida',
+      dashboardOpen: 'Abrir reuniones',
+      dashboardEmptyLead: 'Todavía no hay reuniones programadas. Cree una en aproximadamente dos minutos.',
+      dashboardEmptyMember: 'Todavía no se han compartido reuniones próximas.',
+      today: 'Hoy',
+      tomorrow: 'Mañana',
+      quickEyebrow: 'CREE UNA REUNIÓN EN APROXIMADAMENTE DOS MINUTOS',
+      quickTitle: 'Reunión rápida',
+      quickIntro: 'Elija el tipo de reunión, fecha, facilitador y temas sugeridos. FamilyPD completa el resto y puede editarlo después.',
+      quickTemplate: 'Tipo de reunión',
+      quickTemplateHelp: 'El tipo de reunión sugiere automáticamente un título, duración y temas.',
+      quickDate: 'Fecha',
+      quickDateHelp: 'Déjela en blanco para guardar un borrador.',
+      quickTime: 'Hora',
+      quickDuration: 'Duración',
+      quickFacilitator: 'Rol del facilitador',
+      quickFacilitatorHelp: 'Cualquier miembro capaz, incluso un adolescente o adulto joven, puede facilitar.',
+      quickTopics: 'Temas seleccionados',
+      quickTopicsHelp: 'FamilyPD sugiere temas según el tipo de reunión. Conserve, quite o agregue hasta tres.',
+      quickTopicArea: 'Área del tema',
+      quickTopic: 'Tema',
+      quickAddTopic: 'Agregar tema',
+      quickArticleSummary: 'Opcional: agregar un artículo o enlace',
+      quickArticleIntro: 'Seleccione una historia reciente o pegue un enlace HTTPS público. No se requieren datos adicionales.',
+      quickRecentTitle: 'Buscar una historia reciente',
+      quickRecentArea: 'Área de FamilyPD',
+      quickFindStories: 'Buscar historias',
+      quickCheckTitle: 'Revisar un enlace que ya tengo',
+      quickUrl: 'Enlace público del artículo',
+      quickCheckAdd: 'Revisar y agregar enlace',
+      quickCreate: 'Crear reunión rápida',
+      quickContinue: 'Continuar en el planificador completo',
+      quickCreated: 'Se creó la reunión rápida. Puede abrirla después para agregar más detalles.',
+      quickTopicLimit: 'Las reuniones rápidas pueden incluir hasta tres temas.',
+      quickArticleSelected: 'Artículo seleccionado',
+      quickRemoveArticle: 'Quitar artículo',
+      quickNoTopic: 'Primero seleccione un tema.',
+      directLinkLabel: 'O pegue un enlace público del artículo',
+      linkCheckedAdded: 'El enlace revisado fue agregado como un tema editable.',
+      checkAndAdd: 'Revisar y agregar enlace',
+      checkingLink: 'Revisando enlace…'
+    }
+  };
+
+
+  function meetingUi() {
+    return MEETING_UI[state.language] || MEETING_UI.en;
+  }
+
+
+  function bindMeetingEvents() {
+    document.getElementById('newMeetingButton').addEventListener('click', function() {
+      openMeetingBuilder();
+    });
+    document.getElementById('cancelMeetingEditButton').addEventListener('click', closeMeetingBuilder);
+    document.getElementById('topicGroupSelect').addEventListener('change', populateMeetingTopicLibrary);
+    document.getElementById('addLibraryTopicButton').addEventListener('click', addSelectedLibraryTopic);
+    document.getElementById('addCustomTopicButton').addEventListener('click', addCustomMeetingTopic);
+    document.getElementById('searchMeetingNewsButton').addEventListener('click', searchMeetingNews);
+    document.getElementById('meetingNewsResults').addEventListener('click', handleNewsResultClick);
+    document.getElementById('checkMeetingArticleLinkButton').addEventListener(
+      'click',
+      handleFullPlannerLinkCheck
+    );
+    document.getElementById('quickMeetingTemplateSelect').addEventListener(
+      'change',
+      applyQuickMeetingTemplate
+    );
+    document.getElementById('quickMeetingTopicGroupSelect').addEventListener(
+      'change',
+      populateQuickMeetingTopics
+    );
+    document.getElementById('quickAddTopicButton').addEventListener(
+      'click',
+      addQuickMeetingTopic
+    );
+    document.getElementById('quickMeetingSelectedTopics').addEventListener(
+      'click',
+      handleQuickTopicRemove
+    );
+    document.getElementById('quickSearchNewsButton').addEventListener(
+      'click',
+      searchQuickMeetingNews
+    );
+    document.getElementById('quickMeetingNewsResults').addEventListener(
+      'click',
+      handleQuickNewsResultClick
+    );
+    document.getElementById('quickCheckLinkButton').addEventListener(
+      'click',
+      checkQuickMeetingLink
+    );
+    document.getElementById('quickSelectedArticle').addEventListener(
+      'click',
+      handleQuickArticleRemove
+    );
+    document.getElementById('quickCreateMeetingButton').addEventListener(
+      'click',
+      createQuickMeeting
+    );
+    document.getElementById('quickOpenFullPlannerButton').addEventListener(
+      'click',
+      continueQuickMeetingInFullPlanner
+    );
+    document.getElementById('dashboardQuickMeetingButton').addEventListener(
+      'click',
+      openQuickMeetingFromDashboard
+    );
+    document.getElementById('dashboardOpenMeetingsButton').addEventListener(
+      'click',
+      function() {
+        openPanel('meetingsPanel');
+        document.getElementById('activeMeetingsList').scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    );
+    document.getElementById('addMeetingMaterialButton').addEventListener('click', function() {
+      addMeetingMaterialRow('');
+    });
+    document.getElementById('addMeetingDecisionButton').addEventListener('click', function() {
+      addMeetingDecisionRow({});
+    });
+    document.getElementById('addMeetingActionButton').addEventListener('click', function() {
+      addMeetingActionRow({});
+    });
+    document.getElementById('carryForwardButton').addEventListener('click', handleCarryForward);
+    document.getElementById('saveMeetingButton').addEventListener('click', handleSaveMeeting);
+    document.getElementById('activeMeetingsList').addEventListener('click', handleMeetingListClick);
+    document.getElementById('completedMeetingsList').addEventListener('click', handleMeetingListClick);
+    document.getElementById('cancelMemberPrepButton').addEventListener('click', closeMemberPreparation);
+    document.getElementById('saveMemberPrepButton').addEventListener('click', handleSaveMemberPreparation);
+  }
+
+
+  function applyMeetingLanguage() {
+    const text = meetingUi();
+    const mapping = {
+      meetingsEyebrow: text.eyebrow,
+      meetingsPanelTitle: text.title,
+      meetingsPanelIntro: text.intro,
+      newMeetingButton: text.newMeeting,
+      meetingGuidanceTitle: text.guidanceTitle,
+      meetingGuidanceText: text.guidanceText,
+      meetingPrivacyTitle: text.privacyTitle,
+      meetingBuilderEyebrow: text.builderEyebrow,
+      meetingBuilderTitle: text.builderTitle,
+      meetingBuilderIntro: text.builderIntro,
+      cancelMeetingEditButton: text.cancel,
+      meetingBasicsHeading: text.basics,
+      meetingTitleLabel: text.meetingTitle,
+      meetingTitleHelp: text.meetingTitleHelp,
+      meetingTypeLabel: text.type,
+      meetingTypeHelp: text.typeHelp,
+      meetingStatusLabel: text.status,
+      meetingStatusHelp: text.statusHelp,
+      meetingDateLabel: text.date,
+      meetingDateHelp: text.dateHelp,
+      meetingTimeLabel: text.time,
+      meetingTimeHelp: text.timeHelp,
+      meetingDurationLabel: text.duration,
+      meetingDurationHelp: text.durationHelp,
+      meetingFormatLabel: text.format,
+      meetingFormatHelp: text.formatHelp,
+      meetingLocationLabel: text.location,
+      meetingLocationHelp: text.locationHelp,
+      meetingFacilitatorLabel: text.facilitator,
+      meetingFacilitatorHelp: text.facilitatorHelp,
+      meetingAttendeesLabel: text.attendees,
+      meetingAttendeesHelp: text.attendeesHelp,
+      meetingTopicsHeading: text.topicsHeading,
+      topicLibraryHeading: text.libraryHeading,
+      topicLibraryIntro: text.libraryIntro,
+      topicGroupLabel: text.topicArea,
+      topicLibraryLabel: text.suggestedTopic,
+      addLibraryTopicButton: text.addSuggested,
+      customTopicHeading: text.customHeading,
+      customTopicIntro: text.customIntro,
+      addCustomTopicButton: text.addCustom,
+      newsTopicHeading: text.newsHeading,
+      newsTopicIntro: text.newsIntro,
+      newsPillarLabel: text.newsArea,
+      searchMeetingNewsButton: text.findStories,
+      newsSearchHelp: text.newsHelp,
+      selectedTopicsHeading: text.selectedTopics,
+      selectedTopicsHelp: text.selectedTopicsHelp,
+      meetingPreparationHeading: text.preparationHeading,
+      meetingOpeningLabel: text.opening,
+      meetingOpeningHelp: text.openingHelp,
+      previousMeetingLabel: text.previousMeeting,
+      previousMeetingHelp: text.previousMeetingHelp,
+      carryForwardLabel: text.carryForward,
+      carryForwardButton: text.addPreviousItems,
+      carryForwardHelp: text.carryHelp,
+      meetingRecapLabel: text.recap,
+      meetingRecapHelp: text.recapHelp,
+      meetingMealLabel: text.meal,
+      meetingMealHelp: text.mealHelp,
+      meetingMaterialsLabel: text.materials,
+      meetingMaterialsHelp: text.materialsHelp,
+      addMeetingMaterialButton: text.addMaterial,
+      meetingClosingLabel: text.closing,
+      meetingClosingHelp: text.closingHelp,
+      meetingFollowupHeading: text.followupHeading,
+      meetingNotesLabel: text.notes,
+      meetingNotesHelp: text.notesHelp,
+      meetingDecisionsHeading: text.decisions,
+      meetingDecisionsHelp: text.decisionsHelp,
+      addMeetingDecisionButton: text.addDecision,
+      meetingActionsHeading: text.actions,
+      meetingActionsHelp: text.actionsHelp,
+      addMeetingActionButton: text.addAction,
+      saveMeetingButton: text.save,
+      memberPrepEyebrow: text.prepEyebrow,
+      memberPrepTitle: text.prepTitle,
+      cancelMemberPrepButton: text.cancel,
+      memberPrepQuestionsLabel: text.prepQuestions,
+      memberPrepTopicLabel: text.prepTopic,
+      memberPrepSupportLabel: text.prepSupport,
+      memberPrepSupportHelp: text.prepSupportHelp,
+      saveMemberPrepButton: text.savePrep,
+      activeMeetingsHeading: text.activeHeading,
+      activeMeetingsHelp: text.activeHelp,
+      completedMeetingsHeading: text.completedHeading,
+      completedMeetingsHelp: text.completedHelp,
+      meetingHelpTitle: text.helpTitle,
+      meetingHelpPlanTitle: text.helpPlanTitle,
+      meetingHelpPlanText: text.helpPlanText,
+      meetingHelpTopicsTitle: text.helpTopicsTitle,
+      meetingHelpTopicsText: text.helpTopicsText,
+      meetingHelpLeadTitle: text.helpLeadTitle,
+      meetingHelpLeadText: text.helpLeadText,
+      meetingHelpFollowTitle: text.helpFollowTitle,
+      meetingHelpFollowText: text.helpFollowText,
+      dashboardUpcomingEyebrow: text.dashboardEyebrow,
+      dashboardUpcomingTitle: text.dashboardTitle,
+      dashboardUpcomingHelp: text.dashboardHelp,
+      dashboardQuickMeetingButton: text.dashboardQuick,
+      dashboardOpenMeetingsButton: text.dashboardOpen,
+      quickMeetingEyebrow: text.quickEyebrow,
+      quickMeetingTitle: text.quickTitle,
+      quickMeetingIntro: text.quickIntro,
+      quickMeetingTemplateLabel: text.quickTemplate,
+      quickMeetingTemplateHelp: text.quickTemplateHelp,
+      quickMeetingDateLabel: text.quickDate,
+      quickMeetingDateHelp: text.quickDateHelp,
+      quickMeetingTimeLabel: text.quickTime,
+      quickMeetingDurationLabel: text.quickDuration,
+      quickMeetingFacilitatorLabel: text.quickFacilitator,
+      quickMeetingFacilitatorHelp: text.quickFacilitatorHelp,
+      quickMeetingTopicsLabel: text.quickTopics,
+      quickMeetingTopicsHelp: text.quickTopicsHelp,
+      quickMeetingTopicAreaLabel: text.quickTopicArea,
+      quickMeetingTopicLabel: text.quickTopic,
+      quickAddTopicButton: text.quickAddTopic,
+      quickArticleSummary: text.quickArticleSummary,
+      quickArticleIntro: text.quickArticleIntro,
+      quickRecentArticleTitle: text.quickRecentTitle,
+      quickRecentArticleAreaLabel: text.quickRecentArea,
+      quickSearchNewsButton: text.quickFindStories,
+      quickCheckLinkTitle: text.quickCheckTitle,
+      quickArticleUrlLabel: text.quickUrl,
+      quickCheckLinkButton: text.quickCheckAdd,
+      quickCreateMeetingButton: text.quickCreate,
+      quickOpenFullPlannerButton: text.quickContinue,
+      meetingArticleUrlLabel: text.directLinkLabel,
+      checkMeetingArticleLinkButton: text.checkAndAdd
+    };
+
+    Object.keys(mapping).forEach(function(id) {
+      setText(id, mapping[id]);
+    });
+
+    const placeholders = {
+      meetingTitleInput: state.language === 'es'
+        ? 'Revisión semanal del hogar'
+        : 'Weekly household check-in',
+      meetingLocationInput: state.language === 'es'
+        ? 'En casa, en línea u otra descripción general'
+        : 'At home, online, or another general description',
+      meetingOpeningInput: state.language === 'es'
+        ? 'Dé la bienvenida, explique el propósito y cómo participarán los miembros.'
+        : 'Welcome everyone, share the purpose, and explain how members will participate.',
+      meetingMealInput: state.language === 'es'
+        ? 'Menú general o plan de refrigerios'
+        : 'General menu or refreshment plan',
+      meetingClosingInput: state.language === 'es'
+        ? 'Termine con un mensaje, recordatorio o ánimo corto.'
+        : 'End with a short message, quote, reminder, or encouragement.'
+    };
+    Object.keys(placeholders).forEach(function(id) {
+      const element = document.getElementById(id);
+      if (element) element.placeholder = placeholders[id];
+    });
+
+    if (state.meetingsData) {
+      populateMeetingSelects();
+      renderMeetingLists();
+      renderMeetingTopicsEditor();
+      initializeQuickMeeting(false);
+      renderDashboardUpcomingMeetings();
+    }
+  }
+
+
+  async function loadMeetingsWorkspace() {
+    try {
+      const data = await callServer('getMeetingsWorkspace', state.language);
+      state.meetingsData = data;
+      renderMeetingsWorkspace(data);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    }
+  }
+
+
+  function renderMeetingsWorkspace(data) {
+    state.meetingsData = data;
+    const isLead = data.role === 'HOUSEHOLD_LEAD';
+
+    document.getElementById('newMeetingButton').classList.toggle('hidden', !isLead);
+    document.getElementById('quickMeetingCard').classList.toggle('hidden', !isLead);
+    document.getElementById('dashboardQuickMeetingButton').classList.toggle('hidden', !isLead);
+    if (!isLead) {
+      hide('meetingBuilderCard');
+      hide('quickMeetingCard');
+    }
+
+    setText(
+      'meetingGuidanceCitation',
+      data.citation && data.citation.inTextCitation ||
+        '(Hall, 2025, pp. 17–20, 54, 57–63)'
+    );
+    setText('meetingPrivacyText', data.guidance && data.guidance.privacyMessage || '');
+
+    applyMeetingLanguage();
+    populateMeetingSelects();
+    initializeQuickMeeting(!state.quickMeetingInitialized);
+    renderMeetingLists();
+    renderDashboardUpcomingMeetings();
+  }
+
+
+  function populateMeetingSelects() {
+    if (!state.meetingsData) return;
+    const guidance = state.meetingsData.guidance || {};
+
+    fillOptionSelect('meetingTypeSelect', guidance.types || []);
+    fillOptionSelect('meetingStatusSelect', guidance.statuses || []);
+    fillOptionSelect('meetingDurationSelect', guidance.durations || []);
+    fillOptionSelect('meetingFormatSelect', guidance.formats || []);
+    fillOptionSelect('topicGroupSelect', guidance.topicGroups || []);
+    fillOptionSelect('newsPillarSelect', (guidance.topicGroups || []).filter(function(item) {
+      return item.value !== 'Organization';
+    }));
+    fillOptionSelect('quickMeetingTemplateSelect', guidance.types || []);
+    fillOptionSelect('quickMeetingDurationSelect', guidance.durations || []);
+    fillOptionSelect('quickMeetingTopicGroupSelect', guidance.topicGroups || []);
+    fillOptionSelect('quickNewsPillarSelect', (guidance.topicGroups || []).filter(function(item) {
+      return item.value !== 'Organization';
+    }));
+
+    populateMeetingTopicLibrary();
+    populateQuickMeetingTopics();
+    populateQuickFacilitator();
+    populateFacilitatorSelect();
+    renderMeetingAttendeeOptions();
+    populatePreviousMeetingSelect();
+  }
+
+
+  function meetingRoleLabel(value) {
+    if (state.language !== 'es') return value;
+    return {
+      'Household Lead': 'Líder del hogar',
+      'Co-Lead': 'Colíder',
+      'Family Member': 'Miembro de la familia',
+      'Adult Member': 'Miembro adulto',
+      'Young Adult Member': 'Miembro adulto joven',
+      'Teen Member': 'Miembro adolescente',
+      'Child Member': 'Miembro menor',
+      'Older Adult Member': 'Miembro adulto mayor',
+      'Meeting Facilitator': 'Facilitador de reuniones',
+      'Goal & Progress Coordinator': 'Coordinador de metas y progreso',
+      'Learning Coordinator': 'Coordinador de aprendizaje',
+      'Household Operations Coordinator': 'Coordinador de operaciones del hogar',
+      'Safety Coordinator': 'Coordinador de seguridad'
+    }[value] || value;
+  }
+
+
+  function meetingSourceLabel(value) {
+    if (state.language !== 'es') return value;
+    return {
+      Library: 'Sugerido',
+      Custom: 'Personalizado',
+      News: 'Noticias',
+      Link: 'Enlace'
+    }[value] || value;
+  }
+
+
+  function populateFacilitatorSelect() {
+    const select = document.getElementById('meetingFacilitatorSelect');
+    if (!select || !state.meetingsData) return;
+    const current = select.value;
+    const options = state.meetingsData.attendeeOptions || [];
+    select.innerHTML = '<option value="">' +
+      escapeHtml(meetingUi().selectFacilitator) + '</option>' +
+      options.map(function(value) {
+        return '<option value="' + escapeAttribute(value) + '">' +
+          escapeHtml(meetingRoleLabel(value)) + '</option>';
+      }).join('');
+    if (options.indexOf(current) >= 0) select.value = current;
+  }
+
+
+  function renderMeetingAttendeeOptions(selected) {
+    const container = document.getElementById('meetingAttendeeOptions');
+    if (!container || !state.meetingsData) return;
+    const selectedValues = Array.isArray(selected)
+      ? selected
+      : Array.from(container.querySelectorAll('input:checked')).map(function(input) {
+          return input.value;
+        });
+    const options = state.meetingsData.attendeeOptions || [];
+    container.innerHTML = options.map(function(value) {
+      const checked = selectedValues.indexOf(value) >= 0 ? ' checked' : '';
+      return '<label class="choice-chip"><input type="checkbox" value="' +
+        escapeAttribute(value) + '"' + checked + '><span>' +
+        escapeHtml(meetingRoleLabel(value)) + '</span></label>';
+    }).join('');
+  }
+
+
+  function populatePreviousMeetingSelect() {
+    const select = document.getElementById('previousMeetingSelect');
+    if (!select || !state.meetingsData) return;
+    const current = select.value;
+    const meetings = (state.meetingsData.meetings || []).filter(function(item) {
+      return item.id !== state.editingMeetingId && item.status !== 'Archived';
+    });
+    select.innerHTML = '<option value="">' + escapeHtml(meetingUi().selectPrevious) +
+      '</option>' + meetings.map(function(meeting) {
+        const date = meeting.scheduledDate ? ' · ' + meeting.scheduledDate : '';
+        return '<option value="' + escapeAttribute(meeting.id) + '">' +
+          escapeHtml(meeting.title + date) + '</option>';
+      }).join('');
+    if (meetings.some(function(item) { return item.id === current; })) {
+      select.value = current;
+    }
+  }
+
+
+  function populateMeetingTopicLibrary() {
+    const select = document.getElementById('topicLibrarySelect');
+    if (!select || !state.meetingsData) return;
+    const group = document.getElementById('topicGroupSelect').value || 'Health';
+    const topics = state.meetingsData.guidance &&
+      state.meetingsData.guidance.topics &&
+      state.meetingsData.guidance.topics[group] || [];
+    select.innerHTML = '<option value="">' + escapeHtml(meetingUi().selectTopic) +
+      '</option>' + topics.map(function(topic) {
+        return '<option value="' + escapeAttribute(topic.id) + '">' +
+          escapeHtml(topic.title) + '</option>';
+      }).join('');
+  }
+
+
+
+  function quickMeetingTemplates_() {
+    const es = state.language === 'es';
+    return {
+      'Weekly Check-In': {
+        title: es ? 'Revisión semanal del hogar' : 'Weekly Household Check-In',
+        duration: 30,
+        topics: [
+          ['Health', 'health_wellness'],
+          ['Goals', 'goals_priorities']
+        ]
+      },
+      'Monthly Planning': {
+        title: es ? 'Planificación mensual del hogar' : 'Monthly Household Planning',
+        duration: 45,
+        topics: [
+          ['Finances', 'finances_upcoming'],
+          ['Goals', 'goals_priorities']
+        ]
+      },
+      'Goal Review': {
+        title: es ? 'Revisión de metas del hogar' : 'Household Goal Review',
+        duration: 30,
+        topics: [
+          ['Goals', 'goals_progress'],
+          ['Goals', 'goals_barriers']
+        ]
+      },
+      'Learning Discussion': {
+        title: es ? 'Conversación de aprendizaje' : 'Household Learning Discussion',
+        duration: 45,
+        topics: [
+          ['Education', 'education_digital'],
+          ['Education', 'education_skillshare']
+        ]
+      },
+      'Safety & Preparedness': {
+        title: es ? 'Seguridad y preparación del hogar' : 'Household Safety & Preparedness',
+        duration: 30,
+        topics: [
+          ['Health', 'health_safety'],
+          ['Organization', 'organization_systems']
+        ]
+      },
+      'Celebration & Connection': {
+        title: es ? 'Celebración y conexión del hogar' : 'Household Celebration & Connection',
+        duration: 30,
+        topics: [
+          ['Relationships', 'relationships_appreciation'],
+          ['Goals', 'goals_celebration']
+        ]
+      },
+      'Special Planning': {
+        title: es ? 'Planificación especial del hogar' : 'Special Household Planning',
+        duration: 45,
+        topics: [
+          ['Goals', 'goals_priorities'],
+          ['Organization', 'organization_roles']
+        ]
+      },
+      'Custom Meeting': {
+        title: es ? 'Reunión del hogar' : 'Household Meeting',
+        duration: 30,
+        topics: []
+      }
+    };
+  }
+
+
+  function initializeQuickMeeting(force) {
+    if (!state.meetingsData ||
+        !state.workspace ||
+        state.workspace.role !== 'HOUSEHOLD_LEAD') {
+      return;
+    }
+
+    populateQuickFacilitator();
+    populateQuickMeetingTopics();
+
+    if (force || !state.quickMeetingInitialized) {
+      state.quickMeetingInitialized = true;
+      state.quickMeetingTopics = [];
+      state.quickMeetingArticle = null;
+      document.getElementById('quickMeetingTemplateSelect').value =
+        'Weekly Check-In';
+      document.getElementById('quickMeetingDateInput').value = '';
+      document.getElementById('quickMeetingTimeInput').value = '';
+      document.getElementById('quickMeetingFacilitatorSelect').value = '';
+      document.getElementById('quickArticleUrlInput').value = '';
+      hide('quickMeetingNewsResults');
+      applyQuickMeetingTemplate();
+      renderQuickSelectedArticle();
+      return;
+    }
+
+    refreshQuickTopicsForLanguage_();
+    renderQuickMeetingSelectedTopics();
+    renderQuickSelectedArticle();
+  }
+
+
+  function populateQuickFacilitator() {
+    const select = document.getElementById('quickMeetingFacilitatorSelect');
+    if (!select || !state.meetingsData) return;
+    const current = select.value;
+    const options = state.meetingsData.attendeeOptions || [];
+    select.innerHTML = '<option value="">' +
+      escapeHtml(meetingUi().selectFacilitator) + '</option>' +
+      options.map(function(value) {
+        return '<option value="' + escapeAttribute(value) + '">' +
+          escapeHtml(meetingRoleLabel(value)) + '</option>';
+      }).join('');
+    if (options.indexOf(current) >= 0) select.value = current;
+  }
+
+
+  function populateQuickMeetingTopics() {
+    const select = document.getElementById('quickMeetingTopicSelect');
+    if (!select || !state.meetingsData) return;
+    const group = document.getElementById('quickMeetingTopicGroupSelect').value ||
+      'Health';
+    const topics = state.meetingsData.guidance &&
+      state.meetingsData.guidance.topics &&
+      state.meetingsData.guidance.topics[group] || [];
+
+    select.innerHTML = '<option value="">' +
+      escapeHtml(meetingUi().selectTopic) + '</option>' +
+      topics.map(function(topic) {
+        return '<option value="' + escapeAttribute(topic.id) + '">' +
+          escapeHtml(topic.title) + '</option>';
+      }).join('');
+  }
+
+
+  function findMeetingLibraryTopic_(pillar, id) {
+    const topics = state.meetingsData &&
+      state.meetingsData.guidance &&
+      state.meetingsData.guidance.topics &&
+      state.meetingsData.guidance.topics[pillar] || [];
+    return topics.find(function(topic) { return topic.id === id; }) || null;
+  }
+
+
+  function quickLibraryTopic_(pillar, id) {
+    const topic = findMeetingLibraryTopic_(pillar, id);
+    if (!topic) return null;
+    return {
+      id: '',
+      sourceType: 'Library',
+      libraryId: topic.id,
+      pillar: pillar,
+      title: topic.title,
+      purpose: topic.purpose,
+      prompts: cloneClient_(topic.prompts || []),
+      desiredOutcome: topic.desiredOutcome,
+      timeMinutes: 12,
+      article: null
+    };
+  }
+
+
+  function applyQuickMeetingTemplate() {
+    if (!state.meetingsData) return;
+    const type = document.getElementById('quickMeetingTemplateSelect').value ||
+      'Weekly Check-In';
+    const template = quickMeetingTemplates_()[type] ||
+      quickMeetingTemplates_()['Custom Meeting'];
+
+    document.getElementById('quickMeetingDurationSelect').value =
+      String(template.duration || 30);
+    state.quickMeetingTopics = (template.topics || [])
+      .map(function(pair) {
+        return quickLibraryTopic_(pair[0], pair[1]);
+      })
+      .filter(Boolean)
+      .slice(0, 2);
+    renderQuickMeetingSelectedTopics();
+  }
+
+
+  function refreshQuickTopicsForLanguage_() {
+    state.quickMeetingTopics = (state.quickMeetingTopics || []).map(function(topic) {
+      if (topic.sourceType !== 'Library' || !topic.libraryId) return topic;
+      return quickLibraryTopic_(topic.pillar, topic.libraryId) || topic;
+    });
+  }
+
+
+  function renderQuickMeetingSelectedTopics() {
+    const container = document.getElementById('quickMeetingSelectedTopics');
+    if (!container) return;
+    const topics = state.quickMeetingTopics || [];
+
+    if (!topics.length) {
+      container.innerHTML = '<span class="small-muted">' +
+        escapeHtml(state.language === 'es'
+          ? 'Todavía no hay temas seleccionados.'
+          : 'No topics selected yet.') + '</span>';
+      return;
+    }
+
+    container.innerHTML = topics.map(function(topic, index) {
+      return '<span class="quick-topic-chip"><span>' +
+        escapeHtml(topic.title) + '</span><button type="button" data-quick-topic-index="' +
+        index + '" aria-label="' + escapeAttribute(meetingUi().remove) +
+        '">×</button></span>';
+    }).join('');
+  }
+
+
+  function quickMeetingTopicCount_() {
+    return (state.quickMeetingTopics || []).length +
+      (state.quickMeetingArticle ? 1 : 0);
+  }
+
+
+  function quickArticleHasRoom_() {
+    return Boolean(state.quickMeetingArticle) ||
+      (state.quickMeetingTopics || []).length < 3;
+  }
+
+
+  function addQuickMeetingTopic() {
+    if (quickMeetingTopicCount_() >= 3) {
+      toast(meetingUi().quickTopicLimit, true);
+      return;
+    }
+
+    const pillar = document.getElementById('quickMeetingTopicGroupSelect').value;
+    const id = document.getElementById('quickMeetingTopicSelect').value;
+    if (!id) {
+      toast(meetingUi().quickNoTopic, true);
+      return;
+    }
+
+    const topic = quickLibraryTopic_(pillar, id);
+    if (!topic) {
+      toast(meetingUi().quickNoTopic, true);
+      return;
+    }
+
+    const duplicate = (state.quickMeetingTopics || []).some(function(item) {
+      return item.libraryId === id;
+    });
+    if (!duplicate) {
+      state.quickMeetingTopics.push(topic);
+      renderQuickMeetingSelectedTopics();
+    }
+  }
+
+
+  function handleQuickTopicRemove(event) {
+    const button = event.target.closest('button[data-quick-topic-index]');
+    if (!button) return;
+    state.quickMeetingTopics.splice(Number(button.dataset.quickTopicIndex), 1);
+    renderQuickMeetingSelectedTopics();
+  }
+
+
+  function quickArticleTopic_(article) {
+    const isLink = article && article.provider === 'Manual link check';
+    return {
+      id: '',
+      sourceType: isLink ? 'Link' : 'News',
+      libraryId: '',
+      pillar: document.getElementById('quickNewsPillarSelect').value || 'Education',
+      title: article.title,
+      purpose: state.language === 'es'
+        ? 'Comprender la historia, conectarla con FamilyPD y decidir una acción preventiva o útil para el hogar.'
+        : 'Understand the story, connect it to FamilyPD, and choose one useful or proactive household action.',
+      prompts: state.language === 'es'
+        ? [
+            '¿Qué ocurrió según la fuente?',
+            '¿Qué puede aprender nuestro hogar?',
+            '¿Qué debemos verificar antes de aceptar la información?',
+            '¿Qué acción realista podemos tomar?'
+          ]
+        : [
+            'What happened according to the source?',
+            'What can our household learn?',
+            'What should we verify before accepting the information?',
+            'What realistic action can we take?'
+          ],
+      desiredOutcome: state.language === 'es'
+        ? 'Identificar una lección y una acción realista.'
+        : 'Identify one lesson and one realistic action.',
+      timeMinutes: 15,
+      article: cloneClient_(article)
+    };
+  }
+
+
+  function renderQuickSelectedArticle() {
+    const container = document.getElementById('quickSelectedArticle');
+    if (!container) return;
+    const article = state.quickMeetingArticle;
+
+    if (!article) {
+      container.innerHTML = '';
+      hide('quickSelectedArticle');
+      return;
+    }
+
+    container.innerHTML =
+      '<div><span class="goal-badge">' +
+      escapeHtml(meetingUi().quickArticleSelected) + '</span><h4>' +
+      escapeHtml(article.title) + '</h4><p class="small-muted">' +
+      escapeHtml(article.publisher || '') +
+      (article.publishedDate ? ' · ' + escapeHtml(article.publishedDate) : '') +
+      '</p></div><div class="button-row"><a class="secondary-button compact-button link-button" ' +
+      'target="_blank" rel="noopener" href="' + escapeAttribute(article.url) +
+      '">' + escapeHtml(meetingUi().openArticle) + '</a>' +
+      '<button type="button" class="text-button danger-text" data-remove-quick-article="true">' +
+      escapeHtml(meetingUi().quickRemoveArticle) + '</button></div>';
+    show('quickSelectedArticle');
+  }
+
+
+  function handleQuickArticleRemove(event) {
+    if (!event.target.closest('[data-remove-quick-article]')) return;
+    state.quickMeetingArticle = null;
+    renderQuickSelectedArticle();
+  }
+
+
+  async function searchQuickMeetingNews() {
+    if (!quickArticleHasRoom_()) {
+      toast(meetingUi().quickTopicLimit, true);
+      return;
+    }
+
+    const button = document.getElementById('quickSearchNewsButton');
+    const pillar = document.getElementById('quickNewsPillarSelect').value ||
+      'Education';
+    setBusy(button, true, meetingUi().newsLoading);
+
+    try {
+      const result = await callServer(
+        'findRecentMeetingNews',
+        pillar,
+        state.language
+      );
+      state.quickMeetingNewsResults = result.results || [];
+      renderQuickMeetingNewsResults(result);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, meetingUi().quickFindStories);
+    }
+  }
+
+
+  function renderQuickMeetingNewsResults(result) {
+    const container = document.getElementById('quickMeetingNewsResults');
+    const items = result && result.results || [];
+
+    if (!items.length) {
+      container.innerHTML = renderNewsFallbackSearches_(result);
+      show('quickMeetingNewsResults');
+      return;
+    }
+
+    container.innerHTML =
+      '<div class="news-notice">' + escapeHtml(meetingUi().newsNotice) + '</div>' +
+      items.map(function(article, index) {
+        return '<article class="news-result-card"><div><span class="goal-badge">' +
+          escapeHtml(article.publisher || '') + '</span><h4>' +
+          escapeHtml(article.title) + '</h4><p class="small-muted">' +
+          escapeHtml(article.publishedDate || '') + '</p></div><div class="button-row">' +
+          '<a class="secondary-button compact-button link-button" target="_blank" rel="noopener" href="' +
+          escapeAttribute(article.url) + '">' + escapeHtml(meetingUi().openArticle) + '</a>' +
+          '<button type="button" class="primary-button compact-button" data-quick-news-index="' +
+          index + '">' + escapeHtml(meetingUi().addArticle) + '</button></div></article>';
+      }).join('');
+    show('quickMeetingNewsResults');
+  }
+
+
+  function renderNewsFallbackSearches_(result) {
+    const searches = result && Array.isArray(result.fallbackSearches)
+      ? result.fallbackSearches
+      : [];
+    const notice = result && result.notice || meetingUi().newsEmpty;
+
+    if (!searches.length) {
+      return '<div class="empty-state">' +
+        escapeHtml(notice || meetingUi().newsEmpty) + '</div>';
+    }
+
+    return '<div class="news-fallback-card"><h4>' +
+      escapeHtml(meetingUi().newsFallbackTitle) + '</h4><p>' +
+      escapeHtml(meetingUi().newsFallbackText) + '</p><div class="news-notice">' +
+      escapeHtml(notice) + '</div></div>' +
+      searches.map(function(search) {
+        return '<article class="news-result-card news-search-card"><div>' +
+          '<span class="goal-badge">' +
+          escapeHtml(search.publisher || '') + '</span><h4>' +
+          escapeHtml(search.title || '') + '</h4><p class="small-muted">' +
+          escapeHtml(search.note || '') + '</p></div><div class="button-row">' +
+          '<a class="primary-button compact-button link-button" target="_blank" ' +
+          'rel="noopener" href="' + escapeAttribute(search.url || '#') + '">' +
+          escapeHtml(meetingUi().openSearch) + '</a></div></article>';
+      }).join('');
+  }
+
+
+  function handleQuickNewsResultClick(event) {
+    const button = event.target.closest('button[data-quick-news-index]');
+    if (!button) return;
+    if (!quickArticleHasRoom_()) {
+      toast(meetingUi().quickTopicLimit, true);
+      return;
+    }
+
+    const article = (state.quickMeetingNewsResults || [])[
+      Number(button.dataset.quickNewsIndex)
+    ];
+    if (!article) return;
+
+    state.quickMeetingArticle = cloneClient_(article);
+    renderQuickSelectedArticle();
+    hide('quickMeetingNewsResults');
+  }
+
+
+  async function checkQuickMeetingLink() {
+    if (!quickArticleHasRoom_()) {
+      toast(meetingUi().quickTopicLimit, true);
+      return;
+    }
+
+    const input = document.getElementById('quickArticleUrlInput');
+    const button = document.getElementById('quickCheckLinkButton');
+    setBusy(button, true, meetingUi().checkingLink);
+
+    try {
+      const result = await callServer(
+        'checkMeetingArticleLink',
+        input.value.trim(),
+        state.language
+      );
+      state.quickMeetingArticle = cloneClient_(result.article);
+      renderQuickSelectedArticle();
+      input.value = '';
+      toast(result.message);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, meetingUi().quickCheckAdd);
+    }
+  }
+
+
+  function quickMeetingDraft_() {
+    const type = document.getElementById('quickMeetingTemplateSelect').value ||
+      'Weekly Check-In';
+    const template = quickMeetingTemplates_()[type] ||
+      quickMeetingTemplates_()['Custom Meeting'];
+    const date = document.getElementById('quickMeetingDateInput').value;
+    const topics = cloneClient_(state.quickMeetingTopics || []);
+
+    if (state.quickMeetingArticle) {
+      topics.push(quickArticleTopic_(state.quickMeetingArticle));
+    }
+
+    return {
+      id: '',
+      language: state.language,
+      title: template.title,
+      meetingType: type,
+      status: date ? 'Scheduled' : 'Draft',
+      scheduledDate: date,
+      scheduledTime: document.getElementById('quickMeetingTimeInput').value,
+      durationMinutes: Number(
+        document.getElementById('quickMeetingDurationSelect').value || 30
+      ),
+      meetingFormat: 'In person',
+      locationNote: '',
+      facilitatorRole:
+        document.getElementById('quickMeetingFacilitatorSelect').value,
+      attendeeRoles: [],
+      openingMessage: state.language === 'es'
+        ? 'Bienvenidos. Revisaremos los temas seleccionados, escucharemos ideas y acordaremos próximas acciones.'
+        : 'Welcome. We will review the selected topics, hear ideas, and agree on next actions.',
+      previousRecap: '',
+      mealPlan: '',
+      materials: [],
+      topics: topics.slice(0, 3),
+      notes: '',
+      decisions: [],
+      actionItems: [],
+      closingMessage: state.language === 'es'
+        ? 'Antes de terminar, nombre una acción positiva que realizará después de esta reunión.'
+        : 'Before we close, name one positive action you will take after this meeting.'
+    };
+  }
+
+
+  async function createQuickMeeting() {
+    const payload = quickMeetingDraft_();
+    const privacyPayload = cloneClient_(payload);
+    privacyPayload.topics = (privacyPayload.topics || []).map(function(topic) {
+      topic.article = null;
+      return topic;
+    });
+    if (!clientPrivacyCheck(privacyPayload)) return;
+
+    const button = document.getElementById('quickCreateMeetingButton');
+    setBusy(button, true, meetingUi().saving);
+    try {
+      const result = await callServer('saveMeetingRecord', payload);
+      state.meetingsData = result.workspace;
+      renderMeetingsWorkspace(state.meetingsData);
+      initializeQuickMeeting(true);
+      toast(meetingUi().quickCreated);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, meetingUi().quickCreate);
+    }
+  }
+
+
+  function continueQuickMeetingInFullPlanner() {
+    openMeetingBuilder(quickMeetingDraft_());
+  }
+
+
+  function openQuickMeetingFromDashboard() {
+    if (!state.workspace || state.workspace.role !== 'HOUSEHOLD_LEAD') return;
+    openPanel('meetingsPanel');
+    initializeQuickMeeting(false);
+    document.getElementById('quickMeetingCard').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+
+
+  function renderDashboardUpcomingMeetings() {
+    const container = document.getElementById('dashboardUpcomingMeetingsList');
+    if (!container || !state.meetingsData) return;
+
+    const isLead = state.workspace &&
+      state.workspace.role === 'HOUSEHOLD_LEAD';
+    const today = localDateKey_(new Date());
+    const upcoming = (state.meetingsData.meetings || [])
+      .filter(function(meeting) {
+        return meeting.status === 'Scheduled' &&
+          meeting.scheduledDate &&
+          meeting.scheduledDate >= today;
+      })
+      .sort(function(a, b) {
+        return (a.scheduledDate + ' ' + (a.scheduledTime || '99:99'))
+          .localeCompare(b.scheduledDate + ' ' + (b.scheduledTime || '99:99'));
+      })
+      .slice(0, 3);
+
+    if (!upcoming.length) {
+      container.innerHTML = '<div class="empty-state">' +
+        escapeHtml(isLead
+          ? meetingUi().dashboardEmptyLead
+          : meetingUi().dashboardEmptyMember) + '</div>';
+      return;
+    }
+
+    container.innerHTML = upcoming.map(function(meeting) {
+      return '<article class="dashboard-meeting-item"><div class="dashboard-meeting-date">' +
+        escapeHtml(formatDashboardMeetingDate_(meeting.scheduledDate)) +
+        (meeting.scheduledTime
+          ? '<span>' + escapeHtml(formatDashboardMeetingTime_(meeting.scheduledTime)) + '</span>'
+          : '') + '</div><div><h4>' + escapeHtml(meeting.title) + '</h4><p>' +
+        escapeHtml(meetingLabelFor('types', meeting.meetingType)) + '</p><small>' +
+        escapeHtml(meetingUi().facilitatorShort + ': ' +
+          meetingRoleLabel(meeting.facilitatorRole || '—')) + ' · ' +
+        Number((meeting.topics || []).length) + ' ' +
+        escapeHtml(meetingUi().topics) + '</small></div></article>';
+    }).join('');
+  }
+
+
+  function localDateKey_(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return year + '-' + month + '-' + day;
+  }
+
+
+  function formatDashboardMeetingDate_(dateValue) {
+    const date = new Date(dateValue + 'T12:00:00');
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+
+    if (localDateKey_(date) === localDateKey_(today)) {
+      return meetingUi().today;
+    }
+    if (localDateKey_(date) === localDateKey_(tomorrow)) {
+      return meetingUi().tomorrow;
+    }
+
+    return new Intl.DateTimeFormat(
+      state.language === 'es' ? 'es-US' : 'en-US',
+      { weekday: 'short', month: 'short', day: 'numeric' }
+    ).format(date);
+  }
+
+
+  function formatDashboardMeetingTime_(timeValue) {
+    const parts = String(timeValue || '').split(':');
+    if (parts.length !== 2) return timeValue;
+    const date = new Date();
+    date.setHours(Number(parts[0]), Number(parts[1]), 0, 0);
+    return new Intl.DateTimeFormat(
+      state.language === 'es' ? 'es-US' : 'en-US',
+      { hour: 'numeric', minute: '2-digit' }
+    ).format(date);
+  }
+
+
+  function openMeetingBuilder(meeting) {
+    if (!state.workspace || state.workspace.role !== 'HOUSEHOLD_LEAD') return;
+    meeting = meeting || {};
+
+    state.editingMeetingId = meeting.id || '';
+    state.meetingDraftTopics = cloneClient_(meeting.topics || []);
+    document.getElementById('meetingIdInput').value = state.editingMeetingId;
+    document.getElementById('meetingTitleInput').value = meeting.title || '';
+    document.getElementById('meetingTypeSelect').value =
+      meeting.meetingType || 'Weekly Check-In';
+    document.getElementById('meetingStatusSelect').value =
+      meeting.status || 'Draft';
+    document.getElementById('meetingDateInput').value = meeting.scheduledDate || '';
+    document.getElementById('meetingTimeInput').value = meeting.scheduledTime || '';
+    document.getElementById('meetingDurationSelect').value =
+      String(meeting.durationMinutes || 60);
+    document.getElementById('meetingFormatSelect').value =
+      meeting.meetingFormat || 'In person';
+    document.getElementById('meetingLocationInput').value =
+      meeting.locationNote || '';
+    populateFacilitatorSelect();
+    document.getElementById('meetingFacilitatorSelect').value =
+      meeting.facilitatorRole || '';
+    renderMeetingAttendeeOptions(meeting.attendeeRoles || []);
+    document.getElementById('meetingOpeningInput').value =
+      meeting.openingMessage || (state.language === 'es'
+        ? 'Bienvenidos. Revisaremos nuestras prioridades, escucharemos ideas y acordaremos próximas acciones.'
+        : 'Welcome. We will review priorities, hear ideas, and agree on next actions.');
+    document.getElementById('meetingRecapInput').value =
+      meeting.previousRecap || '';
+    document.getElementById('meetingMealInput').value =
+      meeting.mealPlan || '';
+    document.getElementById('meetingClosingInput').value =
+      meeting.closingMessage || (state.language === 'es'
+        ? 'Antes de terminar, nombre una acción positiva que realizará antes de la próxima reunión.'
+        : 'Before we close, name one positive action you will take before the next meeting.');
+    document.getElementById('meetingNotesInput').value =
+      meeting.notes || '';
+
+    document.getElementById('meetingMaterialsEditor').innerHTML = '';
+    const materials = meeting.materials && meeting.materials.length
+      ? meeting.materials
+      : [
+          state.language === 'es' ? 'Utensilio para escribir' : 'Writing utensil',
+          state.language === 'es' ? 'Computadora o tableta, si se necesita' : 'Laptop or tablet, if needed'
+        ];
+    materials.forEach(addMeetingMaterialRow);
+
+    document.getElementById('meetingDecisionsEditor').innerHTML = '';
+    (meeting.decisions || []).forEach(addMeetingDecisionRow);
+
+    document.getElementById('meetingActionsEditor').innerHTML = '';
+    (meeting.actionItems || []).forEach(addMeetingActionRow);
+
+    renderMeetingTopicsEditor();
+    populatePreviousMeetingSelect();
+    hide('meetingNewsResults');
+    show('meetingBuilderCard');
+    openPanel('meetingsPanel');
+    document.getElementById('meetingBuilderCard').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+
+
+  function closeMeetingBuilder() {
+    hide('meetingBuilderCard');
+    state.editingMeetingId = '';
+    state.meetingDraftTopics = [];
+  }
+
+
+  function addSelectedLibraryTopic() {
+    if (!state.meetingsData) return;
+    syncMeetingTopicsFromDom();
+    const group = document.getElementById('topicGroupSelect').value || 'Health';
+    const id = document.getElementById('topicLibrarySelect').value;
+    const topics = state.meetingsData.guidance &&
+      state.meetingsData.guidance.topics &&
+      state.meetingsData.guidance.topics[group] || [];
+    const selected = topics.find(function(item) { return item.id === id; });
+    if (!selected) {
+      toast(state.language === 'es'
+        ? 'Seleccione un tema sugerido.'
+        : 'Select a suggested topic.', true);
+      return;
+    }
+    state.meetingDraftTopics.push({
+      id: '',
+      sourceType: 'Library',
+      libraryId: selected.id,
+      pillar: group,
+      title: selected.title,
+      purpose: selected.purpose,
+      prompts: cloneClient_(selected.prompts || []),
+      desiredOutcome: selected.desiredOutcome,
+      timeMinutes: 15,
+      article: null
+    });
+    renderMeetingTopicsEditor();
+  }
+
+
+  function addCustomMeetingTopic() {
+    syncMeetingTopicsFromDom();
+    state.meetingDraftTopics.push({
+      id: '',
+      sourceType: 'Custom',
+      libraryId: '',
+      pillar: 'Organization',
+      title: meetingUi().customTopicTitle,
+      purpose: meetingUi().customTopicPurpose,
+      prompts: [''],
+      desiredOutcome: meetingUi().customOutcome,
+      timeMinutes: 15,
+      article: null
+    });
+    renderMeetingTopicsEditor();
+  }
+
+
+
+  async function handleFullPlannerLinkCheck() {
+    const input = document.getElementById('meetingArticleUrlInput');
+    const button = document.getElementById('checkMeetingArticleLinkButton');
+    setBusy(button, true, meetingUi().checkingLink);
+
+    try {
+      const result = await callServer(
+        'checkMeetingArticleLink',
+        input.value.trim(),
+        state.language
+      );
+      const article = result.article;
+      syncMeetingTopicsFromDom();
+      const pillar = document.getElementById('newsPillarSelect').value || 'Education';
+
+      state.meetingDraftTopics.push({
+        id: '',
+        sourceType: 'Link',
+        libraryId: '',
+        pillar: pillar,
+        title: article.title,
+        purpose: state.language === 'es'
+          ? 'Revisar el artículo, conectar la información con FamilyPD y decidir una acción útil o preventiva.'
+          : 'Review the article, connect the information to FamilyPD, and choose one useful or proactive action.',
+        prompts: state.language === 'es'
+          ? [
+              '¿Qué afirma la fuente?',
+              '¿Quién creó la información y cuál puede ser su propósito?',
+              '¿Qué debemos verificar con otra fuente?',
+              '¿Qué puede aprender o hacer nuestro hogar?'
+            ]
+          : [
+              'What does the source claim?',
+              'Who created the information, and what may be its purpose?',
+              'What should we verify with another source?',
+              'What can our household learn or do?'
+            ],
+        desiredOutcome: state.language === 'es'
+          ? 'Identificar una lección, una pregunta de verificación y una acción realista.'
+          : 'Identify one lesson, one verification question, and one realistic action.',
+        timeMinutes: 20,
+        article: cloneClient_(article)
+      });
+
+      input.value = '';
+      renderMeetingTopicsEditor();
+      toast(meetingUi().linkCheckedAdded);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, meetingUi().checkAndAdd);
+    }
+  }
+
+
+  async function searchMeetingNews() {
+    const button = document.getElementById('searchMeetingNewsButton');
+    const pillar = document.getElementById('newsPillarSelect').value || 'Health';
+    setBusy(button, true, meetingUi().newsLoading);
+    try {
+      const result = await callServer('findRecentMeetingNews', pillar, state.language);
+      state.currentNewsResults = result.results || [];
+      renderMeetingNewsResults(result);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, meetingUi().findStories);
+    }
+  }
+
+
+  function renderMeetingNewsResults(result) {
+    const container = document.getElementById('meetingNewsResults');
+    const items = result && result.results || [];
+    if (!items.length) {
+      container.innerHTML = renderNewsFallbackSearches_(result);
+      show('meetingNewsResults');
+      return;
+    }
+
+    container.innerHTML =
+      '<div class="news-notice">' + escapeHtml(meetingUi().newsNotice) + '</div>' +
+      items.map(function(article, index) {
+        return '<article class="news-result-card"><div><span class="goal-badge">' +
+          escapeHtml(article.publisher || '') + '</span><h4>' +
+          escapeHtml(article.title) + '</h4><p class="small-muted">' +
+          escapeHtml(article.publishedDate || '') + '</p></div><div class="button-row">' +
+          '<a class="secondary-button compact-button link-button" target="_blank" rel="noopener" href="' +
+          escapeAttribute(article.url) + '">' + escapeHtml(meetingUi().openArticle) + '</a>' +
+          '<button type="button" class="primary-button compact-button" data-news-index="' +
+          index + '">' + escapeHtml(meetingUi().addArticle) + '</button></div></article>';
+      }).join('');
+    show('meetingNewsResults');
+  }
+
+
+  function handleNewsResultClick(event) {
+    const button = event.target.closest('button[data-news-index]');
+    if (!button) return;
+    const article = state.currentNewsResults[Number(button.dataset.newsIndex)];
+    if (!article) return;
+
+    syncMeetingTopicsFromDom();
+    const pillar = document.getElementById('newsPillarSelect').value || 'Health';
+    state.meetingDraftTopics.push({
+      id: '',
+      sourceType: 'News',
+      libraryId: '',
+      pillar: pillar,
+      title: article.title,
+      purpose: state.language === 'es'
+        ? 'Comprender lo ocurrido, conectarlo con FamilyPD y conversar sobre una acción preventiva que el hogar pueda tomar.'
+        : 'Understand what happened, connect it to FamilyPD, and discuss a proactive action the household can take.',
+      prompts: state.language === 'es'
+        ? [
+            '¿Qué ocurrió según la fuente?',
+            '¿Qué pilar de FamilyPD se relaciona con esta historia?',
+            '¿Qué pueden aprender los hogares?',
+            '¿Qué acción preventiva puede tomar nuestro hogar?'
+          ]
+        : [
+            'What happened according to the source?',
+            'Which FamilyPD pillar is connected to this story?',
+            'What can households learn?',
+            'What proactive action can our household take?'
+          ],
+      desiredOutcome: state.language === 'es'
+        ? 'Identificar una lección y una acción preventiva realista.'
+        : 'Identify one lesson and one realistic proactive action.',
+      timeMinutes: 20,
+      article: cloneClient_(article)
+    });
+    renderMeetingTopicsEditor();
+    toast(meetingUi().newsAdded);
+  }
+
+
+  function renderMeetingTopicsEditor() {
+    const container = document.getElementById('meetingTopicsEditor');
+    if (!container) return;
+    const groups = state.meetingsData &&
+      state.meetingsData.guidance &&
+      state.meetingsData.guidance.topicGroups || [];
+
+    if (!state.meetingDraftTopics.length) {
+      container.innerHTML = '<div class="empty-state">' +
+        escapeHtml(state.language === 'es'
+          ? 'Todavía no se han seleccionado temas.'
+          : 'No agenda topics have been selected yet.') + '</div>';
+      return;
+    }
+
+    container.innerHTML = '';
+    state.meetingDraftTopics.forEach(function(topic, topicIndex) {
+      const card = document.createElement('article');
+      card.className = 'meeting-topic-card';
+      card.dataset.index = String(topicIndex);
+
+      const groupOptions = groups.map(function(group) {
+        return '<option value="' + escapeAttribute(group.value) + '"' +
+          (group.value === topic.pillar ? ' selected' : '') + '>' +
+          escapeHtml(group.label) + '</option>';
+      }).join('');
+
+      const promptHtml = (topic.prompts || []).map(function(prompt, promptIndex) {
+        return '<div class="meeting-prompt-row" data-prompt-index="' + promptIndex + '">' +
+          '<input class="meeting-topic-prompt" type="text" maxlength="600" spellcheck="true" value="' +
+          escapeAttribute(prompt) + '" placeholder="' +
+          escapeAttribute(meetingUi().promptPlaceholder) + '">' +
+          '<button type="button" class="remove-row-button remove-topic-prompt">' +
+          escapeHtml(meetingUi().remove) + '</button></div>';
+      }).join('');
+
+      const articleHtml = topic.article && topic.article.url
+        ? '<div class="selected-news-article"><strong>' +
+          escapeHtml(meetingUi().article) + ':</strong> <a target="_blank" rel="noopener" href="' +
+          escapeAttribute(topic.article.url) + '">' + escapeHtml(topic.article.title) +
+          '</a><span>' + escapeHtml(topic.article.publisher || '') +
+          (topic.article.publishedDate ? ' · ' + escapeHtml(topic.article.publishedDate) : '') +
+          '</span></div>'
+        : '';
+
+      card.innerHTML =
+        '<div class="section-heading-row"><div><span class="goal-badge">' +
+        escapeHtml(meetingSourceLabel(topic.sourceType || 'Custom')) + '</span></div>' +
+        '<button type="button" class="text-button danger-text remove-meeting-topic">' +
+        escapeHtml(meetingUi().removeTopic) + '</button></div>' +
+        '<div class="form-grid"><label class="field full"><span>' +
+        escapeHtml(state.language === 'es' ? 'Título del tema' : 'Topic title') +
+        '</span><input class="meeting-topic-title" type="text" maxlength="220" spellcheck="true" value="' +
+        escapeAttribute(topic.title || '') + '"></label>' +
+        '<label class="field"><span>' + escapeHtml(meetingUi().topicArea) +
+        '</span><select class="meeting-topic-pillar">' + groupOptions + '</select></label>' +
+        '<label class="field"><span>' + escapeHtml(meetingUi().plannedTime) +
+        '</span><input class="meeting-topic-time" type="number" min="5" max="60" step="5" value="' +
+        Number(topic.timeMinutes || 15) + '"></label>' +
+        '<label class="field full"><span>' + escapeHtml(meetingUi().purpose) +
+        '</span><textarea class="meeting-topic-purpose" rows="3" maxlength="1400" spellcheck="true">' +
+        escapeHtml(topic.purpose || '') + '</textarea></label></div>' +
+        '<div class="section-heading-row compact-row"><div><h4>' +
+        escapeHtml(meetingUi().prompts) + '</h4></div>' +
+        '<button type="button" class="secondary-button compact-button add-topic-prompt">' +
+        escapeHtml(meetingUi().addPrompt) + '</button></div>' +
+        '<div class="meeting-prompts-editor">' + promptHtml + '</div>' +
+        '<label class="field full"><span>' + escapeHtml(meetingUi().outcome) +
+        '</span><textarea class="meeting-topic-outcome" rows="2" maxlength="1000" spellcheck="true">' +
+        escapeHtml(topic.desiredOutcome || '') + '</textarea></label>' +
+        articleHtml;
+
+      card.querySelector('.remove-meeting-topic').addEventListener('click', function() {
+        syncMeetingTopicsFromDom();
+        state.meetingDraftTopics.splice(topicIndex, 1);
+        renderMeetingTopicsEditor();
+      });
+
+      card.querySelector('.add-topic-prompt').addEventListener('click', function() {
+        syncMeetingTopicsFromDom();
+        if ((state.meetingDraftTopics[topicIndex].prompts || []).length >= 6) {
+          toast(state.language === 'es'
+            ? 'Puede agregar hasta seis preguntas por tema.'
+            : 'You can add up to six questions per topic.', true);
+          return;
+        }
+        state.meetingDraftTopics[topicIndex].prompts.push('');
+        renderMeetingTopicsEditor();
+      });
+
+      card.querySelectorAll('.remove-topic-prompt').forEach(function(button) {
+        button.addEventListener('click', function() {
+          const promptIndex = Number(button.parentElement.dataset.promptIndex);
+          syncMeetingTopicsFromDom();
+          state.meetingDraftTopics[topicIndex].prompts.splice(promptIndex, 1);
+          renderMeetingTopicsEditor();
+        });
+      });
+
+      container.appendChild(card);
+    });
+  }
+
+
+  function syncMeetingTopicsFromDom() {
+    const cards = Array.from(document.querySelectorAll('#meetingTopicsEditor .meeting-topic-card'));
+    if (!cards.length) return;
+    const next = cards.map(function(card, index) {
+      const existing = state.meetingDraftTopics[index] || {};
+      return {
+        id: existing.id || '',
+        sourceType: existing.sourceType || 'Custom',
+        libraryId: existing.libraryId || '',
+        pillar: card.querySelector('.meeting-topic-pillar').value,
+        title: card.querySelector('.meeting-topic-title').value.trim(),
+        purpose: card.querySelector('.meeting-topic-purpose').value.trim(),
+        prompts: Array.from(card.querySelectorAll('.meeting-topic-prompt'))
+          .map(function(input) { return input.value.trim(); })
+          .filter(Boolean),
+        desiredOutcome: card.querySelector('.meeting-topic-outcome').value.trim(),
+        timeMinutes: Number(card.querySelector('.meeting-topic-time').value || 15),
+        article: existing.article ? cloneClient_(existing.article) : null
+      };
+    });
+    state.meetingDraftTopics = next;
+  }
+
+
+  function addMeetingMaterialRow(value) {
+    const container = document.getElementById('meetingMaterialsEditor');
+    if (container.children.length >= 15) return;
+    const row = document.createElement('div');
+    row.className = 'repeat-row';
+    row.innerHTML = '<input class="meeting-material-input" type="text" maxlength="300" spellcheck="true" value="' +
+      escapeAttribute(value || '') + '" placeholder="' +
+      escapeAttribute(meetingUi().materialPlaceholder) + '">' +
+      '<button type="button" class="remove-row-button">' +
+      escapeHtml(meetingUi().remove) + '</button>';
+    row.querySelector('button').addEventListener('click', function() { row.remove(); });
+    container.appendChild(row);
+  }
+
+
+  function addMeetingDecisionRow(item) {
+    item = item || {};
+    const container = document.getElementById('meetingDecisionsEditor');
+    if (container.children.length >= 20) return;
+    const row = document.createElement('div');
+    row.className = 'repeat-row';
+    row.dataset.id = item.id || '';
+    row.innerHTML = '<input class="meeting-decision-input" type="text" maxlength="1000" spellcheck="true" value="' +
+      escapeAttribute(item.text || '') + '" placeholder="' +
+      escapeAttribute(meetingUi().decisionPlaceholder) + '">' +
+      '<button type="button" class="remove-row-button">' +
+      escapeHtml(meetingUi().remove) + '</button>';
+    row.querySelector('button').addEventListener('click', function() { row.remove(); });
+    container.appendChild(row);
+  }
+
+
+  function addMeetingActionRow(item) {
+    item = item || {};
+    const container = document.getElementById('meetingActionsEditor');
+    if (container.children.length >= 25) return;
+    const options = state.meetingsData && state.meetingsData.attendeeOptions || [];
+    const roleOptions = '<option value="">' + escapeHtml(meetingUi().generalRole) +
+      '</option>' + options.map(function(value) {
+        return '<option value="' + escapeAttribute(value) + '"' +
+          (value === item.assignedRole ? ' selected' : '') + '>' +
+          escapeHtml(meetingRoleLabel(value)) + '</option>';
+      }).join('');
+
+    const row = document.createElement('div');
+    row.className = 'meeting-action-row';
+    row.dataset.id = item.id || '';
+    row.innerHTML =
+      '<input class="meeting-action-text" type="text" maxlength="800" spellcheck="true" value="' +
+      escapeAttribute(item.text || '') + '" placeholder="' +
+      escapeAttribute(meetingUi().actionPlaceholder) + '">' +
+      '<select class="meeting-action-role" aria-label="' +
+      escapeAttribute(meetingUi().assignedRole) + '">' + roleOptions + '</select>' +
+      '<input class="meeting-action-date" type="date" value="' +
+      escapeAttribute(item.dueDate || '') + '" aria-label="' +
+      escapeAttribute(meetingUi().targetDate) + '">' +
+      '<label class="action-complete-check"><input class="meeting-action-complete" type="checkbox"' +
+      (item.status === 'Completed' ? ' checked' : '') + '><span>' +
+      escapeHtml(meetingUi().completed) + '</span></label>' +
+      '<button type="button" class="remove-row-button">' +
+      escapeHtml(meetingUi().remove) + '</button>';
+    row.querySelector('button').addEventListener('click', function() { row.remove(); });
+    container.appendChild(row);
+  }
+
+
+  function collectMeetingMaterials() {
+    return Array.from(document.querySelectorAll('.meeting-material-input'))
+      .map(function(input) { return input.value.trim(); })
+      .filter(Boolean);
+  }
+
+
+  function collectMeetingDecisions() {
+    return Array.from(document.querySelectorAll('#meetingDecisionsEditor .repeat-row'))
+      .map(function(row) {
+        return {
+          id: row.dataset.id || '',
+          text: row.querySelector('.meeting-decision-input').value.trim()
+        };
+      })
+      .filter(function(item) { return Boolean(item.text); });
+  }
+
+
+  function collectMeetingActions() {
+    return Array.from(document.querySelectorAll('#meetingActionsEditor .meeting-action-row'))
+      .map(function(row) {
+        return {
+          id: row.dataset.id || '',
+          text: row.querySelector('.meeting-action-text').value.trim(),
+          assignedRole: row.querySelector('.meeting-action-role').value,
+          dueDate: row.querySelector('.meeting-action-date').value,
+          status: row.querySelector('.meeting-action-complete').checked
+            ? 'Completed' : 'Open'
+        };
+      })
+      .filter(function(item) { return Boolean(item.text); });
+  }
+
+
+  async function handleSaveMeeting() {
+    syncMeetingTopicsFromDom();
+    const status = document.getElementById('meetingStatusSelect').value || 'Draft';
+    const title = document.getElementById('meetingTitleInput').value.trim();
+    const date = document.getElementById('meetingDateInput').value;
+
+    if (!title) {
+      toast(meetingUi().titleRequired, true);
+      return;
+    }
+    if (status !== 'Draft' && !date) {
+      toast(meetingUi().scheduledDateRequired, true);
+      return;
+    }
+
+    const payload = {
+      id: document.getElementById('meetingIdInput').value,
+      language: state.language,
+      title: title,
+      meetingType: document.getElementById('meetingTypeSelect').value,
+      status: status,
+      scheduledDate: date,
+      scheduledTime: document.getElementById('meetingTimeInput').value,
+      durationMinutes: Number(document.getElementById('meetingDurationSelect').value || 60),
+      meetingFormat: document.getElementById('meetingFormatSelect').value,
+      locationNote: document.getElementById('meetingLocationInput').value,
+      facilitatorRole: document.getElementById('meetingFacilitatorSelect').value,
+      attendeeRoles: Array.from(
+        document.querySelectorAll('#meetingAttendeeOptions input:checked')
+      ).map(function(input) { return input.value; }),
+      openingMessage: document.getElementById('meetingOpeningInput').value,
+      previousRecap: document.getElementById('meetingRecapInput').value,
+      mealPlan: document.getElementById('meetingMealInput').value,
+      materials: collectMeetingMaterials(),
+      topics: state.meetingDraftTopics,
+      notes: document.getElementById('meetingNotesInput').value,
+      decisions: collectMeetingDecisions(),
+      actionItems: collectMeetingActions(),
+      closingMessage: document.getElementById('meetingClosingInput').value
+    };
+
+    if (!clientPrivacyCheck(payload)) return;
+
+    const button = document.getElementById('saveMeetingButton');
+    setBusy(button, true, meetingUi().saving);
+    try {
+      const result = await callServer('saveMeetingRecord', payload);
+      state.meetingsData = result.workspace;
+      renderMeetingsWorkspace(state.meetingsData);
+      closeMeetingBuilder();
+      toast(meetingUi().saved);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, meetingUi().save);
+    }
+  }
+
+
+  function renderMeetingLists() {
+    if (!state.meetingsData) return;
+    const meetings = state.meetingsData.meetings || [];
+    const active = meetings.filter(function(item) {
+      return item.status === 'Draft' || item.status === 'Scheduled';
+    });
+    const completed = meetings.filter(function(item) {
+      return item.status === 'Completed';
+    });
+
+    renderMeetingList('activeMeetingsList', active, false);
+    renderMeetingList('completedMeetingsList', completed, true);
+  }
+
+
+  function renderMeetingList(containerId, meetings, completed) {
+    const container = document.getElementById(containerId);
+    if (!meetings.length) {
+      container.innerHTML = '<div class="empty-state">' +
+        escapeHtml(completed ? meetingUi().noCompleted : meetingUi().noActive) +
+        '</div>';
+      return;
+    }
+
+    const isLead = state.workspace && state.workspace.role === 'HOUSEHOLD_LEAD';
+    container.innerHTML = meetings.map(function(meeting) {
+      const openActions = (meeting.actionItems || []).filter(function(item) {
+        return item.status !== 'Completed';
+      }).length;
+      const dateLine = [meeting.scheduledDate, meeting.scheduledTime]
+        .filter(Boolean).join(' · ') || (state.language === 'es' ? 'Fecha pendiente' : 'Date not set');
+      const topicNames = (meeting.topics || []).slice(0, 4).map(function(topic) {
+        return '<span>' + escapeHtml(topic.title) + '</span>';
+      }).join('');
+      const articleLinks = (meeting.topics || [])
+        .filter(function(topic) {
+          return topic.article && topic.article.url;
+        })
+        .slice(0, 4)
+        .map(function(topic) {
+          return '<a target="_blank" rel="noopener" href="' +
+            escapeAttribute(topic.article.url) + '">' +
+            escapeHtml(meetingUi().openArticle + ': ' + topic.article.title) +
+            '</a>';
+        }).join('');
+
+      const actionButtons = isLead
+        ? [
+            buttonHtml_('edit', meeting.id, meetingUi().edit),
+            buttonHtml_('duplicate', meeting.id, meetingUi().duplicate),
+            buttonHtml_('agenda', meeting.id, meetingUi().agendaPdf),
+            meeting.status === 'Completed'
+              ? buttonHtml_('minutes', meeting.id, meetingUi().minutesPdf) : '',
+            buttonHtml_('archive', meeting.id, meetingUi().archive, true)
+          ].join('')
+        : [
+            buttonHtml_('prepare', meeting.id, meetingUi().prepare),
+            buttonHtml_('agenda', meeting.id, meetingUi().agendaPdf),
+            meeting.status === 'Completed'
+              ? buttonHtml_('minutes', meeting.id, meetingUi().minutesPdf) : ''
+          ].join('');
+
+      return '<article class="meeting-card"><div class="meeting-card-header"><div>' +
+        '<span class="goal-badge">' + escapeHtml(meetingUi().householdBadge) + '</span>' +
+        (!isLead ? '<span class="goal-badge muted">' +
+          escapeHtml(meetingUi().readonlyBadge) + '</span>' : '') +
+        '<h3>' + escapeHtml(meeting.title) + '</h3><p class="small-muted">' +
+        escapeHtml(meetingLabelFor('types', meeting.meetingType)) + ' · ' +
+        escapeHtml(dateLine) + '</p></div><span class="meeting-status-badge">' +
+        escapeHtml(meetingLabelFor('statuses', meeting.status)) + '</span></div>' +
+        '<div class="meeting-summary-grid"><span><b>' +
+        escapeHtml(meetingUi().facilitatorShort) + ':</b> ' +
+        escapeHtml(meetingRoleLabel(meeting.facilitatorRole || '—')) + '</span><span><b>' +
+        escapeHtml(meetingUi().topics) + ':</b> ' +
+        Number((meeting.topics || []).length) + '</span><span><b>' +
+        escapeHtml(meetingUi().actionsOpen) + ':</b> ' + openActions + '</span></div>' +
+        (topicNames ? '<div class="meeting-topic-chips">' + topicNames + '</div>' : '') +
+        (articleLinks ? '<div class="meeting-source-links">' + articleLinks + '</div>' : '') +
+        (meeting.mealPlan ? '<p><b>' + escapeHtml(meetingUi().mealShort) +
+          ':</b> ' + escapeHtml(meeting.mealPlan) + '</p>' : '') +
+        '<div class="button-row meeting-card-actions">' + actionButtons + '</div></article>';
+    }).join('');
+  }
+
+
+  function buttonHtml_(action, meetingId, label, danger) {
+    return '<button type="button" class="' +
+      (danger ? 'text-button danger-text' : 'secondary-button compact-button') +
+      '" data-meeting-action="' + escapeAttribute(action) +
+      '" data-meeting-id="' + escapeAttribute(meetingId) + '">' +
+      escapeHtml(label) + '</button>';
+  }
+
+
+  function meetingLabelFor(group, value) {
+    const options = state.meetingsData &&
+      state.meetingsData.guidance &&
+      state.meetingsData.guidance[group] || [];
+    const match = options.find(function(option) { return option.value === value; });
+    return match ? match.label : value;
+  }
+
+
+  function findMeeting(meetingId) {
+    return (state.meetingsData && state.meetingsData.meetings || [])
+      .find(function(item) { return item.id === meetingId; }) || null;
+  }
+
+
+  async function handleMeetingListClick(event) {
+    const button = event.target.closest('button[data-meeting-action]');
+    if (!button) return;
+    const action = button.dataset.meetingAction;
+    const meeting = findMeeting(button.dataset.meetingId);
+    if (!meeting) return;
+
+    if (action === 'edit') openMeetingBuilder(meeting);
+    if (action === 'prepare') openMemberPreparation(meeting);
+    if (action === 'duplicate') await duplicateMeeting(meeting);
+    if (action === 'archive') await archiveMeeting(meeting);
+    if (action === 'agenda') await generateMeetingPdf(meeting, 'AGENDA', button);
+    if (action === 'minutes') await generateMeetingPdf(meeting, 'MINUTES', button);
+  }
+
+
+  async function duplicateMeeting(meeting) {
+    try {
+      const result = await callServer(
+        'duplicateMeetingRecord',
+        meeting.id,
+        state.language
+      );
+      state.meetingsData = result.workspace;
+      renderMeetingsWorkspace(state.meetingsData);
+      toast(meetingUi().duplicated);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    }
+  }
+
+
+  async function archiveMeeting(meeting) {
+    if (!window.confirm(meetingUi().confirmArchive)) return;
+    try {
+      const result = await callServer(
+        'archiveMeetingRecord',
+        meeting.id,
+        state.language
+      );
+      state.meetingsData = result.workspace;
+      renderMeetingsWorkspace(state.meetingsData);
+      toast(meetingUi().archived);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    }
+  }
+
+
+  async function generateMeetingPdf(meeting, type, button) {
+    const original = button.textContent;
+    setBusy(button, true, meetingUi().pdfCreating);
+    try {
+      const result = await callServer(
+        'generateMeetingDocument',
+        meeting.id,
+        type,
+        state.language
+      );
+      downloadBase64File(result.filename, 'application/pdf', result.base64Content);
+      toast(result.message);
+      if (result.driveFileUrl) {
+        window.open(result.driveFileUrl, '_blank', 'noopener');
+      }
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, original);
+    }
+  }
+
+
+  async function handleCarryForward() {
+    const previousId = document.getElementById('previousMeetingSelect').value;
+    if (!previousId) {
+      toast(meetingUi().choosePrevious, true);
+      return;
+    }
+
+    const button = document.getElementById('carryForwardButton');
+    setBusy(button, true, state.language === 'es' ? 'Agregando…' : 'Adding…');
+    try {
+      const result = await callServer(
+        'carryForwardMeetingItems',
+        previousId,
+        state.language
+      );
+      document.getElementById('meetingRecapInput').value =
+        result.recap || document.getElementById('meetingRecapInput').value;
+      if (!(result.actionItems || []).length) {
+        toast(meetingUi().previousItemsNone);
+      } else {
+        (result.actionItems || []).forEach(addMeetingActionRow);
+        toast(meetingUi().carried);
+      }
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, meetingUi().addPreviousItems);
+    }
+  }
+
+
+  function openMemberPreparation(meeting) {
+    const existing = (state.meetingsData.memberPreparations || []).find(function(item) {
+      return item.meetingId === meeting.id;
+    }) || {};
+
+    document.getElementById('memberPrepIdInput').value = existing.id || '';
+    document.getElementById('memberPrepMeetingIdInput').value = meeting.id;
+    document.getElementById('memberPrepMeetingName').textContent = meeting.title;
+    document.getElementById('memberPrepQuestionsInput').value = existing.questions || '';
+    document.getElementById('memberPrepTopicInput').value = existing.topicSuggestion || '';
+    document.getElementById('memberPrepSupportInput').value = existing.supportNeeded || '';
+    show('memberMeetingPrepCard');
+    openPanel('meetingsPanel');
+    document.getElementById('memberMeetingPrepCard').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+
+
+  function closeMemberPreparation() {
+    hide('memberMeetingPrepCard');
+  }
+
+
+  async function handleSaveMemberPreparation() {
+    const payload = {
+      id: document.getElementById('memberPrepIdInput').value,
+      meetingId: document.getElementById('memberPrepMeetingIdInput').value,
+      questions: document.getElementById('memberPrepQuestionsInput').value,
+      topicSuggestion: document.getElementById('memberPrepTopicInput').value,
+      supportNeeded: document.getElementById('memberPrepSupportInput').value,
+      language: state.language
+    };
+    if (!clientPrivacyCheck(payload)) return;
+
+    const button = document.getElementById('saveMemberPrepButton');
+    setBusy(button, true, meetingUi().saving);
+    try {
+      const result = await callServer('saveMeetingPreparation', payload);
+      state.meetingsData = result.workspace;
+      renderMeetingsWorkspace(state.meetingsData);
+      closeMemberPreparation();
+      toast(meetingUi().prepSaved);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, meetingUi().savePrep);
+    }
+  }
+
+
+  function cloneClient_(value) {
+    return JSON.parse(JSON.stringify(value == null ? null : value));
+  }
+</script>

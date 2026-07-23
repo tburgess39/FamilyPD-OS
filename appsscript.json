@@ -1,0 +1,38 @@
+{
+  "timeZone": "America/Los_Angeles",
+  "dependencies": {},
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/script.external_request"
+  ],
+  "urlFetchWhitelist": [
+    "https://www.googleapis.com/drive/v3/",
+    "https://www.googleapis.com/upload/drive/v3/",
+    "https://api.gdeltproject.org/api/v2/doc/doc",
+    "https://familypd.org/",
+    "https://www.familypd.org/",
+    "https://nevadapartners.org/",
+    "https://www.nevadapartners.org/",
+    "https://www.careeronestop.org/",
+    "https://www.onetonline.org/",
+    "https://onetinterestprofiler.org/",
+    "https://www.apprenticeship.gov/",
+    "https://studentaid.gov/",
+    "https://collegescorecard.ed.gov/",
+    "https://www.usa.gov/",
+    "https://www.sba.gov/",
+    "https://www.jobcorps.gov/",
+    "https://www.usajobs.gov/",
+    "https://www.americorps.gov/",
+    "https://www.census.gov/",
+    "https://opportunityinsights.org/",
+    "https://upward-mobility.urban.org/",
+    "https://www.urban.org/"
+  ],
+  "webapp": {
+    "executeAs": "USER_ACCESSING",
+    "access": "ANYONE"
+  }
+}

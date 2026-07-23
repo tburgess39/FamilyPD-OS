@@ -1,0 +1,22 @@
+<script>
+  /**
+   * Rename this file to FamilyAiBackendConnector.html, replace the endpoint,
+   * and include it immediately before FamilyAiClient in Index.html.
+   *
+   * The backend must allow requests from the deployed FamilyPD app origin and
+   * return JSON such as: { "answer": "..." }
+   */
+  window.FPD_SON_AI_CONNECTOR = {
+    ask: async function(question, context) {
+      const response = await fetch('REPLACE_WITH_YOUR_SONS_AI_ENDPOINT', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: question, context: context })
+      });
+      if (!response.ok) {
+        throw new Error('AI request failed with status ' + response.status + '.');
+      }
+      return response.json();
+    }
+  };
+</script>

@@ -1,0 +1,992 @@
+<script>
+  const SYSTEMS_UI = {
+    en: {
+      nav: 'Systems, Policies & Safety',
+      eyebrow: 'PLAN · TEACH · PRACTICE · REVIEW',
+      title: 'Systems, Policies & Safety',
+      intro: 'Use guided templates to turn household expectations into clear, repeatable steps that can be taught, assigned, reviewed, and improved.',
+      create: 'Create a Household System',
+      guidanceTitle: 'Structure should reduce stress—not create more of it',
+      guidanceText: 'Start with one useful policy, routine, checklist, or general safety plan. Teach the steps, share responsibility, and review what is working.',
+      privacyTitle: 'Keep private emergency and account details elsewhere',
+      safetyTitle: 'General planning—not professional or emergency guidance',
+      builderEyebrow: 'GUIDED SYSTEM BUILDER',
+      builderTitle: 'Create or edit a household system',
+      builderIntro: 'Choose a pillar and template. FamilyPD fills in an editable purpose, agreement, steps, role, and review rhythm.',
+      cancel: 'Cancel',
+      pillar: 'FamilyPD area',
+      template: 'Suggested template',
+      templateHelp: 'Each area includes policies, routines, checklists, and general safety plans.',
+      useTemplate: 'Use Selected Template',
+      recordTitle: 'Title',
+      type: 'Type',
+      status: 'Status',
+      owner: 'Responsible role',
+      ownerHelp: 'This role coordinates the system—it is not the only person who contributes.',
+      priority: 'Priority',
+      appliesTo: 'Who should understand or use this?',
+      appliesToHelp: 'Select general role labels. Legal names are not required.',
+      purpose: 'Why does this system matter?',
+      statement: 'Agreement or system description',
+      steps: 'Steps or checklist',
+      stepsHelp: 'Keep the steps clear enough that another household member can learn and follow them.',
+      addStep: '+ Add Step',
+      reviewHeading: 'Review and follow-through',
+      frequency: 'Review frequency',
+      effective: 'Effective or start date',
+      nextReview: 'Next review date',
+      nextReviewHelp: 'Leave blank and FamilyPD can calculate it from the start date and review frequency.',
+      notes: 'General notes',
+      save: 'Save Household System',
+      filter: 'Show',
+      pillarFilter: 'Area',
+      current: 'Current records',
+      review: 'Review needed',
+      all: 'All records',
+      archived: 'Archived',
+      allAreas: 'All areas',
+      selectTemplate: 'Select a template',
+      selectRole: 'Select a responsible role',
+      noRecordsLead: 'No household systems have been created yet. Start with one template that would reduce stress or confusion.',
+      noRecordsMember: 'No household systems have been shared yet.',
+      edit: 'Edit',
+      reviewed: 'Mark Reviewed',
+      pdf: 'PDF',
+      archive: 'Archive',
+      readonly: 'Read only',
+      stepsCount: 'steps',
+      nextReviewShort: 'Next review',
+      noReviewDate: 'No review date',
+      saved: 'Household system saved.',
+      archivedMessage: 'Household system archived.',
+      reviewedMessage: 'Review recorded.',
+      confirmArchive: 'Archive this household system? It will remain in workspace history.',
+      templateAdded: 'The template was added. Edit any wording or steps that do not fit the household.',
+      titleRequired: 'Enter a short title.',
+      stepPlaceholder: 'Clear step or checklist item',
+      remove: 'Remove',
+      saving: 'Saving…',
+      creating: 'Creating…',
+      reviewing: 'Reviewing…',
+      dashboardEyebrow: 'KEEP THE HOUSEHOLD SYSTEM CURRENT',
+      dashboardTitle: 'Systems and safety reviews',
+      dashboardHelp: 'See active household systems and the next items scheduled for review.',
+      dashboardOpen: 'Open Systems',
+      dashboardActive: 'Active',
+      dashboardReview: 'Review needed',
+      dashboardTotal: 'Current records',
+      dashboardEmpty: 'No system reviews are scheduled yet.',
+      due: 'Due',
+      safetyBadge: 'General safety plan',
+      helpTitle: 'Systems, Policies & Safety quick guide',
+      helpChooseTitle: 'Choose one repeated problem',
+      helpChooseText: 'Start with something that causes confusion, repeated reminders, unfair workload, missed steps, or avoidable risk.',
+      helpTemplateTitle: 'Use a template',
+      helpTemplateText: 'Select a FamilyPD area and template. Keep only the wording and steps that fit the household.',
+      helpTeachTitle: 'Teach and practice the steps',
+      helpTeachText: 'Do not assume a member already knows the process. Explain, demonstrate, practice, and provide support.',
+      helpReviewTitle: 'Review and improve',
+      helpReviewText: 'A system is useful only when it works. Review it, notice problems, adjust responsibilities, and update the next review date.'
+    },
+    es: {
+      nav: 'Sistemas, políticas y seguridad',
+      eyebrow: 'PLANIFICAR · ENSEÑAR · PRACTICAR · REVISAR',
+      title: 'Sistemas, políticas y seguridad',
+      intro: 'Use plantillas guiadas para convertir expectativas del hogar en pasos claros que se pueden enseñar, asignar, revisar y mejorar.',
+      create: 'Crear un sistema del hogar',
+      guidanceTitle: 'La estructura debe reducir el estrés, no crear más',
+      guidanceText: 'Comience con una política, rutina, lista o plan general de seguridad. Enseñe los pasos, comparta la responsabilidad y revise lo que funciona.',
+      privacyTitle: 'Guarde detalles privados de emergencia y cuentas en otro lugar',
+      safetyTitle: 'Planificación general, no orientación profesional ni de emergencia',
+      builderEyebrow: 'CREADOR GUIADO DE SISTEMAS',
+      builderTitle: 'Crear o editar un sistema del hogar',
+      builderIntro: 'Elija un pilar y una plantilla. FamilyPD completa un propósito, acuerdo, pasos, rol y frecuencia editables.',
+      cancel: 'Cancelar',
+      pillar: 'Área de FamilyPD',
+      template: 'Plantilla sugerida',
+      templateHelp: 'Cada área incluye políticas, rutinas, listas y planes generales de seguridad.',
+      useTemplate: 'Usar plantilla seleccionada',
+      recordTitle: 'Título',
+      type: 'Tipo',
+      status: 'Estado',
+      owner: 'Rol responsable',
+      ownerHelp: 'Este rol coordina el sistema; no es la única persona que contribuye.',
+      priority: 'Prioridad',
+      appliesTo: '¿Quién debe comprender o usar esto?',
+      appliesToHelp: 'Seleccione etiquetas generales. No se requieren nombres legales.',
+      purpose: '¿Por qué importa este sistema?',
+      statement: 'Acuerdo o descripción del sistema',
+      steps: 'Pasos o lista',
+      stepsHelp: 'Mantenga los pasos suficientemente claros para que otro miembro pueda aprenderlos.',
+      addStep: '+ Agregar paso',
+      reviewHeading: 'Revisión y seguimiento',
+      frequency: 'Frecuencia de revisión',
+      effective: 'Fecha de inicio',
+      nextReview: 'Próxima revisión',
+      nextReviewHelp: 'Déjela en blanco y FamilyPD puede calcularla usando la fecha inicial y la frecuencia.',
+      notes: 'Notas generales',
+      save: 'Guardar sistema del hogar',
+      filter: 'Mostrar',
+      pillarFilter: 'Área',
+      current: 'Registros actuales',
+      review: 'Necesita revisión',
+      all: 'Todos los registros',
+      archived: 'Archivados',
+      allAreas: 'Todas las áreas',
+      selectTemplate: 'Seleccione una plantilla',
+      selectRole: 'Seleccione un rol responsable',
+      noRecordsLead: 'Todavía no se han creado sistemas. Comience con una plantilla que reduzca estrés o confusión.',
+      noRecordsMember: 'Todavía no se han compartido sistemas del hogar.',
+      edit: 'Editar',
+      reviewed: 'Marcar revisado',
+      pdf: 'PDF',
+      archive: 'Archivar',
+      readonly: 'Solo lectura',
+      stepsCount: 'pasos',
+      nextReviewShort: 'Próxima revisión',
+      noReviewDate: 'Sin fecha de revisión',
+      saved: 'Sistema del hogar guardado.',
+      archivedMessage: 'Sistema del hogar archivado.',
+      reviewedMessage: 'Revisión registrada.',
+      confirmArchive: '¿Archivar este sistema? Permanecerá en el historial.',
+      templateAdded: 'Se agregó la plantilla. Edite palabras o pasos que no se adapten.',
+      titleRequired: 'Escriba un título corto.',
+      stepPlaceholder: 'Paso claro o elemento de la lista',
+      remove: 'Quitar',
+      saving: 'Guardando…',
+      creating: 'Creando…',
+      reviewing: 'Revisando…',
+      dashboardEyebrow: 'MANTENGA ACTUALIZADO EL SISTEMA DEL HOGAR',
+      dashboardTitle: 'Revisiones de sistemas y seguridad',
+      dashboardHelp: 'Vea sistemas activos y los próximos elementos programados para revisión.',
+      dashboardOpen: 'Abrir sistemas',
+      dashboardActive: 'Activos',
+      dashboardReview: 'Necesita revisión',
+      dashboardTotal: 'Registros actuales',
+      dashboardEmpty: 'Todavía no hay revisiones programadas.',
+      due: 'Fecha',
+      safetyBadge: 'Plan general de seguridad',
+      helpTitle: 'Guía rápida de sistemas, políticas y seguridad',
+      helpChooseTitle: 'Elija un problema repetido',
+      helpChooseText: 'Comience con algo que causa confusión, recordatorios repetidos, carga injusta, pasos olvidados o riesgo evitable.',
+      helpTemplateTitle: 'Use una plantilla',
+      helpTemplateText: 'Seleccione un área y una plantilla. Conserve solamente las palabras y pasos que se adapten al hogar.',
+      helpTeachTitle: 'Enseñe y practique los pasos',
+      helpTeachText: 'No suponga que un miembro ya conoce el proceso. Explique, demuestre, practique y ofrezca apoyo.',
+      helpReviewTitle: 'Revise y mejore',
+      helpReviewText: 'Un sistema es útil solamente cuando funciona. Revíselo, note problemas, ajuste responsabilidades y actualice la próxima fecha.'
+    }
+  };
+
+
+  function systemsUi() {
+    return SYSTEMS_UI[state.language] || SYSTEMS_UI.en;
+  }
+
+
+  function bindSystemsEvents() {
+    document.getElementById('newSystemRecordButton').addEventListener(
+      'click',
+      function() { openSystemBuilder(); }
+    );
+    document.getElementById('cancelSystemEditButton').addEventListener(
+      'click',
+      closeSystemBuilder
+    );
+    document.getElementById('systemPillarSelect').addEventListener(
+      'change',
+      populateSystemTemplates
+    );
+    document.getElementById('useSystemTemplateButton').addEventListener(
+      'click',
+      useSelectedSystemTemplate
+    );
+    document.getElementById('addSystemStepButton').addEventListener(
+      'click',
+      function() { addSystemStepRow(''); }
+    );
+    document.getElementById('saveSystemRecordButton').addEventListener(
+      'click',
+      saveSystemRecord
+    );
+    document.getElementById('systemsFilterSelect').addEventListener(
+      'change',
+      renderSystemRecords
+    );
+    document.getElementById('systemsPillarFilterSelect').addEventListener(
+      'change',
+      renderSystemRecords
+    );
+    document.getElementById('systemsRecordList').addEventListener(
+      'click',
+      handleSystemRecordAction
+    );
+    document.getElementById('dashboardOpenSystemsButton').addEventListener(
+      'click',
+      function() {
+        openPanel('systemsPanel');
+        document.getElementById('systemsRecordList').scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    );
+  }
+
+
+  async function loadSystemsWorkspace() {
+    try {
+      const data = await callServer('getSystemsWorkspace', state.language);
+      state.systemsData = normalizeSystemsWorkspace_(data);
+      renderSystemsWorkspace(state.systemsData);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    }
+  }
+
+
+  function normalizeSystemsWorkspace_(data) {
+    data = data && typeof data === 'object' ? data : {};
+    const guidance = data.guidance && typeof data.guidance === 'object'
+      ? data.guidance
+      : {};
+
+    return Object.assign({}, data, {
+      role: data.role ||
+        state.workspace && state.workspace.role ||
+        'FAMILY_MEMBER',
+      records: Array.isArray(data.records) ? data.records : [],
+      roleOptions: Array.isArray(data.roleOptions) ? data.roleOptions : [],
+      summary: data.summary && typeof data.summary === 'object'
+        ? data.summary
+        : { total: 0, active: 0, reviewNeeded: 0, upcomingReviews: [] },
+      guidance: Object.assign({
+        pillars: [],
+        types: [],
+        statuses: [],
+        reviewFrequencies: [],
+        priorities: [],
+        templates: {},
+        privacyMessage: '',
+        safetyMessage: ''
+      }, guidance),
+      citation: data.citation && typeof data.citation === 'object'
+        ? data.citation
+        : {
+            inTextCitation: '(Hall, 2025, pp. 15–20, 57–63)'
+          }
+    });
+  }
+
+
+  function renderSystemsWorkspace(data) {
+    state.systemsData = normalizeSystemsWorkspace_(data);
+    const isLead = state.systemsData.role === 'HOUSEHOLD_LEAD';
+
+    document.getElementById('newSystemRecordButton').classList.toggle(
+      'hidden',
+      !isLead
+    );
+    if (!isLead) hide('systemBuilderCard');
+
+    setText(
+      'systemsGuidanceCitation',
+      state.systemsData.citation.inTextCitation ||
+        '(Hall, 2025, pp. 15–20, 57–63)'
+    );
+    setText(
+      'systemsPrivacyText',
+      state.systemsData.guidance.privacyMessage || ''
+    );
+    setText(
+      'systemsSafetyNoticeText',
+      state.systemsData.guidance.safetyMessage || ''
+    );
+
+    applySystemsLanguage();
+    populateSystemsSelects();
+    renderSystemRecords();
+    renderSystemsDashboard();
+  }
+
+
+  function applySystemsLanguage() {
+    const text = systemsUi();
+    const mapping = {
+      systemsEyebrow: text.eyebrow,
+      systemsPanelTitle: text.title,
+      systemsPanelIntro: text.intro,
+      newSystemRecordButton: text.create,
+      systemsGuidanceTitle: text.guidanceTitle,
+      systemsGuidanceText: text.guidanceText,
+      systemsPrivacyTitle: text.privacyTitle,
+      systemsSafetyNoticeTitle: text.safetyTitle,
+      systemBuilderEyebrow: text.builderEyebrow,
+      systemBuilderTitle: text.builderTitle,
+      systemBuilderIntro: text.builderIntro,
+      cancelSystemEditButton: text.cancel,
+      systemPillarLabel: text.pillar,
+      systemTemplateLabel: text.template,
+      systemTemplateHelp: text.templateHelp,
+      useSystemTemplateButton: text.useTemplate,
+      systemTitleLabel: text.recordTitle,
+      systemTypeLabel: text.type,
+      systemStatusLabel: text.status,
+      systemOwnerLabel: text.owner,
+      systemOwnerHelp: text.ownerHelp,
+      systemPriorityLabel: text.priority,
+      systemAppliesToLabel: text.appliesTo,
+      systemAppliesToHelp: text.appliesToHelp,
+      systemPurposeLabel: text.purpose,
+      systemStatementLabel: text.statement,
+      systemStepsLabel: text.steps,
+      systemStepsHelp: text.stepsHelp,
+      addSystemStepButton: text.addStep,
+      systemReviewHeading: text.reviewHeading,
+      systemFrequencyLabel: text.frequency,
+      systemEffectiveDateLabel: text.effective,
+      systemNextReviewLabel: text.nextReview,
+      systemNextReviewHelp: text.nextReviewHelp,
+      systemNotesLabel: text.notes,
+      saveSystemRecordButton: text.save,
+      systemsFilterLabel: text.filter,
+      systemsPillarFilterLabel: text.pillarFilter,
+      dashboardSystemsEyebrow: text.dashboardEyebrow,
+      dashboardSystemsTitle: text.dashboardTitle,
+      dashboardSystemsHelp: text.dashboardHelp,
+      dashboardOpenSystemsButton: text.dashboardOpen,
+      dashboardSystemsActiveLabel: text.dashboardActive,
+      dashboardSystemsReviewLabel: text.dashboardReview,
+      dashboardSystemsTotalLabel: text.dashboardTotal,
+      systemsHelpTitle: text.helpTitle,
+      systemsHelpChooseTitle: text.helpChooseTitle,
+      systemsHelpChooseText: text.helpChooseText,
+      systemsHelpTemplateTitle: text.helpTemplateTitle,
+      systemsHelpTemplateText: text.helpTemplateText,
+      systemsHelpTeachTitle: text.helpTeachTitle,
+      systemsHelpTeachText: text.helpTeachText,
+      systemsHelpReviewTitle: text.helpReviewTitle,
+      systemsHelpReviewText: text.helpReviewText
+    };
+    Object.keys(mapping).forEach(function(id) {
+      setText(id, mapping[id]);
+    });
+
+    const filter = document.getElementById('systemsFilterSelect');
+    if (filter && filter.options.length >= 4) {
+      filter.options[0].textContent = text.current;
+      filter.options[1].textContent = text.review;
+      filter.options[2].textContent = text.all;
+      filter.options[3].textContent = text.archived;
+    }
+
+    if (state.systemsData) {
+      populateSystemsSelects();
+      renderSystemRecords();
+      renderSystemsDashboard();
+    }
+  }
+
+
+  function populateSystemsSelects() {
+    if (!state.systemsData) return;
+    const guidance = state.systemsData.guidance;
+
+    fillSystemsSelect_('systemPillarSelect', guidance.pillars || []);
+    fillSystemsSelect_('systemTypeSelect', guidance.types || []);
+    fillSystemsSelect_('systemStatusSelect', guidance.statuses || []);
+    fillSystemsSelect_(
+      'systemFrequencySelect',
+      guidance.reviewFrequencies || []
+    );
+    fillSystemsSelect_('systemPrioritySelect', guidance.priorities || []);
+
+    populateSystemTemplates();
+    populateSystemOwners();
+    renderSystemAppliesTo();
+    populateSystemsPillarFilter();
+  }
+
+
+  function fillSystemsSelect_(id, options, includeBlank, blankLabel) {
+    const select = document.getElementById(id);
+    if (!select) return;
+    const current = select.value;
+    const records = Array.isArray(options) ? options : [];
+    select.innerHTML =
+      (includeBlank
+        ? '<option value="">' + escapeHtml(blankLabel || '') + '</option>'
+        : '') +
+      records.map(function(option) {
+        return '<option value="' + escapeAttribute(option.value) + '">' +
+          escapeHtml(option.label) + '</option>';
+      }).join('');
+
+    const values = records.map(function(option) { return option.value; });
+    if (current && values.indexOf(current) >= 0) {
+      select.value = current;
+    } else if (select.options.length) {
+      select.selectedIndex = 0;
+    }
+  }
+
+
+  function populateSystemTemplates() {
+    const select = document.getElementById('systemTemplateSelect');
+    if (!select || !state.systemsData) return;
+
+    const pillar = document.getElementById('systemPillarSelect').value ||
+      'Health';
+    const templates = state.systemsData.guidance.templates &&
+      state.systemsData.guidance.templates[pillar] || [];
+
+    select.innerHTML = '<option value="">' +
+      escapeHtml(systemsUi().selectTemplate) + '</option>' +
+      templates.map(function(template) {
+        return '<option value="' + escapeAttribute(template.id) + '">' +
+          escapeHtml(template.title) + ' · ' +
+          escapeHtml(systemTypeLabel_(template.recordType)) +
+          '</option>';
+      }).join('');
+  }
+
+
+  function populateSystemOwners(selected) {
+    const select = document.getElementById('systemOwnerSelect');
+    if (!select || !state.systemsData) return;
+    const current = selected !== undefined ? selected : select.value;
+    const options = state.systemsData.roleOptions || [];
+
+    select.innerHTML = '<option value="">' +
+      escapeHtml(systemsUi().selectRole) + '</option>' +
+      options.map(function(value) {
+        return '<option value="' + escapeAttribute(value) + '">' +
+          escapeHtml(systemRoleLabel_(value)) + '</option>';
+      }).join('');
+
+    if (options.indexOf(current) >= 0) select.value = current;
+  }
+
+
+  function renderSystemAppliesTo(selected) {
+    const container = document.getElementById('systemAppliesToOptions');
+    if (!container || !state.systemsData) return;
+
+    const selectedValues = Array.isArray(selected)
+      ? selected
+      : Array.from(container.querySelectorAll('input:checked'))
+        .map(function(input) { return input.value; });
+    const options = state.systemsData.roleOptions || [];
+
+    container.innerHTML = options.map(function(value) {
+      return '<label class="choice-chip"><input type="checkbox" value="' +
+        escapeAttribute(value) + '"' +
+        (selectedValues.indexOf(value) >= 0 ? ' checked' : '') +
+        '><span>' + escapeHtml(systemRoleLabel_(value)) +
+        '</span></label>';
+    }).join('');
+  }
+
+
+  function populateSystemsPillarFilter() {
+    const select = document.getElementById('systemsPillarFilterSelect');
+    if (!select || !state.systemsData) return;
+    const current = select.value || 'ALL';
+    select.innerHTML = '<option value="ALL">' +
+      escapeHtml(systemsUi().allAreas) + '</option>' +
+      (state.systemsData.guidance.pillars || []).map(function(option) {
+        return '<option value="' + escapeAttribute(option.value) + '">' +
+          escapeHtml(option.label) + '</option>';
+      }).join('');
+    select.value = current;
+  }
+
+
+  function openSystemBuilder(record) {
+    record = record || {};
+    document.getElementById('systemRecordIdInput').value = record.id || '';
+    document.getElementById('systemTemplateIdInput').value =
+      record.templateId || '';
+    document.getElementById('systemPillarSelect').value =
+      record.pillar || 'Health';
+    populateSystemTemplates();
+    document.getElementById('systemTemplateSelect').value =
+      record.templateId || '';
+    document.getElementById('systemTitleInput').value = record.title || '';
+    document.getElementById('systemTypeSelect').value =
+      record.recordType || 'System';
+    document.getElementById('systemStatusSelect').value =
+      record.status || 'Draft';
+    populateSystemOwners(record.ownerRole || '');
+    document.getElementById('systemPrioritySelect').value =
+      record.priority || 'Routine';
+    renderSystemAppliesTo(record.appliesTo || []);
+    document.getElementById('systemPurposeInput').value =
+      record.purpose || '';
+    document.getElementById('systemStatementInput').value =
+      record.statement || '';
+    document.getElementById('systemFrequencySelect').value =
+      record.reviewFrequency || 'Monthly';
+    document.getElementById('systemEffectiveDateInput').value =
+      record.effectiveDate || '';
+    document.getElementById('systemNextReviewInput').value =
+      record.nextReviewDate || '';
+    document.getElementById('systemNotesInput').value = record.notes || '';
+
+    const steps = document.getElementById('systemStepsEditor');
+    steps.innerHTML = '';
+    (record.steps || []).forEach(addSystemStepRow);
+
+    show('systemBuilderCard');
+    openPanel('systemsPanel');
+    document.getElementById('systemBuilderCard').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+
+
+  function closeSystemBuilder() {
+    hide('systemBuilderCard');
+  }
+
+
+  async function useSelectedSystemTemplate() {
+    const templateId = document.getElementById('systemTemplateSelect').value;
+    if (!templateId) {
+      toast(systemsUi().selectTemplate, true);
+      return;
+    }
+
+    const button = document.getElementById('useSystemTemplateButton');
+    setBusy(button, true, systemsUi().creating);
+
+    try {
+      const template = await callServer('generateGuidedSystemRecord', {
+        language: state.language,
+        pillar: document.getElementById('systemPillarSelect').value,
+        templateId: templateId
+      });
+
+      document.getElementById('systemTemplateIdInput').value =
+        template.id || '';
+      document.getElementById('systemTitleInput').value =
+        template.title || '';
+      document.getElementById('systemTypeSelect').value =
+        template.recordType || 'System';
+      document.getElementById('systemStatusSelect').value = 'Draft';
+      populateSystemOwners(template.ownerRole || '');
+      document.getElementById('systemPrioritySelect').value =
+        template.priority || 'Routine';
+      renderSystemAppliesTo(['Family Member']);
+      document.getElementById('systemPurposeInput').value =
+        template.purpose || '';
+      document.getElementById('systemStatementInput').value =
+        template.statement || '';
+      document.getElementById('systemFrequencySelect').value =
+        template.reviewFrequency || 'Monthly';
+
+      const steps = document.getElementById('systemStepsEditor');
+      steps.innerHTML = '';
+      (template.steps || []).forEach(addSystemStepRow);
+
+      toast(systemsUi().templateAdded);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, systemsUi().useTemplate);
+    }
+  }
+
+
+  function addSystemStepRow(value) {
+    const container = document.getElementById('systemStepsEditor');
+    if (container.children.length >= 12) {
+      toast(
+        state.language === 'es'
+          ? 'Puede agregar hasta doce pasos.'
+          : 'You can add up to twelve steps.',
+        true
+      );
+      return;
+    }
+
+    const row = document.createElement('div');
+    row.className = 'repeat-row';
+    row.innerHTML =
+      '<input class="system-step-input" type="text" maxlength="1000" ' +
+      'spellcheck="true" value="' + escapeAttribute(value || '') +
+      '" placeholder="' + escapeAttribute(systemsUi().stepPlaceholder) +
+      '"><button type="button" class="remove-row-button">' +
+      escapeHtml(systemsUi().remove) + '</button>';
+
+    row.querySelector('button').addEventListener('click', function() {
+      row.remove();
+    });
+    container.appendChild(row);
+  }
+
+
+  function collectSystemSteps_() {
+    return Array.from(
+      document.querySelectorAll('#systemStepsEditor .system-step-input')
+    ).map(function(input) {
+      return input.value.trim();
+    }).filter(Boolean);
+  }
+
+
+  async function saveSystemRecord() {
+    const title = document.getElementById('systemTitleInput').value.trim();
+    if (!title) {
+      toast(systemsUi().titleRequired, true);
+      return;
+    }
+
+    const payload = {
+      id: document.getElementById('systemRecordIdInput').value,
+      language: state.language,
+      templateId: document.getElementById('systemTemplateIdInput').value,
+      title: title,
+      pillar: document.getElementById('systemPillarSelect').value,
+      recordType: document.getElementById('systemTypeSelect').value,
+      status: document.getElementById('systemStatusSelect').value,
+      ownerRole: document.getElementById('systemOwnerSelect').value,
+      priority: document.getElementById('systemPrioritySelect').value,
+      appliesTo: Array.from(
+        document.querySelectorAll('#systemAppliesToOptions input:checked')
+      ).map(function(input) { return input.value; }),
+      purpose: document.getElementById('systemPurposeInput').value,
+      statement: document.getElementById('systemStatementInput').value,
+      steps: collectSystemSteps_(),
+      reviewFrequency: document.getElementById('systemFrequencySelect').value,
+      effectiveDate: document.getElementById('systemEffectiveDateInput').value,
+      nextReviewDate: document.getElementById('systemNextReviewInput').value,
+      notes: document.getElementById('systemNotesInput').value
+    };
+
+    if (!clientPrivacyCheck(payload)) return;
+
+    const button = document.getElementById('saveSystemRecordButton');
+    setBusy(button, true, systemsUi().saving);
+    try {
+      const result = await callServer('saveSystemRecord', payload);
+      state.systemsData = normalizeSystemsWorkspace_(result.workspace);
+      renderSystemsWorkspace(state.systemsData);
+      closeSystemBuilder();
+      toast(systemsUi().saved);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, systemsUi().save);
+    }
+  }
+
+
+  function renderSystemRecords() {
+    const container = document.getElementById('systemsRecordList');
+    if (!container || !state.systemsData) return;
+
+    const filter = document.getElementById('systemsFilterSelect').value ||
+      'CURRENT';
+    const pillar = document.getElementById('systemsPillarFilterSelect').value ||
+      'ALL';
+    const today = systemsLocalDateKey_(new Date());
+    const isLead = state.systemsData.role === 'HOUSEHOLD_LEAD';
+
+    const records = (state.systemsData.records || []).filter(function(record) {
+      if (pillar !== 'ALL' && record.pillar !== pillar) return false;
+      if (filter === 'ARCHIVED') return record.status === 'Archived';
+      if (filter === 'ALL') return true;
+      if (filter === 'REVIEW') {
+        return record.status === 'Review needed' ||
+          Boolean(record.nextReviewDate && record.nextReviewDate < today);
+      }
+      return record.status !== 'Archived';
+    });
+
+    if (!records.length) {
+      container.innerHTML = '<div class="empty-state">' +
+        escapeHtml(isLead
+          ? systemsUi().noRecordsLead
+          : systemsUi().noRecordsMember) + '</div>';
+      return;
+    }
+
+    container.innerHTML = records.map(function(record) {
+      const overdue = record.nextReviewDate &&
+        record.nextReviewDate < today &&
+        record.status !== 'Archived';
+      const actions = [
+        isLead
+          ? systemActionButton_('edit', record, systemsUi().edit)
+          : '',
+        isLead && record.status !== 'Archived'
+          ? systemActionButton_(
+              'review',
+              record,
+              systemsUi().reviewed
+            )
+          : '',
+        systemActionButton_('pdf', record, systemsUi().pdf),
+        isLead && record.status !== 'Archived'
+          ? systemActionButton_(
+              'archive',
+              record,
+              systemsUi().archive,
+              true
+            )
+          : ''
+      ].join('');
+
+      return '<article class="system-record-card' +
+        (overdue ? ' review-due' : '') + '">' +
+        '<div class="system-card-top"><div>' +
+        '<span class="goal-badge">' +
+        escapeHtml(systemTypeLabel_(record.recordType)) + '</span>' +
+        (record.recordType === 'Safety Plan'
+          ? '<span class="goal-badge safety-badge">' +
+            escapeHtml(systemsUi().safetyBadge) + '</span>'
+          : '') +
+        (!isLead
+          ? '<span class="goal-badge muted">' +
+            escapeHtml(systemsUi().readonly) + '</span>'
+          : '') +
+        '<h3>' + escapeHtml(record.title) + '</h3></div>' +
+        '<span class="meeting-status-badge">' +
+        escapeHtml(systemStatusLabel_(record.status)) + '</span></div>' +
+        '<div class="goal-meta"><span>' +
+        escapeHtml(systemPillarLabel_(record.pillar)) + '</span><span>' +
+        escapeHtml(systemFrequencyLabel_(record.reviewFrequency)) +
+        '</span><span>' +
+        escapeHtml(systemPriorityLabel_(record.priority)) +
+        '</span></div>' +
+        (record.purpose
+          ? '<p>' + escapeHtml(record.purpose) + '</p>'
+          : '') +
+        '<div class="system-record-details"><span>' +
+        escapeHtml(systemRoleLabel_(record.ownerRole || '—')) +
+        '</span><span>' + Number((record.steps || []).length) + ' ' +
+        escapeHtml(systemsUi().stepsCount) + '</span><span>' +
+        escapeHtml(record.nextReviewDate
+          ? systemsUi().nextReviewShort + ': ' +
+            systemsFormatDate_(record.nextReviewDate)
+          : systemsUi().noReviewDate) + '</span></div>' +
+        '<div class="button-row">' + actions + '</div></article>';
+    }).join('');
+  }
+
+
+  function systemActionButton_(action, record, label, danger) {
+    return '<button type="button" class="' +
+      (danger
+        ? 'text-button danger-text'
+        : 'secondary-button compact-button') +
+      '" data-system-action="' + escapeAttribute(action) +
+      '" data-system-id="' + escapeAttribute(record.id) +
+      '" data-system-type="' + escapeAttribute(record.recordType) +
+      '">' + escapeHtml(label) + '</button>';
+  }
+
+
+  async function handleSystemRecordAction(event) {
+    const button = event.target.closest('button[data-system-action]');
+    if (!button) return;
+    const record = findSystemRecord_(button.dataset.systemId);
+    if (!record) return;
+
+    if (button.dataset.systemAction === 'edit') {
+      openSystemBuilder(record);
+    }
+    if (button.dataset.systemAction === 'review') {
+      await markSystemRecordReviewed(record, button);
+    }
+    if (button.dataset.systemAction === 'pdf') {
+      await generateSystemPdf(record, button);
+    }
+    if (button.dataset.systemAction === 'archive') {
+      await archiveSystemRecord(record);
+    }
+  }
+
+
+  function findSystemRecord_(id) {
+    return (state.systemsData.records || []).find(function(record) {
+      return record.id === id;
+    }) || null;
+  }
+
+
+  async function markSystemRecordReviewed(record, button) {
+    setBusy(button, true, systemsUi().reviewing);
+    try {
+      const result = await callServer('markSystemReviewed', {
+        recordId: record.id,
+        recordType: record.recordType,
+        language: state.language
+      });
+      state.systemsData = normalizeSystemsWorkspace_(result.workspace);
+      renderSystemsWorkspace(state.systemsData);
+      toast(systemsUi().reviewedMessage);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    }
+  }
+
+
+  async function archiveSystemRecord(record) {
+    if (!window.confirm(systemsUi().confirmArchive)) return;
+    try {
+      const result = await callServer('archiveSystemRecord', {
+        recordId: record.id,
+        recordType: record.recordType,
+        language: state.language
+      });
+      state.systemsData = normalizeSystemsWorkspace_(result.workspace);
+      renderSystemsWorkspace(state.systemsData);
+      toast(systemsUi().archivedMessage);
+    } catch (error) {
+      toast(error.message || String(error), true);
+    }
+  }
+
+
+  async function generateSystemPdf(record, button) {
+    const original = button.textContent;
+    setBusy(button, true, systemsUi().creating);
+    try {
+      const result = await callServer(
+        'generateSystemDocument',
+        record.recordType,
+        record.id,
+        state.language
+      );
+      downloadBase64File(
+        result.filename,
+        'application/pdf',
+        result.base64Content
+      );
+      toast(result.message);
+      if (result.driveFileUrl) {
+        window.open(result.driveFileUrl, '_blank', 'noopener');
+      }
+    } catch (error) {
+      toast(error.message || String(error), true);
+    } finally {
+      setBusy(button, false, original);
+    }
+  }
+
+
+  function renderSystemsDashboard() {
+    if (!state.systemsData) return;
+    const summary = state.systemsData.summary || {};
+    setText('dashboardSystemsActiveCount', String(summary.active || 0));
+    setText(
+      'dashboardSystemsReviewCount',
+      String(summary.reviewNeeded || 0)
+    );
+    setText('dashboardSystemsTotalCount', String(summary.total || 0));
+
+    const container = document.getElementById('dashboardSystemsReviewList');
+    const records = Array.isArray(summary.upcomingReviews)
+      ? summary.upcomingReviews
+      : [];
+
+    if (!records.length) {
+      container.innerHTML = '<div class="empty-state">' +
+        escapeHtml(systemsUi().dashboardEmpty) + '</div>';
+      return;
+    }
+
+    container.innerHTML = records.map(function(record) {
+      return '<article class="dashboard-system-item"><div>' +
+        '<span class="goal-badge">' +
+        escapeHtml(systemTypeLabel_(record.recordType)) + '</span>' +
+        '<h4>' + escapeHtml(record.title) + '</h4><p>' +
+        escapeHtml(systemPillarLabel_(record.pillar)) + '</p></div>' +
+        '<div class="dashboard-system-date"><span>' +
+        escapeHtml(systemsUi().due) + '</span><strong>' +
+        escapeHtml(systemsFormatDate_(record.nextReviewDate)) +
+        '</strong></div></article>';
+    }).join('');
+  }
+
+
+  function systemTypeLabel_(value) {
+    return systemsOptionLabel_('types', value);
+  }
+
+
+  function systemStatusLabel_(value) {
+    return systemsOptionLabel_('statuses', value);
+  }
+
+
+  function systemFrequencyLabel_(value) {
+    return systemsOptionLabel_('reviewFrequencies', value);
+  }
+
+
+  function systemPriorityLabel_(value) {
+    return systemsOptionLabel_('priorities', value);
+  }
+
+
+  function systemPillarLabel_(value) {
+    return systemsOptionLabel_('pillars', value);
+  }
+
+
+  function systemsOptionLabel_(group, value) {
+    const options = state.systemsData &&
+      state.systemsData.guidance &&
+      state.systemsData.guidance[group] || [];
+    const match = options.find(function(option) {
+      return option.value === value;
+    });
+    return match ? match.label : value;
+  }
+
+
+  function systemRoleLabel_(value) {
+    if (state.language !== 'es') return value;
+    return {
+      'Household Lead': 'Líder del hogar',
+      'Co-Lead': 'Colíder',
+      'Family Member': 'Miembro de la familia',
+      'Adult Member': 'Miembro adulto',
+      'Young Adult Member': 'Miembro adulto joven',
+      'Teen Member': 'Miembro adolescente',
+      'Child Member': 'Miembro menor',
+      'Older Adult Member': 'Miembro adulto mayor',
+      'Meeting Facilitator': 'Facilitador de reuniones',
+      'Goal & Progress Coordinator': 'Coordinador de metas y progreso',
+      'Learning Coordinator': 'Coordinador de aprendizaje',
+      'Household Operations Coordinator':
+        'Coordinador de operaciones del hogar',
+      'Safety Coordinator': 'Coordinador de seguridad'
+    }[value] || value;
+  }
+
+
+  function systemsFormatDate_(value) {
+    if (!value) return '';
+    const date = new Date(value + 'T12:00:00');
+    if (Number.isNaN(date.getTime())) return value;
+
+    return new Intl.DateTimeFormat(
+      state.language === 'es' ? 'es-US' : 'en-US',
+      { month: 'short', day: 'numeric', year: 'numeric' }
+    ).format(date);
+  }
+
+
+  function systemsLocalDateKey_(date) {
+    return [
+      date.getFullYear(),
+      String(date.getMonth() + 1).padStart(2, '0'),
+      String(date.getDate()).padStart(2, '0')
+    ].join('-');
+  }
+</script>

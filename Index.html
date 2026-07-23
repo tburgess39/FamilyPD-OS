@@ -1,0 +1,2950 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base target="_top">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?!= include('Styles'); ?>
+    <script>window.FPD_INITIAL_LINK_CONTEXT = <?!= initialLinkContext ?>;</script>
+  </head>
+
+  <body>
+    <div id="securityBlock" class="security-block hidden">
+      <div class="security-block-card">
+        <div class="security-alert-icon">!</div>
+        <h1 id="securityBlockTitle">FamilyPD Security Warning</h1>
+        <p id="securityBlockMessage">
+          This page is not running from an approved FamilyPD or Google Apps Script host.
+        </p>
+        <p id="securityBlockInstruction">
+          Do not connect Google Drive, upload a file, or enter information.
+          Close this page and manually type <strong>familypd.org</strong>
+          into the browser.
+        </p>
+      </div>
+    </div>
+
+    <div id="app" class="app-shell hidden">
+      <header class="topbar">
+        <a class="brand" href="#" onclick="return false;">
+          <?!= include('BrandAssets'); ?>
+          <span>
+            <strong>FamilyPD OS</strong>
+            <small id="brandSubtitle">Connected to Google Drive</small>
+          </span>
+        </a>
+
+        <div class="topbar-actions">
+          <label class="language-control" for="languageSelect">
+            <span>Language / Idioma</span>
+            <select id="languageSelect" aria-label="Language / Idioma">
+              <option value="en">English</option>
+              <option value="es">Español</option>
+            </select>
+          </label>
+          <button id="readPageButton" class="topbar-tool-button" type="button" title="Read the current instructions aloud">
+            🔊 <span id="readPageButtonText">Read aloud</span>
+          </button>
+          <button id="quickSupportButton" class="topbar-tool-button support-tool-button" type="button" title="Open reading and writing support">
+            💡 <span id="quickSupportButtonText">Quick help</span>
+          </button>
+          <button id="helpButton" class="topbar-tool-button" type="button">
+            ? <span id="helpButtonText">Help</span>
+          </button>
+          <button id="switchGoogleAccountButton" class="topbar-tool-button account-switch-button" type="button" title="Sign out of Google and reopen FamilyPD OS with another account">
+            ⇄ <span id="switchGoogleAccountButtonText">Switch Google account</span>
+          </button>
+          <a id="donateButton" class="donate-button" href="https://www.zeffy.com/en-US/donation-form/fuel-a-familys-future" target="_blank" rel="noopener noreferrer">❤ <span>Donate</span></a>
+          <a class="admin-contact" href="mailto:admin@familypd.org" title="Contact FamilyPD">admin@familypd.org</a>
+          <button id="securityBannerButton" class="security-banner-button">
+            <span class="security-dot"></span>
+            <span id="securityBannerText">Checking site authenticity…</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <section id="loadingView" class="center-card">
+          <div class="spinner" aria-hidden="true"></div>
+          <h1 id="loadingTitle">Opening FamilyPD</h1>
+          <p id="loadingText">Checking your workspace status…</p>
+        </section>
+
+        <section id="onboardingView" class="hidden">
+          <div class="hero">
+            <div>
+              <span class="eyebrow" id="onboardingEyebrow">PRIVACY-FIRST FOUNDATION</span>
+              <h1 id="onboardingTitle">Build a useful workspace without sharing your entire Drive.</h1>
+              <p id="onboardingIntro">
+                FamilyPD creates and manages only its own Drive files.
+                It does not request permission to browse or manage unrelated
+                files in your Google Drive.
+              </p>
+            </div>
+
+            <div class="permission-card">
+              <h2 id="permissionTitle">What Google permission should say</h2>
+              <p id="permissionMainText">
+                FamilyPD may create and manage the specific Drive files used
+                with this app.
+              </p>
+              <p class="small" id="permissionSmallText">
+                This version does not request permission to view or edit all
+                Google Drive files and does not request access to unrelated
+                Google Sheets.
+              </p>
+            </div>
+          </div>
+
+          <section class="privacy-card">
+            <div class="privacy-icon">🛡️</div>
+            <div>
+              <h2 id="privacyTitle">Do not enter sensitive information</h2>
+              <p id="privacyIntroText">
+                FamilyPD does not need passwords, account numbers, exact
+                addresses, exact birth dates, medical records, confidential
+                school records, identification numbers, or other sensitive data.
+              </p>
+            </div>
+          </section>
+
+          <h2 class="section-title" id="roleChoiceTitle">Create your FamilyPD workspace</h2>
+
+          <div class="role-grid single-workspace-choice">
+            <button class="role-card" data-role="HOUSEHOLD_LEAD">
+              <span class="role-icon">🏠</span>
+              <span>
+                <strong id="leadRoleTitle">Create My FamilyPD Workspace</strong>
+                <small id="leadRoleText">
+                  Create your own private FamilyPD workspace. Share only the profiles, goals, projects, meetings, and resources you choose.
+                </small>
+              </span>
+            </button>
+          </div>
+
+          <section id="buildPanel" class="form-card hidden">
+            <div>
+              <span class="eyebrow" id="readyToBuildText">READY TO CREATE</span>
+              <h2 id="selectedRoleTitle">FamilyPD workspace</h2>
+              <p id="selectedRoleDescription"></p>
+            </div>
+
+            <div class="privacy-confirmation">
+              <label>
+                <input id="privacyAcknowledgement" type="checkbox">
+                <span id="privacyAcknowledgementText">
+                  I understand that FamilyPD is for non-sensitive planning
+                  information and should not be used to store confidential data.
+                </span>
+              </label>
+            </div>
+
+            <div class="button-row">
+              <button class="text-button" id="changeRoleButton">Change role</button>
+              <button class="primary-button" id="buildButton" disabled>
+                Create My FamilyPD Workspace
+              </button>
+            </div>
+          </section>
+        </section>
+
+        <section id="dashboardView" class="hidden">
+          <div class="workspace-heading">
+            <div>
+              <span class="eyebrow" id="roleLabel">FAMILYPD OS · FAMILY OPERATING SYSTEM</span>
+              <h1 id="workspaceTitle">Workspace</h1>
+              <p id="workspaceSummary"></p>
+            </div>
+            <a id="openDriveButton" class="secondary-button link-button" target="_blank">
+              Open Drive Folder
+            </a>
+          </div>
+
+          <section id="workspaceHealthBanner" class="workspace-health-banner hidden" role="alert">
+            <div class="workspace-health-icon">🛠️</div>
+            <div class="workspace-health-copy">
+              <strong id="workspaceHealthTitle">Checking the FamilyPD workspace…</strong>
+              <p id="workspaceHealthText">FamilyPD is confirming that its folder and core files are available.</p>
+              <ul id="workspaceHealthIssues" class="workspace-health-issues hidden"></ul>
+            </div>
+            <button id="healthRepairButton" class="primary-button hidden" type="button">Repair Workspace</button>
+          </section>
+
+          <div class="workspace-layout">
+            <nav class="workspace-nav" aria-label="Workspace sections">
+              <button class="nav-item active" data-panel="overviewPanel">
+                <span>⌂</span><span>Overview</span>
+              </button>
+              <button class="nav-item" data-panel="identityPanel">
+                <span>🧭</span> <span id="identityNavText">Household Identity & Roles</span>
+              </button>
+              <button class="nav-item" data-panel="goalsPanel">
+                <span>🎯</span> <span id="goalsNavText">Goals & Checkpoints</span>
+              </button>
+              <button class="nav-item" data-panel="meetingsPanel">
+                <span>🗓️</span> <span id="meetingsNavText">Meetings</span>
+              </button>
+              <button class="nav-item" data-panel="learningPanel">
+                <span>📚</span> <span id="learningNavText">Learning & Discussions</span>
+              </button>
+              <button class="nav-item" data-panel="projectStudioPanel">
+                <span>💡</span> <span id="projectStudioNavText">Project Studio</span>
+              </button>
+              <button class="nav-item" data-panel="familyAiPanel">
+                <span>🤖</span> <span id="familyAiNavText">Family AI</span>
+              </button>
+              <button class="nav-item" data-panel="opportunitiesPanel">
+                <span>🧰</span> <span id="opportunitiesNavText">Opportunities & Mobility</span>
+              </button>
+              <button class="nav-item" data-panel="systemsPanel">
+                <span>⚙️</span> <span id="systemsNavText">Systems, Policies & Safety</span>
+              </button>
+              <button class="nav-item" data-panel="updatePanel">
+                <span>↔</span> <span id="sharingNavText">Family Sharing</span>
+              </button>
+              <a class="nav-item website-nav-link" href="https://familypd.org" target="_blank" rel="noopener noreferrer" aria-label="Open the FamilyPD website in a new tab">
+                <span>🌐</span> <span id="websiteNavText">FamilyPD Website</span>
+              </a>
+              <button class="nav-item" data-panel="helpPanel">
+                <span>?</span> <span id="helpNavText">Help & Tutorials</span>
+              </button>
+              <button class="nav-item" data-panel="workspacePanel">
+                <span>⚙</span> <span id="workspaceNavText">Workspace</span>
+              </button>
+            </nav>
+
+            <div class="workspace-content">
+              <section id="overviewPanel" class="workspace-panel active">
+                <div class="panel-heading">
+                  <div>
+                    <span class="eyebrow">FAMILYPD OS v11 · GUIDED EXPERIENCE</span>
+                    <h2>Your household home base</h2>
+                    <p>
+                      See what matters now, use guided tools, and keep every powerful FamilyPD feature available when you need it.
+                    </p>
+                  </div>
+                  <span id="publishedVersionBadge" class="version-badge">Not published</span>
+                </div>
+
+                <section class="scope-card compact">
+                  <div class="scope-icon">✓</div>
+                  <div>
+                    <h3>Designed around data minimization</h3>
+                    <p>
+                      No legal names, exact ages, phone numbers, email addresses,
+                      schools, employers, exact addresses, or other sensitive details are required.
+                    </p>
+                  </div>
+                </section>
+
+                <div class="status-grid">
+                  <article class="status-card">
+                    <span>Workspace role</span>
+                    <strong id="roleStatus">—</strong>
+                    <small>Role-based tools</small>
+                  </article>
+                  <article class="status-card">
+                    <span>Identity version</span>
+                    <strong id="identityVersionStatus">Not published</strong>
+                    <small id="identityVersionDate">Complete and publish when ready</small>
+                  </article>
+                  <article class="status-card">
+                    <span>Drive access</span>
+                    <strong>Specific app files</strong>
+                    <small>No Drive-wide search</small>
+                  </article>
+                  <article class="status-card">
+                    <span>Research standard</span>
+                    <strong>Citations + References</strong>
+                    <small>Required for evidence-based content</small>
+                  </article>
+                </div>
+
+                <div class="next-step-card">
+                  <div class="next-step-number">1</div>
+                  <div>
+                    <span class="eyebrow">RECOMMENDED NEXT STEP</span>
+                    <h3 id="nextStepTitle">Create the household identity</h3>
+                    <p id="nextStepText">
+                      Use simple, honest language. Start with the vision, mission,
+                      and three to five values.
+                    </p>
+                  </div>
+                  <button class="primary-button" id="goToIdentityButton">Open Identity</button>
+                </div>
+
+
+
+                <section id="dashboardIdentityCard" class="dashboard-identity-card">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow">YOUR HOUSEHOLD FOUNDATION</span>
+                      <h3 id="dashboardIdentityName">My Household</h3>
+                      <p id="dashboardIdentityPublishNotice" class="identity-publish-notice">Your Family Profile has not been published yet.</p>
+                    </div>
+                    <button id="dashboardOpenIdentityButton" class="secondary-button" type="button">Open Family Profile</button>
+                  </div>
+                  <div class="dashboard-identity-grid">
+                    <article><span>Mission</span><p id="dashboardIdentityMission">Add a mission to keep your household focused.</p></article>
+                    <article><span>Vision</span><p id="dashboardIdentityVision">Add a vision to describe what your household is building.</p></article>
+                    <article><span>Motto</span><p id="dashboardIdentityMotto">Add a short reminder your household can remember.</p></article>
+                  </div>
+                  <div class="dashboard-identity-reminders">
+                    <div><strong>Values</strong><div id="dashboardIdentityValues" class="identity-chip-list"><span class="identity-chip muted">Not selected yet</span></div></div>
+                    <div><strong>Commitments</strong><ul id="dashboardIdentityCommitments"><li>Choose commitments your household will practice.</li></ul></div>
+                  </div>
+                </section>
+
+                <section id="dashboardUpcomingMeetingsCard" class="dashboard-upcoming-card">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="dashboardUpcomingEyebrow">WHAT IS COMING UP</span>
+                      <h3 id="dashboardUpcomingTitle">Upcoming meetings</h3>
+                      <p id="dashboardUpcomingHelp">
+                        See the next scheduled household meetings without opening the full planner.
+                      </p>
+                    </div>
+                    <div class="button-row dashboard-meeting-actions">
+                      <button id="dashboardQuickMeetingButton" class="primary-button" type="button">
+                        Quick Meeting
+                      </button>
+                      <button id="dashboardOpenMeetingsButton" class="secondary-button" type="button">
+                        Open Meetings
+                      </button>
+                    </div>
+                  </div>
+                  <div id="dashboardUpcomingMeetingsList" class="dashboard-upcoming-list">
+                    <div class="empty-state">Upcoming meetings will appear here.</div>
+                  </div>
+                </section>
+
+                <section id="dashboardOpportunitiesCard" class="dashboard-opportunities-card">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="dashboardOpportunitiesEyebrow">TURN INFORMATION INTO OPTIONS</span>
+                      <h3 id="dashboardOpportunitiesTitle">Opportunities and next actions</h3>
+                      <p id="dashboardOpportunitiesHelp">
+                        Review saved opportunities, approaching deadlines, and plans that need a next step.
+                      </p>
+                    </div>
+                    <button id="dashboardOpenOpportunitiesButton" class="secondary-button" type="button">
+                      Open Opportunities
+                    </button>
+                  </div>
+
+                  <div class="opportunity-summary-grid">
+                    <article>
+                      <span id="dashboardOpportunitySharedLabel">Shared</span>
+                      <strong id="dashboardOpportunitySharedCount">0</strong>
+                    </article>
+                    <article>
+                      <span id="dashboardOpportunityPersonalLabel">Personal</span>
+                      <strong id="dashboardOpportunityPersonalCount">0</strong>
+                    </article>
+                    <article>
+                      <span id="dashboardOpportunityActionLabel">Action needed</span>
+                      <strong id="dashboardOpportunityActionCount">0</strong>
+                    </article>
+                    <article>
+                      <span id="dashboardOpportunityOverdueLabel">Past deadline</span>
+                      <strong id="dashboardOpportunityOverdueCount">0</strong>
+                    </article>
+                  </div>
+
+                  <div id="dashboardOpportunityDeadlineList" class="dashboard-opportunity-list">
+                    <div class="empty-state">Saved opportunity deadlines will appear here.</div>
+                  </div>
+                </section>
+
+                <section id="dashboardSystemsCard" class="dashboard-systems-card">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="dashboardSystemsEyebrow">KEEP THE HOUSEHOLD SYSTEM CURRENT</span>
+                      <h3 id="dashboardSystemsTitle">Systems and safety reviews</h3>
+                      <p id="dashboardSystemsHelp">
+                        See active household systems and the next items scheduled for review.
+                      </p>
+                    </div>
+                    <button id="dashboardOpenSystemsButton" class="secondary-button" type="button">
+                      Open Systems
+                    </button>
+                  </div>
+
+                  <div class="systems-summary-grid">
+                    <article>
+                      <span id="dashboardSystemsActiveLabel">Active</span>
+                      <strong id="dashboardSystemsActiveCount">0</strong>
+                    </article>
+                    <article>
+                      <span id="dashboardSystemsReviewLabel">Review needed</span>
+                      <strong id="dashboardSystemsReviewCount">0</strong>
+                    </article>
+                    <article>
+                      <span id="dashboardSystemsTotalLabel">Current records</span>
+                      <strong id="dashboardSystemsTotalCount">0</strong>
+                    </article>
+                  </div>
+
+                  <div id="dashboardSystemsReviewList" class="dashboard-systems-list">
+                    <div class="empty-state">System reviews will appear here.</div>
+                  </div>
+                </section>
+
+                <section class="dashboard-shared-card">
+                  <div class="section-heading-row"><div><span class="eyebrow">SHARED WITH ME</span><h3>FamilyPD items added to this workspace</h3><p>Projects, goals, profiles, and progress shared with you will appear here after you approve them.</p></div><button id="dashboardOpenSharingButton" class="secondary-button" type="button">Open Family Sharing</button></div>
+                  <div id="dashboardReceivedItemsList" class="shared-items-list"><div class="empty-state">No shared items have been added yet.</div></div>
+                </section>
+
+                <div class="future-grid">
+                  <article><span>🗓️</span><h3>Meetings</h3><p>Draft, schedule, revisit, duplicate, complete, and print meetings.</p></article>
+                  <article><span>🎯</span><h3>Goals</h3><p>Track household and personal goals across the five pillars.</p></article>
+                  <article><span>📚</span><h3>Learning</h3><p>Build guided learning plans, check sources, discuss ideas, reflect, and take action.</p></article>
+                  <article><span>⚙️</span><h3>Systems & Safety</h3><p>Create policies, routines, checklists, review schedules, and general safety plans.</p></article>
+                  <article><span>🧰</span><h3>Opportunities & Mobility</h3><p>Find official resources, save promising opportunities, and build realistic action plans.</p></article>
+                </div>
+              </section>
+
+              <section id="identityPanel" class="workspace-panel hidden">
+                <div class="panel-heading">
+                  <div>
+                    <span class="eyebrow">FAMILYPD GUIDEBOOK FRAMEWORK</span>
+                    <h2 id="identityPanelTitle">Household Identity</h2>
+                    <p id="identityGuidanceText"></p>
+                    <p class="citation-line" id="identityGuidanceCitation"></p>
+                  </div>
+                  <div class="pillar-strip" aria-label="FamilyPD pillars">
+                    <span>Health</span><span>Relationships</span><span>Education</span><span>Finances</span><span>Goals</span>
+                  </div>
+                </div>
+
+                <section class="guided-flow-shell identity-guided-flow">
+                  <div class="guided-flow-summary">
+                    <div>
+                      <span class="eyebrow" id="identityGuideEyebrow">CREATE, REVIEW, AND SAVE</span>
+                      <strong id="identityGuideStatus">Choose a starting profile or answer the basic questions below.</strong>
+                      <p id="identityGuideInstruction">Your selections stay on this page. Generate an editable profile, review it, then save or publish when ready.</p>
+                    </div>
+                    <div class="guided-flow-controls">
+                      <button id="identityPreviousStepButton" class="secondary-button compact-button" type="button">Previous</button>
+                      <button id="identityNextStepButton" class="primary-button compact-button" type="button">Next step</button>
+                    </div>
+                  </div>
+                  <nav id="identitySectionNav" class="guided-step-nav" aria-label="Household Identity guided steps">
+                    <button type="button" data-identity-step="start"><span>1</span><strong id="identityStepStartText">Start Here</strong></button>
+                    <button type="button" data-identity-step="examples"><span>2</span><strong id="identityStepExamplesText">More Examples</strong></button>
+                    <button type="button" data-identity-step="statements"><span>3</span><strong id="identityStepStatementsText">Mission & Vision</strong></button>
+                    <button type="button" data-identity-step="values"><span>4</span><strong id="identityStepValuesText">Values & Commitments</strong></button>
+                    <button type="button" data-identity-step="roles"><span>5</span><strong id="identityStepRolesText">Roles</strong></button>
+                    <button type="button" data-identity-step="preferences"><span>6</span><strong id="identityStepPreferencesText">Accessibility</strong></button>
+                    <button type="button" data-identity-step="publish"><span>7</span><strong id="identityStepPublishText">Review & Publish</strong></button>
+                  </nav>
+                </section>
+
+                <div id="leadIdentityView" class="hidden">
+                  <section id="identityStarterProfilesSection" class="edit-card identity-starter-card">
+                    <div class="section-heading-row">
+                      <div>
+                        <span class="eyebrow">CHOOSE ONE WAY TO BEGIN</span>
+                        <h3>Create your Household Identity</h3>
+                        <p>Choose one simple starting point. Nothing is stored in Google Drive until you publish.</p>
+                      </div>
+                    </div>
+                    <label class="field full identity-name-first">
+                      <span>Household name <strong aria-hidden="true">*</strong></span>
+                      <input id="identityStartHouseholdName" maxlength="100" value="Our Household" placeholder="Example: Our Household" spellcheck="true">
+                      <small>A household name is the only item required to generate a profile.</small>
+                    </label>
+                    <div class="identity-start-options" role="group" aria-label="Ways to create a Family Profile">
+                      <button id="randomIdentityProfileButton" class="identity-start-option selected" type="button" aria-pressed="true">
+                        <strong>1. Foundational Family Identity</strong>
+                        <span>Recommended. General household basics are already selected. Click Generate Profile, then edit anything you want.</span>
+                      </button>
+                      <button id="editableIdeasIdentityButton" class="identity-start-option" type="button">
+                        <strong>2. Editable Options</strong>
+                        <span>Answer a few questions, then choose mission, vision, and motto ideas.</span>
+                      </button>
+                      <button id="blankIdentityProfileButton" class="identity-start-option" type="button">
+                        <strong>3. Blank Template</strong>
+                        <span>Open a blank profile and write everything yourself.</span>
+                      </button>
+                    </div>
+                    <div class="button-row right identity-generate-row">
+                      <button id="generateSelectedIdentityProfileButton" class="primary-button" type="button">Generate Foundational Profile</button>
+                    </div>
+                    <div id="identityIncompleteNotice" class="result-box warning-box hidden" aria-live="polite"></div>
+                    <div id="identityStarterProfilePreview" class="result-box hidden" aria-live="polite"></div>
+                  </section>
+                  <section id="identityExamplesSection" class="edit-card identity-examples-card">
+                    <div class="section-heading-row">
+                      <div>
+                        <span class="eyebrow">CLICKABLE STARTING POINTS</span>
+                        <h3 id="identityExamplesTitle">Mission, vision, and value examples by pillar</h3>
+                        <p id="identityExamplesIntro">
+                          Choose a FamilyPD pillar and the kind of example you need.
+                          Click any example to place it in the editable identity draft.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="form-grid identity-example-controls">
+                      <label class="field">
+                        <span id="identityExamplePillarLabel">FamilyPD pillar</span>
+                        <select id="identityExamplePillarSelect">
+                          <option value="Health">Health</option>
+                          <option value="Relationships">Relationships</option>
+                          <option value="Education">Education</option>
+                          <option value="Finances">Finances</option>
+                          <option value="Goals">Goals</option>
+                        </select>
+                      </label>
+                      <label class="field">
+                        <span id="identityExampleTypeLabel">Example type</span>
+                        <select id="identityExampleTypeSelect">
+                          <option value="mission">Mission</option>
+                          <option value="vision">Vision</option>
+                          <option value="values">Values</option>
+                        </select>
+                      </label>
+                    </div>
+
+                    <div id="identityExampleOptions" class="identity-example-options"></div>
+                    <p id="identityExampleHelp" class="field-note">
+                      These are starting points, not required wording. Edit every selection so it sounds natural for the household.
+                    </p>
+                  </section>
+                  <section id="guidedIdentityBuilder" class="edit-card guided-builder-card">
+                    <div class="section-heading-row">
+                      <div>
+                        <span class="eyebrow">STEP-BY-STEP SUPPORT</span>
+                        <h3 id="guidedBuilderTitle">Guided Identity Builder</h3>
+                        <p id="guidedBuilderIntro">Choose one answer from each list. FamilyPD will create editable mission, vision, and motto ideas.</p>
+                      </div>
+                      <button type="button" class="info-button" data-help="The generator creates starting points only. Review and edit every suggestion before saving." aria-label="About the Guided Identity Builder">i</button>
+                    </div>
+                    <div class="form-grid guided-builder-grid">
+                      <label class="field">
+                        <span id="builderFeelingLabel">How should the home feel?</span>
+                        <select id="builderFeelingSelect"></select>
+                        <small id="builderFeelingHelp">Choose the feeling you most want people to experience at home.</small>
+                      </label>
+                      <label class="field">
+                        <span id="builderTreatmentLabel">How should members treat one another?</span>
+                        <select id="builderTreatmentSelect"></select>
+                        <small id="builderTreatmentHelp">Choose one behavior that should guide communication and decisions.</small>
+                      </label>
+                      <label class="field">
+                        <span id="builderFocusLabel">What should the household strengthen?</span>
+                        <select id="builderFocusSelect"></select>
+                        <small id="builderFocusHelp">Choose the current area of growth. It can be changed later.</small>
+                      </label>
+                      <label class="field">
+                        <span id="builderFutureLabel">What should the household become?</span>
+                        <select id="builderFutureSelect"></select>
+                        <small id="builderFutureHelp">Choose a word that describes the future you are working toward.</small>
+                      </label>
+                      <label class="field full">
+                        <span id="builderPracticeLabel">What should the household practice regularly?</span>
+                        <select id="builderPracticeSelect"></select>
+                        <small id="builderPracticeHelp">Choose one repeated action. The generated wording can be edited.</small>
+                      </label>
+                    </div>
+                    <div class="button-row right">
+                      <button id="generateIdentityButton" class="primary-button" type="button">Generate My Editable Profile Ideas</button>
+                    </div>
+                    <div id="generatedIdentityResults" class="generated-results hidden">
+                      <div class="generated-column">
+                        <h4 id="generatedVisionHeading">Vision ideas</h4>
+                        <div id="generatedVisionOptions"></div>
+                      </div>
+                      <div class="generated-column">
+                        <h4 id="generatedMissionHeading">Mission ideas</h4>
+                        <div id="generatedMissionOptions"></div>
+                      </div>
+                      <div class="generated-column">
+                        <div class="generated-heading-row">
+                          <h4 id="generatedMottoHeading">Motto ideas</h4>
+                          <button id="refreshMottoIdeasButton" class="text-button compact-button" type="button">Show different mottos</button>
+                        </div>
+                        <div id="generatedMottoOptions"></div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section id="identityStatementsSection" class="edit-card">
+                    <div class="section-heading-row">
+                      <div>
+                        <h3>Identity statements</h3>
+                        <p>Draft privately, then publish the version intended for household members.</p>
+                      </div>
+                      <span id="draftStatusBadge" class="draft-badge">Draft</span>
+                      <span id="identityUnsavedBadge" class="draft-badge warning-badge hidden">Unsaved changes</span>
+                    </div>
+
+                    <div class="prompt-box">
+                      <strong>Think about:</strong>
+                      <span>What kind of household do we want to be?</span>
+                      <span>What do we stand for?</span>
+                      <span>How do we want this home to feel?</span>
+                    </div>
+
+                    <div class="form-grid">
+                      <label class="field full">
+                        <span>Household label</span>
+                        <input id="identityLabelInput" maxlength="100" placeholder="My Household" spellcheck="true">
+                        <small>Use a general label. A legal family name is not required.</small>
+                      </label>
+                      <label class="field full">
+                        <span>Vision — where are we going?</span>
+                        <textarea id="visionInput" maxlength="2000" rows="5" spellcheck="true" placeholder="Describe the kind of household you are working toward."></textarea>
+                        <small id="visionFieldHelp">This describes the future. Use a generated idea, select an example, or write your own.</small>
+                      </label>
+                      <label class="field full">
+                        <span>Mission — what do we practice to get there?</span>
+                        <textarea id="missionInput" maxlength="2000" rows="5" spellcheck="true" placeholder="Describe the actions and habits the household practices."></textarea>
+                        <small id="missionFieldHelp">This describes what the household will practice regularly to move toward the vision.</small>
+                      </label>
+                      <label class="field full">
+                        <span>Motto <em>optional</em></span>
+                        <input id="mottoInput" maxlength="300" spellcheck="true" placeholder="A short phrase the household can remember">
+                        <small id="mottoFieldHelp">Keep it short enough to remember. This field is optional.</small>
+                      </label>
+                    </div>
+
+                    <div class="button-row right">
+                      <button id="saveIdentityButton" class="primary-button" type="button">Save Draft in This Browser</button>
+                    </div>
+                  </section>
+
+                  <section id="identitySymbolSection" class="edit-card symbol-section">
+                    <div>
+                      <h3>Symbolic household image</h3>
+                      <p>
+                        Add a logo, icon, drawing, or other non-personal symbol.
+                        Do not upload photographs of people, identification, addresses,
+                        documents, or private information.
+                      </p>
+                    </div>
+                    <div class="symbol-editor">
+                      <div><div id="symbolPreview" class="symbol-preview">FPD</div><div id="symbolUploadStatus" class="symbol-upload-status" aria-live="polite">No logo uploaded yet.</div></div>
+                      <div class="symbol-controls">
+                        <input id="symbolFileInput" type="file" accept="image/png,image/jpeg,image/webp">
+                        <label class="compact-check">
+                          <input id="symbolPrivacyCheck" type="checkbox">
+                          <span>I confirmed this is a non-sensitive symbol with no faces or private information.</span>
+                        </label>
+                        <div class="button-row">
+                          <button id="uploadSymbolButton" class="secondary-button" type="button">Use Logo in Draft</button>
+                          <button id="clearSymbolButton" class="text-button" type="button">Remove Logo</button>
+                        </div>
+                        <small>PNG, JPEG, or WebP · 2 MB maximum</small>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section id="identityValuesSection" class="edit-card">
+                    <div class="section-heading-row">
+                      <div>
+                        <h3 id="valuesSectionTitle">Core values</h3>
+                        <p id="valuesSectionHelp">Choose three to five starting values. The descriptions are prepopulated and fully editable.</p>
+                      </div>
+                      <button type="button" class="info-button" data-help="Values describe how household members agree to treat one another and make decisions. Choose only the values that the household is willing to practice." aria-label="About household values">i</button>
+                    </div>
+                    <div id="valueLibrary" class="value-library"></div>
+                    <div class="section-divider"><span id="selectedValuesLabel">Selected values — edit anything below</span></div>
+                    <div id="valuesEditor" class="repeat-list"></div>
+                    <div class="button-row between">
+                      <button id="addValueButton" class="secondary-button small-button">+ Add Custom Value</button>
+                      <button id="saveValuesButton" class="primary-button">Save Values</button>
+                    </div>
+                  </section>
+
+                  <section id="identityCommitmentsSection" class="edit-card">
+                    <div class="section-heading-row">
+                      <div>
+                        <h3>Household commitments</h3>
+                        <p>Write clear agreements the household will practice and revisit.</p>
+                      </div>
+                      <button id="addCommitmentButton" class="secondary-button small-button">+ Add Commitment</button>
+                    </div>
+                    <div id="commitmentsEditor" class="repeat-list"></div>
+                    <p class="field-note"><em>Tip:</em> A commitment is a clear promise the household agrees to practice. Start with “We will…”</p>
+                    <div class="button-row right">
+                      <button id="saveCommitmentsButton" class="primary-button">Save Commitments</button>
+                    </div>
+                  </section>
+
+                  <section id="identityPublishSection" class="publish-card">
+                    <div>
+                      <span class="eyebrow">SHARE THE APPROVED VERSION</span>
+                      <h3>Publish household identity</h3>
+                      <p>
+                        Publishing saves the approved Household Identity and logo to your FamilyPD Google Drive workspace. The dashboard will then show the published household name, mission, vision, motto, values, and commitments as gentle reminders.
+                      </p>
+                    </div>
+                    <div class="button-row">
+                      <button id="publishIdentityButton" class="primary-button" type="button" disabled>Publish Household Identity</button>
+                      <button id="generatePdfButton" class="secondary-button" type="button">Create PDF from Published Profile</button>
+                    </div>
+                    <div id="pdfResult" class="result-box hidden"></div>
+                  </section>
+
+                  <section id="identityHistorySection" class="edit-card hidden" aria-hidden="true">
+                    <div class="section-heading-row">
+                      <div>
+                        <h3>Version history</h3>
+                        <p>Restore a prior published version into the draft area without changing what members currently see.</p>
+                      </div>
+                    </div>
+                    <div id="identityHistoryList" class="history-list"></div>
+                  </section>
+                </div>
+
+                <div id="memberIdentityView" class="hidden">
+                  <section id="memberIdentityCard" class="identity-display-card"></section>
+
+                  <section class="edit-card">
+                    <h3>Suggest an identity change</h3>
+                    <p>
+                      Suggestions stay private in this workspace. They are not automatically
+                      transmitted to the Household Lead; bring them to a meeting or share them intentionally.
+                    </p>
+                    <div class="form-grid">
+                      <label class="field">
+                        <span>Suggestion area</span>
+                        <select id="suggestionCategorySelect">
+                          <option>Mission</option><option>Vision</option><option>Motto</option>
+                          <option>Value</option><option>Commitment</option>
+                          <option>Household role</option><option>Other</option>
+                        </select>
+                        <small>Choose the part of the household identity you want to discuss.</small>
+                      </label>
+                      <label class="field full">
+                        <span>Non-sensitive suggestion</span>
+                        <textarea id="suggestionTextInput" rows="4" maxlength="1200" spellcheck="true"></textarea>
+                        <small>This remains private in this member workspace until you intentionally share it.</small>
+                      </label>
+                    </div>
+                    <div class="button-row right">
+                      <button id="saveSuggestionButton" class="primary-button">Save Suggestion Privately</button>
+                    </div>
+                    <div id="suggestionsList" class="suggestion-list"></div>
+                  </section>
+                </div>
+
+                <div id="identityRolesAndPreferences">
+                <section id="identityPreferencesSection" class="edit-card">
+                  <h3>Language and accessibility</h3><p>Only settings that change your experience are shown here.</p>
+                  <div class="form-grid">
+                    <label class="field hidden" aria-hidden="true">
+                      <span>General role label</span>
+                      <select id="profileRoleSelect"></select>
+                      <small>This describes how you participate. It does not grant account access or control over another member.</small>
+                    </label>
+                    <label class="field hidden" aria-hidden="true">
+                      <span>General age group</span>
+                      <select id="profileAgeSelect"></select>
+                      <small>Use a broad group only. An exact age or birth date is not needed.</small>
+                    </label>
+                    <label class="field">
+                      <span>Workspace language</span>
+                      <select id="profileLanguageSelect">
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                      </select>
+                      <small>Changes menus, guidance, tutorials, and suggested content.</small>
+                    </label>
+                    <label class="field hidden" aria-hidden="true">
+                      <span>Preferred learning format</span>
+                      <select id="profileLearningSelect"></select>
+                      <small>Choose the format that usually makes information easiest to understand.</small>
+                    </label>
+                    <label class="field hidden" aria-hidden="true">
+                      <span>Preferred check-in rhythm</span>
+                      <select id="profileRhythmSelect"></select>
+                      <small>Choose how often reminders or progress check-ins may be helpful.</small>
+                    </label>
+                    <label class="field full hidden" aria-hidden="true">
+                      <span>Default sharing preference</span>
+                      <select id="profileSharingSelect"></select>
+                      <small>This preference guides future sharing choices. FamilyPD should still show a preview before sharing.</small>
+                    </label>
+                    <div class="field full preference-checks">
+                      <span>Reading and display support</span>
+                      <label class="compact-check"><input id="profileSimpleLanguageCheck" type="checkbox"><span>Use simpler instructions when available</span></label>
+                      <label class="compact-check"><input id="profileLargeTextCheck" type="checkbox"><span>Use larger workspace text</span></label>
+                      <small>These settings can be changed at any time.</small>
+                    </div>
+                    <label class="field full">
+                      <span>Accessibility or participation preference <em>optional</em></span>
+                      <textarea id="profileAccessibilityInput" maxlength="600" rows="3" placeholder="Use a general preference, such as: I need larger text or extra time to read."></textarea>
+                      <small>Do not enter diagnoses, medical details, school records, or other confidential information.</small>
+                    </label>
+                  </div>
+                  <div class="button-row right">
+                    <button id="saveProfileButton" class="primary-button">Save Profile Preferences</button>
+                  </div>
+                </section>
+
+                <section id="leadRosterView" class="edit-card hidden">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow">ONE ROLE DROPDOWN · EDITABLE RESPONSIBILITIES</span>
+                      <h3 id="roleBuilderTitle">Guided Role Builder</h3>
+                      <p id="roleBuilderIntro">Choose the main way a member will help. Suggested responsibilities will appear automatically and can be edited.</p>
+                    </div>
+                    <button type="button" class="info-button" data-help="Any capable household member—including a teen or young adult—may facilitate a meeting, coordinate goals, introduce learning, or help manage another responsibility area." aria-label="About household leadership">i</button>
+                  </div>
+                  <div class="leadership-note">
+                    <strong id="leadershipNoteTitle">Leadership can come from any household member.</strong>
+                    <span id="leadershipNoteText">A parent does not have to lead every activity. Choose roles based on readiness, interest, support, and the task.</span>
+                  </div>
+                  <div class="form-grid">
+                    <label class="field">
+                      <span id="roleSelectLabel">Choose a role</span>
+                      <select id="roleTemplateSelect"></select>
+                      <small id="roleSelectHelp">Select one role. FamilyPD will explain what it does and suggest responsibilities.</small>
+                    </label>
+                    <label class="field">
+                      <span id="assignedLabelText">Household member label</span>
+                      <select id="roleAssignedLabelSelect"></select>
+                      <small id="assignedLabelHelp">
+                        Choose a general label. Legal names are not required.
+                      </small>
+                    </label>
+                    <label id="customAssignedLabelWrap" class="field hidden">
+                      <span id="customAssignedLabelText">Custom general label</span>
+                      <input id="roleAssignedLabelInput" maxlength="80" spellcheck="true"
+                        placeholder="Example: Teen Member C">
+                      <small id="customAssignedLabelHelp">
+                        Use a nickname or general label—not a legal name.
+                      </small>
+                    </label>
+                    <label id="customRoleTitleWrap" class="field full hidden">
+                      <span id="customRoleTitleLabel">Custom role title</span>
+                      <input id="customRoleTitleInput" maxlength="100" spellcheck="true" placeholder="Example: Family Event Coordinator">
+                      <small id="customRoleTitleHelp">Describe the responsibility area, not private information about a person.</small>
+                    </label>
+                  </div>
+                  <div id="selectedRoleExplanation" class="role-explanation"></div>
+                  <div class="section-divider"><span id="responsibilitiesLabel">Suggested responsibilities — keep, edit, remove, or add</span></div>
+                  <div id="roleResponsibilitiesEditor" class="responsibility-editor"></div>
+                  <div class="button-row between">
+                    <button id="addCustomResponsibilityButton" class="secondary-button small-button" type="button">+ Add Responsibility</button>
+                    <button id="addRoleToRosterButton" class="primary-button" type="button">Add Role to Household List</button>
+                  </div>
+                  <div class="section-divider"><span id="savedRolesLabel">Household role list</span></div>
+                  <div id="rosterEditor" class="roster-card-list"></div>
+                  <div class="button-row right">
+                    <button id="saveRosterButton" class="primary-button">Save Household Roles</button>
+                  </div>
+                </section>
+
+                <section id="memberRosterView" class="edit-card hidden">
+                  <h3>Published household roles</h3>
+                  <p>These general labels were included in the latest verified Household Update Pack.</p>
+                  <div id="memberRosterList" class="roster-display"></div>
+                </section>
+
+                </div>
+              </section>
+
+              <section id="goalsPanel" class="workspace-panel hidden">
+                <div class="panel-heading">
+                  <div>
+                    <span class="eyebrow" id="goalsEyebrow">GUIDED GOALS & REGULAR CHECK-INS</span>
+                    <h2 id="goalsPanelTitle">Goals & Checkpoints</h2>
+                    <p id="goalsPanelIntro">
+                      Choose a starting idea, edit it to fit the household, break it into small steps,
+                      and return for quick progress reviews.
+                    </p>
+                  </div>
+                  <button id="newGoalButton" class="primary-button" type="button">Create a Goal</button>
+                </div>
+
+                <section class="guidance-banner">
+                  <div class="guidance-icon">🎯</div>
+                  <div>
+                    <h3 id="goalsGuidanceTitle">Start with a few clear goals</h3>
+                    <p id="goalsGuidanceText">
+                      Choose goals that fit the household’s current season. Make them clear,
+                      realistic, connected to a timeframe, and small enough to review regularly.
+                    </p>
+                    <span id="goalsGuidanceCitation" class="citation-line">(Hall, 2025, pp. 50–55)</span>
+                  </div>
+                </section>
+
+                <section class="privacy-card compact">
+                  <div class="privacy-icon">🛡️</div>
+                  <div>
+                    <h3 id="goalPrivacyTitle">Use general, non-sensitive descriptions</h3>
+                    <p id="goalPrivacyText">
+                      Do not enter account balances, diagnoses, confidential school records,
+                      exact addresses, identification numbers, passwords, or private documents.
+                    </p>
+                  </div>
+                </section>
+
+                <section id="goalBuilderCard" class="edit-card hidden">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="goalBuilderEyebrow">STEP-BY-STEP GOAL BUILDER</span>
+                      <h3 id="goalBuilderTitle">Create or edit a goal</h3>
+                      <p id="goalBuilderIntro">
+                        Select from the dropdowns for a fast start. Every suggested answer can be edited.
+                      </p>
+                    </div>
+                    <button id="cancelGoalEditButton" class="text-button" type="button">Cancel</button>
+                  </div>
+
+                  <input id="goalIdInput" type="hidden">
+
+                  <div class="form-grid">
+                    <label id="goalScopeField" class="field">
+                      <span id="goalScopeLabel">Who is this goal for?</span>
+                      <select id="goalScopeSelect">
+                        <option value="HOUSEHOLD">The household</option>
+                        <option value="PERSONAL">My private workspace</option>
+                      </select>
+                      <small id="goalScopeHelp">
+                        Household goals enter verified Update Packs. Personal goals stay in this workspace.
+                      </small>
+                    </label>
+
+                    <label class="field">
+                      <span id="goalPillarLabel">FamilyPD pillar</span>
+                      <select id="goalPillarSelect"></select>
+                      <small id="goalPillarHelp">Choose the area this goal supports.</small>
+                    </label>
+
+                    <label class="field full">
+                      <span id="goalIdeaLabel">Need a starting idea?</span>
+                      <select id="goalIdeaSelect"></select>
+                      <small id="goalIdeaHelp">
+                        Select an idea to prepopulate an editable title, description, and steps.
+                      </small>
+                    </label>
+
+                    <div class="field full">
+                      <button id="useGoalIdeaButton" class="secondary-button" type="button">
+                        Use Selected Idea
+                      </button>
+                    </div>
+
+                    <label class="field full">
+                      <span id="goalTitleLabel">Goal title</span>
+                      <input id="goalTitleInput" type="text" maxlength="160" spellcheck="true">
+                      <small id="goalTitleHelp">Keep it short and clear. This appears on the goal card and PDF.</small>
+                    </label>
+
+                    <label class="field">
+                      <span id="goalTimeframeLabel">Timeframe</span>
+                      <select id="goalTimeframeSelect"></select>
+                      <small id="goalTimeframeHelp">Choose a realistic period. It can be changed later.</small>
+                    </label>
+
+                    <label class="field">
+                      <span id="goalMeasureLabel">How will progress be reviewed?</span>
+                      <select id="goalMeasureSelect"></select>
+                      <small id="goalMeasureHelp">Choose a simple measure that does not require sensitive records.</small>
+                    </label>
+
+                    <label class="field full">
+                      <span id="goalTargetLabel">What result are you working toward?</span>
+                      <textarea id="goalTargetInput" rows="4" maxlength="1600" spellcheck="true"></textarea>
+                      <small id="goalTargetHelp">
+                        Describe the desired result in general language. Avoid exact private financial, medical, or school information.
+                      </small>
+                    </label>
+
+                    <label class="field full">
+                      <span id="goalWhyLabel">Why does this goal matter?</span>
+                      <textarea id="goalWhyInput" rows="3" maxlength="1200" spellcheck="true"></textarea>
+                      <small id="goalWhyHelp">A short reason can help the household stay motivated.</small>
+                    </label>
+                  </div>
+
+                  <div class="section-heading-row compact-row">
+                    <div>
+                      <h4 id="goalStepsLabel">Small steps</h4>
+                      <p id="goalStepsHelp">Keep, edit, remove, or add steps. Start with the next action—not the entire journey.</p>
+                    </div>
+                    <button id="addGoalStepButton" class="secondary-button" type="button">+ Add Step</button>
+                  </div>
+                  <div id="goalStepsEditor" class="repeat-editor"></div>
+
+                  <div class="button-row">
+                    <button id="saveGoalButton" class="primary-button" type="button">Save Goal</button>
+                  </div>
+                </section>
+
+                <section class="goals-column-layout">
+                  <div>
+                    <div class="section-heading-row">
+                      <div>
+                        <h3 id="householdGoalsTitle">Household goals</h3>
+                        <p id="householdGoalsHelp">
+                          Household Lead workspaces can edit these goals. Family Member workspaces see verified imported goals.
+                        </p>
+                      </div>
+                    </div>
+                    <div id="householdGoalsList" class="goal-list"></div>
+                  </div>
+
+                  <div>
+                    <div class="section-heading-row">
+                      <div>
+                        <h3 id="personalGoalsTitle">My personal goals</h3>
+                        <p id="personalGoalsHelp">
+                          These goals remain private in this workspace and are not included in Household Update Packs.
+                        </p>
+                      </div>
+                    </div>
+                    <div id="personalGoalsList" class="goal-list"></div>
+                  </div>
+                </section>
+
+                <section id="goalCheckpointCard" class="edit-card hidden">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="checkpointEyebrow">QUICK PROGRESS REVIEW</span>
+                      <h3 id="checkpointTitle">Add a checkpoint</h3>
+                      <p id="checkpointGoalName"></p>
+                    </div>
+                    <button id="cancelCheckpointButton" class="text-button" type="button">Cancel</button>
+                  </div>
+
+                  <input id="checkpointGoalIdInput" type="hidden">
+                  <input id="checkpointScopeInput" type="hidden">
+
+                  <div class="form-grid">
+                    <label class="field">
+                      <span id="checkpointProgressLabel">Percent complete</span>
+                      <input id="checkpointProgressInput" type="range" min="0" max="100" step="5" value="0">
+                      <output id="checkpointProgressOutput">0%</output>
+                      <small id="checkpointProgressHelp">Use your best general estimate. Exact records are not required.</small>
+                    </label>
+
+                    <label class="field">
+                      <span id="checkpointStatusLabel">Status</span>
+                      <select id="checkpointStatusSelect"></select>
+                      <small id="checkpointStatusHelp">Choose the status that best describes the goal right now.</small>
+                    </label>
+
+                    <label class="field full">
+                      <span id="checkpointProgressNoteLabel">What progress was made?</span>
+                      <textarea id="checkpointProgressNoteInput" rows="3" maxlength="1200" spellcheck="true"></textarea>
+                    </label>
+
+                    <label class="field full">
+                      <span id="checkpointBarrierLabel">What got in the way?</span>
+                      <textarea id="checkpointBarrierInput" rows="2" maxlength="800" spellcheck="true"></textarea>
+                      <small id="checkpointBarrierHelp">Use a general description. This is for problem-solving, not blame.</small>
+                    </label>
+
+                    <label class="field full">
+                      <span id="checkpointSupportLabel">What support would help?</span>
+                      <textarea id="checkpointSupportInput" rows="2" maxlength="800" spellcheck="true"></textarea>
+                    </label>
+
+                    <label class="field full">
+                      <span id="checkpointNextActionLabel">What is the next small action?</span>
+                      <textarea id="checkpointNextActionInput" rows="2" maxlength="800" spellcheck="true"></textarea>
+                    </label>
+                  </div>
+
+                  <div class="button-row">
+                    <button id="saveCheckpointButton" class="primary-button" type="button">Save Checkpoint</button>
+                  </div>
+                </section>
+              </section>
+
+
+              <section id="meetingsPanel" class="workspace-panel hidden">
+                <div class="panel-heading">
+                  <div>
+                    <span class="eyebrow" id="meetingsEyebrow">PLANNED · INCLUSIVE · ACTION-FOCUSED</span>
+                    <h2 id="meetingsPanelTitle">Family Meetings</h2>
+                    <p id="meetingsPanelIntro">
+                      Plan the conversation before the meeting, make room for participation,
+                      record decisions, and carry unfinished work forward.
+                    </p>
+                  </div>
+                  <button id="newMeetingButton" class="secondary-button" type="button">
+                    Open Full Planner
+                  </button>
+                </div>
+
+                <section class="guidance-banner">
+                  <div class="guidance-icon">🗓️</div>
+                  <div>
+                    <h3 id="meetingGuidanceTitle">Use structure without making meetings rigid</h3>
+                    <p id="meetingGuidanceText">
+                      Choose a date, facilitator, topics, questions, materials, and intended
+                      outcomes. Keep the meeting focused and save some topics for another time.
+                    </p>
+                    <span id="meetingGuidanceCitation" class="citation-line">
+                      (Hall, 2025, pp. 17–20, 54, 57–63)
+                    </span>
+                  </div>
+                </section>
+
+                <section class="privacy-card compact">
+                  <div class="privacy-icon">🛡️</div>
+                  <div>
+                    <h3 id="meetingPrivacyTitle">Plan with general labels</h3>
+                    <p id="meetingPrivacyText">
+                      Do not enter exact addresses, contact details, confidential records,
+                      account information, medical information, passwords, or identification numbers.
+                    </p>
+                  </div>
+                </section>
+
+
+                <section id="quickMeetingCard" class="edit-card quick-meeting-card">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="quickMeetingEyebrow">CREATE A MEETING IN ABOUT TWO MINUTES</span>
+                      <h3 id="quickMeetingTitle">Quick Meeting</h3>
+                      <p id="quickMeetingIntro">
+                        Choose a meeting type, date, facilitator, and suggested topics.
+                        FamilyPD fills in the rest, and you can edit the full meeting later.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="form-grid">
+                    <label class="field">
+                      <span id="quickMeetingTemplateLabel">Meeting type</span>
+                      <select id="quickMeetingTemplateSelect"></select>
+                      <small id="quickMeetingTemplateHelp">
+                        The meeting type automatically suggests a title, length, and topics.
+                      </small>
+                    </label>
+
+                    <label class="field">
+                      <span id="quickMeetingDateLabel">Date</span>
+                      <input id="quickMeetingDateInput" type="date">
+                      <small id="quickMeetingDateHelp">
+                        Leave blank to save it as a draft.
+                      </small>
+                    </label>
+
+                    <label class="field">
+                      <span id="quickMeetingTimeLabel">Time</span>
+                      <input id="quickMeetingTimeInput" type="time">
+                    </label>
+
+                    <label class="field">
+                      <span id="quickMeetingDurationLabel">Length</span>
+                      <select id="quickMeetingDurationSelect"></select>
+                    </label>
+
+                    <label class="field full">
+                      <span id="quickMeetingFacilitatorLabel">Facilitator role</span>
+                      <select id="quickMeetingFacilitatorSelect"></select>
+                      <small id="quickMeetingFacilitatorHelp">
+                        Any capable member—including a teen or young adult—may facilitate.
+                      </small>
+                    </label>
+                  </div>
+
+                  <div class="quick-topic-section">
+                    <div class="section-heading-row compact-row">
+                      <div>
+                        <h4 id="quickMeetingTopicsLabel">Selected topics</h4>
+                        <p id="quickMeetingTopicsHelp">
+                          FamilyPD suggests topics based on the meeting type. Keep, remove, or add up to three.
+                        </p>
+                      </div>
+                    </div>
+                    <div id="quickMeetingSelectedTopics" class="quick-topic-chips"></div>
+
+                    <div class="quick-topic-picker">
+                      <label class="field">
+                        <span id="quickMeetingTopicAreaLabel">Topic area</span>
+                        <select id="quickMeetingTopicGroupSelect"></select>
+                      </label>
+                      <label class="field">
+                        <span id="quickMeetingTopicLabel">Topic</span>
+                        <select id="quickMeetingTopicSelect"></select>
+                      </label>
+                      <button id="quickAddTopicButton" class="secondary-button" type="button">
+                        Add Topic
+                      </button>
+                    </div>
+                  </div>
+
+                  <details class="quick-article-options">
+                    <summary id="quickArticleSummary">Optional: add one article or link</summary>
+                    <p id="quickArticleIntro">
+                      Select a recent story or paste one public HTTPS link. No author, year,
+                      or other source fields are required.
+                    </p>
+
+                    <div class="quick-article-grid">
+                      <section class="topic-tool-card">
+                        <h4 id="quickRecentArticleTitle">Find a recent story</h4>
+                        <label class="field">
+                          <span id="quickRecentArticleAreaLabel">FamilyPD area</span>
+                          <select id="quickNewsPillarSelect"></select>
+                        </label>
+                        <button id="quickSearchNewsButton" class="secondary-button" type="button">
+                          Find Stories
+                        </button>
+                      </section>
+
+                      <section class="topic-tool-card">
+                        <h4 id="quickCheckLinkTitle">Check a link I already have</h4>
+                        <label class="field">
+                          <span id="quickArticleUrlLabel">Public article link</span>
+                          <input id="quickArticleUrlInput" type="url" maxlength="2000"
+                            placeholder="https://">
+                        </label>
+                        <button id="quickCheckLinkButton" class="secondary-button" type="button">
+                          Check and Add Link
+                        </button>
+                      </section>
+                    </div>
+
+                    <div id="quickMeetingNewsResults" class="news-result-list hidden"></div>
+                    <div id="quickSelectedArticle" class="selected-quick-article hidden"></div>
+                  </details>
+
+                  <div class="button-row">
+                    <button id="quickCreateMeetingButton" class="primary-button" type="button">
+                      Create Quick Meeting
+                    </button>
+                    <button id="quickOpenFullPlannerButton" class="secondary-button" type="button">
+                      Continue in Full Planner
+                    </button>
+                  </div>
+                </section>
+
+                <section id="meetingBuilderCard" class="edit-card hidden">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="meetingBuilderEyebrow">GUIDED MEETING PLANNER</span>
+                      <h3 id="meetingBuilderTitle">Create or edit a meeting</h3>
+                      <p id="meetingBuilderIntro">
+                        Use the dropdowns and suggested topics for a fast start. Everything can be edited.
+                      </p>
+                    </div>
+                    <button id="cancelMeetingEditButton" class="text-button" type="button">Cancel</button>
+                  </div>
+
+                  <input id="meetingIdInput" type="hidden">
+
+                  <details class="planner-step" open>
+                    <summary>
+                      <span class="planner-step-number">1</span>
+                      <span id="meetingBasicsHeading">Meeting basics</span>
+                    </summary>
+
+                    <div class="form-grid planner-step-content">
+                      <label class="field full">
+                        <span id="meetingTitleLabel">Meeting title</span>
+                        <input id="meetingTitleInput" type="text" maxlength="180" spellcheck="true"
+                          placeholder="Weekly household check-in">
+                        <small id="meetingTitleHelp">
+                          Use a short title that helps members understand the purpose.
+                        </small>
+                      </label>
+
+                      <label class="field">
+                        <span id="meetingTypeLabel">Meeting type</span>
+                        <select id="meetingTypeSelect"></select>
+                        <small id="meetingTypeHelp">Select the closest starting point.</small>
+                      </label>
+
+                      <label class="field">
+                        <span id="meetingStatusLabel">Status</span>
+                        <select id="meetingStatusSelect"></select>
+                        <small id="meetingStatusHelp">
+                          Draft while planning, Scheduled when ready, and Completed after notes are added.
+                        </small>
+                      </label>
+
+                      <label class="field">
+                        <span id="meetingDateLabel">Date</span>
+                        <input id="meetingDateInput" type="date">
+                        <small id="meetingDateHelp">A date is optional while the meeting is a draft.</small>
+                      </label>
+
+                      <label class="field">
+                        <span id="meetingTimeLabel">Time</span>
+                        <input id="meetingTimeInput" type="time">
+                        <small id="meetingTimeHelp">Choose a time that supports participation.</small>
+                      </label>
+
+                      <label class="field">
+                        <span id="meetingDurationLabel">Planned length</span>
+                        <select id="meetingDurationSelect"></select>
+                        <small id="meetingDurationHelp">Most meetings should stay focused and avoid unnecessary length.</small>
+                      </label>
+
+                      <label class="field">
+                        <span id="meetingFormatLabel">Format</span>
+                        <select id="meetingFormatSelect"></select>
+                        <small id="meetingFormatHelp">Choose in person, video, phone, hybrid, or other.</small>
+                      </label>
+
+                      <label class="field full">
+                        <span id="meetingLocationLabel">General location note</span>
+                        <input id="meetingLocationInput" type="text" maxlength="300" spellcheck="true"
+                          placeholder="At home, online, or another general description">
+                        <small id="meetingLocationHelp">
+                          Do not enter an exact street address or private access code.
+                        </small>
+                      </label>
+
+                      <label class="field">
+                        <span id="meetingFacilitatorLabel">Facilitator role</span>
+                        <select id="meetingFacilitatorSelect"></select>
+                        <small id="meetingFacilitatorHelp">
+                          Any capable member—including a teen or young adult—may facilitate.
+                        </small>
+                      </label>
+
+                      <div class="field">
+                        <span id="meetingAttendeesLabel">Participant labels</span>
+                        <div id="meetingAttendeeOptions" class="choice-grid compact-choice-grid"></div>
+                        <small id="meetingAttendeesHelp">
+                          Select general role labels. Legal names are not required.
+                        </small>
+                      </div>
+                    </div>
+                  </details>
+
+                  <details class="planner-step" open>
+                    <summary>
+                      <span class="planner-step-number">2</span>
+                      <span id="meetingTopicsHeading">Choose and edit agenda topics</span>
+                    </summary>
+
+                    <div class="planner-step-content">
+                      <div class="topic-tool-grid">
+                        <section class="topic-tool-card">
+                          <h4 id="topicLibraryHeading">Suggested FamilyPD topics</h4>
+                          <p id="topicLibraryIntro">
+                            Choose a pillar or household-organization area, then select a topic.
+                          </p>
+                          <label class="field">
+                            <span id="topicGroupLabel">Topic area</span>
+                            <select id="topicGroupSelect"></select>
+                          </label>
+                          <label class="field">
+                            <span id="topicLibraryLabel">Suggested topic</span>
+                            <select id="topicLibrarySelect"></select>
+                          </label>
+                          <button id="addLibraryTopicButton" class="secondary-button" type="button">
+                            Add Suggested Topic
+                          </button>
+                        </section>
+
+                        <section class="topic-tool-card">
+                          <h4 id="customTopicHeading">Custom topic</h4>
+                          <p id="customTopicIntro">
+                            Add your own topic and use the editable boxes to explain it.
+                          </p>
+                          <button id="addCustomTopicButton" class="secondary-button" type="button">
+                            Add Custom Topic
+                          </button>
+                        </section>
+
+                        <section class="topic-tool-card news-tool-card">
+                          <h4 id="newsTopicHeading">Recent news discussion</h4>
+                          <p id="newsTopicIntro">
+                            Find a recent story connected to a FamilyPD pillar and discuss what households can learn or do proactively.
+                          </p>
+                          <label class="field">
+                            <span id="newsPillarLabel">News area</span>
+                            <select id="newsPillarSelect"></select>
+                          </label>
+                          <button id="searchMeetingNewsButton" class="secondary-button" type="button">
+                            Find Recent Stories
+                          </button>
+                          <small id="newsSearchHelp">
+                            FamilyPD checks title, source, date, and link. Open the article and review it before adding it.
+                          </small>
+                          <div class="direct-link-check">
+                            <label class="field">
+                              <span id="meetingArticleUrlLabel">Or paste one public article link</span>
+                              <input id="meetingArticleUrlInput" type="url" maxlength="2000"
+                                placeholder="https://">
+                            </label>
+                            <button id="checkMeetingArticleLinkButton" class="secondary-button" type="button">
+                              Check and Add Link
+                            </button>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div id="meetingNewsResults" class="news-result-list hidden"></div>
+
+                      <div class="section-heading-row compact-row">
+                        <div>
+                          <h4 id="selectedTopicsHeading">Selected agenda topics</h4>
+                          <p id="selectedTopicsHelp">
+                            Edit the wording, questions, desired outcome, and planned time.
+                          </p>
+                        </div>
+                      </div>
+                      <div id="meetingTopicsEditor" class="meeting-topic-editor"></div>
+                    </div>
+                  </details>
+
+                  <details class="planner-step" open>
+                    <summary>
+                      <span class="planner-step-number">3</span>
+                      <span id="meetingPreparationHeading">Prepare the meeting experience</span>
+                    </summary>
+
+                    <div class="form-grid planner-step-content">
+                      <label class="field full">
+                        <span id="meetingOpeningLabel">Opening message</span>
+                        <textarea id="meetingOpeningInput" rows="3" maxlength="1000" spellcheck="true"
+                          placeholder="Welcome everyone, share the purpose, and explain how members will participate."></textarea>
+                        <small id="meetingOpeningHelp">
+                          Set a welcoming tone and explain what members can expect.
+                        </small>
+                      </label>
+
+                      <label class="field">
+                        <span id="previousMeetingLabel">Review a previous meeting</span>
+                        <select id="previousMeetingSelect"></select>
+                        <small id="previousMeetingHelp">
+                          Choose a meeting to carry unfinished action items forward.
+                        </small>
+                      </label>
+
+                      <div class="field">
+                        <span id="carryForwardLabel">Carry forward</span>
+                        <button id="carryForwardButton" class="secondary-button" type="button">
+                          Add Previous Open Items
+                        </button>
+                        <small id="carryForwardHelp">
+                          This adds a recap starter and copies unfinished action items into this draft.
+                        </small>
+                      </div>
+
+                      <label class="field full">
+                        <span id="meetingRecapLabel">Previous-meeting recap</span>
+                        <textarea id="meetingRecapInput" rows="3" maxlength="1600" spellcheck="true"></textarea>
+                        <small id="meetingRecapHelp">
+                          Summarize decisions, progress, reminders, or unfinished work.
+                        </small>
+                      </label>
+
+                      <label class="field full">
+                        <span id="meetingMealLabel">Meal or refreshments <em>optional</em></span>
+                        <textarea id="meetingMealInput" rows="2" maxlength="1000" spellcheck="true"
+                          placeholder="General menu or refreshment plan"></textarea>
+                        <small id="meetingMealHelp">
+                          Use general menu information only. Do not enter medical or dietary records.
+                        </small>
+                      </label>
+
+                      <div class="field full">
+                        <div class="section-heading-row compact-row">
+                          <div>
+                            <span id="meetingMaterialsLabel">Materials and supplies</span>
+                            <small id="meetingMaterialsHelp">
+                              Examples: laptop or tablet, writing utensil, printed agenda, activity supplies.
+                            </small>
+                          </div>
+                          <button id="addMeetingMaterialButton" class="secondary-button" type="button">
+                            + Add Material
+                          </button>
+                        </div>
+                        <div id="meetingMaterialsEditor" class="repeat-editor"></div>
+                      </div>
+
+                      <label class="field full">
+                        <span id="meetingClosingLabel">Closing message</span>
+                        <textarea id="meetingClosingInput" rows="3" maxlength="1000" spellcheck="true"
+                          placeholder="End with a short message, quote, reminder, or encouragement."></textarea>
+                        <small id="meetingClosingHelp">
+                          Summarize the purpose and encourage one positive next action.
+                        </small>
+                      </label>
+                    </div>
+                  </details>
+
+                  <details class="planner-step">
+                    <summary>
+                      <span class="planner-step-number">4</span>
+                      <span id="meetingFollowupHeading">Record notes, decisions, and next actions</span>
+                    </summary>
+
+                    <div class="planner-step-content">
+                      <label class="field full">
+                        <span id="meetingNotesLabel">General meeting notes</span>
+                        <textarea id="meetingNotesInput" rows="5" maxlength="4000" spellcheck="true"></textarea>
+                        <small id="meetingNotesHelp">
+                          Record non-sensitive highlights. Avoid confidential personal details.
+                        </small>
+                      </label>
+
+                      <div class="section-heading-row compact-row">
+                        <div>
+                          <h4 id="meetingDecisionsHeading">Decisions</h4>
+                          <p id="meetingDecisionsHelp">Write the decisions the household agreed on.</p>
+                        </div>
+                        <button id="addMeetingDecisionButton" class="secondary-button" type="button">
+                          + Add Decision
+                        </button>
+                      </div>
+                      <div id="meetingDecisionsEditor" class="repeat-editor"></div>
+
+                      <div class="section-heading-row compact-row">
+                        <div>
+                          <h4 id="meetingActionsHeading">Action items</h4>
+                          <p id="meetingActionsHelp">
+                            Assign each action to a general role and add a target date when useful.
+                          </p>
+                        </div>
+                        <button id="addMeetingActionButton" class="secondary-button" type="button">
+                          + Add Action
+                        </button>
+                      </div>
+                      <div id="meetingActionsEditor" class="meeting-action-editor"></div>
+                    </div>
+                  </details>
+
+                  <div class="button-row">
+                    <button id="saveMeetingButton" class="primary-button" type="button">
+                      Save Meeting
+                    </button>
+                  </div>
+                </section>
+
+                <section id="memberMeetingPrepCard" class="edit-card hidden">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="memberPrepEyebrow">PRIVATE MEETING PREPARATION</span>
+                      <h3 id="memberPrepTitle">Prepare for the meeting</h3>
+                      <p id="memberPrepMeetingName"></p>
+                    </div>
+                    <button id="cancelMemberPrepButton" class="text-button" type="button">Cancel</button>
+                  </div>
+
+                  <input id="memberPrepIdInput" type="hidden">
+                  <input id="memberPrepMeetingIdInput" type="hidden">
+
+                  <div class="form-grid">
+                    <label class="field full">
+                      <span id="memberPrepQuestionsLabel">Questions I want to ask</span>
+                      <textarea id="memberPrepQuestionsInput" rows="3" maxlength="1600" spellcheck="true"></textarea>
+                    </label>
+                    <label class="field full">
+                      <span id="memberPrepTopicLabel">A topic or idea I want to suggest</span>
+                      <textarea id="memberPrepTopicInput" rows="3" maxlength="1200" spellcheck="true"></textarea>
+                    </label>
+                    <label class="field full">
+                      <span id="memberPrepSupportLabel">Support that would help me participate</span>
+                      <textarea id="memberPrepSupportInput" rows="3" maxlength="1000" spellcheck="true"></textarea>
+                      <small id="memberPrepSupportHelp">
+                        Keep this general. Do not enter medical, school, legal, or other confidential records.
+                      </small>
+                    </label>
+                  </div>
+                  <div class="button-row">
+                    <button id="saveMemberPrepButton" class="primary-button" type="button">
+                      Save Private Preparation
+                    </button>
+                  </div>
+                </section>
+
+                <section class="meeting-list-layout">
+                  <div>
+                    <div class="section-heading-row">
+                      <div>
+                        <h3 id="activeMeetingsHeading">Draft and upcoming meetings</h3>
+                        <p id="activeMeetingsHelp">
+                          Open a meeting to review the agenda, prepare, edit, duplicate, or print.
+                        </p>
+                      </div>
+                    </div>
+                    <div id="activeMeetingsList" class="meeting-list"></div>
+                  </div>
+
+                  <div>
+                    <div class="section-heading-row">
+                      <div>
+                        <h3 id="completedMeetingsHeading">Completed meetings</h3>
+                        <p id="completedMeetingsHelp">
+                          Revisit decisions, action items, notes, and meeting minutes.
+                        </p>
+                      </div>
+                    </div>
+                    <div id="completedMeetingsList" class="meeting-list"></div>
+                  </div>
+                </section>
+              </section>
+
+
+              <section id="learningPanel" class="workspace-panel hidden">
+                <div class="panel-heading">
+                  <div>
+                    <span class="eyebrow" id="learningEyebrow">LEARN · DISCUSS · PRACTICE · APPLY</span>
+                    <h2 id="learningPanelTitle">Learning, Research & Discussions</h2>
+                    <p id="learningPanelIntro">
+                      Choose a topic, use a guided plan, add trustworthy resources, discuss what
+                      matters, and turn the lesson into one realistic action.
+                    </p>
+                  </div>
+                  <button id="newLearningPlanButton" class="primary-button" type="button">
+                    Create a Learning Plan
+                  </button>
+                </div>
+
+                <section class="guidance-banner">
+                  <div class="guidance-icon">📚</div>
+                  <div>
+                    <h3 id="learningGuidanceTitle">Learning belongs in the household too</h3>
+                    <p id="learningGuidanceText">
+                      FamilyPD encourages continued learning inside and outside the home.
+                      Members can teach, practice, research, ask questions, and reflect together.
+                    </p>
+                    <span id="learningGuidanceCitation" class="citation-line">
+                      (Hall, 2025, pp. 20–23)
+                    </span>
+                  </div>
+                </section>
+
+                <section class="privacy-card compact">
+                  <div class="privacy-icon">🛡️</div>
+                  <div>
+                    <h3 id="learningPrivacyTitle">Use examples and general descriptions</h3>
+                    <p id="learningPrivacyText">
+                      Do not enter legal names, confidential school records, medical information,
+                      passwords, account details, exact addresses, or identification numbers.
+                    </p>
+                  </div>
+                </section>
+
+
+                <section id="resourceHubRoot" class="resource-hub-shell" aria-labelledby="resourceHubTitle">
+                  <div class="resource-hub-hero">
+                    <div><span class="eyebrow">FAMILY OPERATING SYSTEM · KNOWLEDGE & OPPORTUNITY</span>
+                      <h3 id="resourceHubTitle">Learn, Grow & Find Help</h3>
+                      <p>Trusted starting points for learning, school, work, money, health, family support, technology, and legacy. Search the catalog, open a resource, then connect what you learn to a goal, meeting, calendar item, or learning plan.</p>
+                    </div><div class="resource-hub-promise"><strong>FamilyPD promise</strong><span>Trusted help, practical learning, and a path to almost anything your family wants to understand.</span></div>
+                  </div>
+                  <div class="resource-hub-controls resource-choice-first">
+                    <label class="field"><span>1. What area do you need?</span><select id="resourceHubCategory"><option value="">All areas</option></select><small>Choose an area to immediately narrow the catalog.</small></label>
+                    <label class="field"><span>2. What topic?</span><select id="resourceHubTopic"><option value="">All topics</option></select><small>Topics update after you choose an area.</small></label>
+                    <label class="field"><span>3. Who is this for?</span><select id="resourceHubAudience"><option value="">Everyone</option></select><small>Choose the closest audience. You can still review all results.</small></label>
+                    <label class="resource-hub-check"><input id="resourceHubFree" type="checkbox"><span>Free resources only</span></label>
+                    <button id="resourceHubClear" class="secondary-button" type="button">Show Everything</button>
+                  </div>
+                  <details class="resource-search-optional"><summary>Optional: search by a word or phrase</summary><label class="field"><span>Search</span><input id="resourceHubSearch" type="search" placeholder="Examples: Canvas, IEP, budget, interview" autocomplete="off"><small>You do not have to type anything to browse resources.</small></label></details>
+                  <div class="resource-hub-meta"><strong id="resourceHubStatus" role="status">Loading trusted resources…</strong><span id="resourceHubReviewed"></span></div>
+                  <div id="resourceHubGrid" class="resource-hub-grid"></div>
+                  <details class="resource-ai-prompts"><summary>Use AI to find or understand more resources</summary>
+                    <p>Copy a prompt, open your preferred AI tool, paste it, replace the bracketed words, and carefully review the answer. Verify health, legal, financial, and safety information with official sources or qualified professionals.</p>
+                    <div class="resource-prompt-grid">
+                      <label><span>Learn almost anything</span><textarea id="resourcePromptUniversal" rows="8" readonly></textarea><button class="secondary-button" data-copy-prompt="resourcePromptUniversal" type="button">Copy prompt</button></label>
+                      <label><span>Learn a school platform</span><textarea id="resourcePromptSchool" rows="8" readonly></textarea><button class="secondary-button" data-copy-prompt="resourcePromptSchool" type="button">Copy prompt</button></label>
+                      <label><span>Prepare for an IEP or 504 meeting</span><textarea id="resourcePromptIep" rows="8" readonly></textarea><button class="secondary-button" data-copy-prompt="resourcePromptIep" type="button">Copy prompt</button></label>
+                    </div>
+                  </details>
+                </section>
+
+                <section id="learningBuilderCard" class="edit-card hidden">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="learningBuilderEyebrow">GUIDED LEARNING PLAN</span>
+                      <h3 id="learningBuilderTitle">Create or edit a learning plan</h3>
+                      <p id="learningBuilderIntro">
+                        Start with a suggested topic or create your own. All suggested wording is editable.
+                      </p>
+                    </div>
+                    <button id="cancelLearningEditButton" class="text-button" type="button">Cancel</button>
+                  </div>
+
+                  <input id="learningPlanIdInput" type="hidden">
+
+                  <details class="planner-step" open>
+                    <summary>
+                      <span class="planner-step-number">1</span>
+                      <span id="learningBasicsHeading">Choose the learning purpose</span>
+                    </summary>
+
+                    <div class="form-grid planner-step-content">
+                      <label id="learningScopeField" class="field">
+                        <span id="learningScopeLabel">Who is this plan for?</span>
+                        <select id="learningScopeSelect">
+                          <option value="HOUSEHOLD">The household</option>
+                          <option value="PERSONAL">My private workspace</option>
+                        </select>
+                        <small id="learningScopeHelp">
+                          Household plans enter verified Update Packs. Personal plans remain private.
+                        </small>
+                      </label>
+
+                      <label class="field">
+                        <span id="learningPillarLabel">FamilyPD learning area</span>
+                        <select id="learningPillarSelect"></select>
+                        <small id="learningPillarHelp">Choose the pillar or household-organization area.</small>
+                      </label>
+
+                      <label class="field full">
+                        <span id="learningTopicLabel">Suggested topic</span>
+                        <select id="learningTopicSelect"></select>
+                        <small id="learningTopicHelp">
+                          Select a topic to prepopulate an objective, activity, discussion questions, and action step.
+                        </small>
+                      </label>
+
+                      <div class="field full">
+                        <button id="useLearningTopicButton" class="secondary-button" type="button">
+                          Use Selected Topic
+                        </button>
+                      </div>
+
+                      <label class="field full">
+                        <span id="learningTitleLabel">Learning-plan title</span>
+                        <input id="learningTitleInput" type="text" maxlength="200" spellcheck="true">
+                        <small id="learningTitleHelp">Use a short title that is easy to recognize later.</small>
+                      </label>
+
+                      <label class="field">
+                        <span id="learningStatusLabel">Status</span>
+                        <select id="learningStatusSelect"></select>
+                      </label>
+
+                      <label class="field">
+                        <span id="learningFormatLabel">Preferred format</span>
+                        <select id="learningFormatSelect"></select>
+                        <small id="learningFormatHelp">Choose the format that makes the topic easiest to understand.</small>
+                      </label>
+
+                      <label class="field">
+                        <span id="learningDifficultyLabel">Starting level</span>
+                        <select id="learningDifficultySelect"></select>
+                        <small id="learningDifficultyHelp">Select a general level. The plan can support mixed abilities.</small>
+                      </label>
+
+                      <label class="field">
+                        <span id="learningDurationLabel">Estimated time</span>
+                        <select id="learningDurationSelect"></select>
+                      </label>
+
+                      <label class="field">
+                        <span id="learningFacilitatorLabel">Facilitator or teacher role</span>
+                        <select id="learningFacilitatorSelect"></select>
+                        <small id="learningFacilitatorHelp">
+                          Any capable member—including a teen or young adult—may teach or facilitate with support.
+                        </small>
+                      </label>
+
+                      <div class="field">
+                        <span id="learningAudienceLabel">Participant labels</span>
+                        <div id="learningAudienceOptions" class="choice-grid compact-choice-grid"></div>
+                        <small id="learningAudienceHelp">Select general role labels. Legal names are not required.</small>
+                      </div>
+
+                      <label class="field full">
+                        <span id="learningObjectiveLabel">What should participants understand or be able to do?</span>
+                        <textarea id="learningObjectiveInput" rows="4" maxlength="1800" spellcheck="true"></textarea>
+                      </label>
+
+                      <label class="field full">
+                        <span id="learningWhyLabel">Why does this matter?</span>
+                        <textarea id="learningWhyInput" rows="3" maxlength="1200" spellcheck="true"></textarea>
+                      </label>
+                    </div>
+                  </details>
+
+                  <details class="planner-step" open>
+                    <summary>
+                      <span class="planner-step-number">2</span>
+                      <span id="learningSourcesHeading">Add and review sources</span>
+                    </summary>
+
+                    <div class="planner-step-content">
+                      <div class="source-check-banner">
+                        <div>
+                          <h4 id="sourceCheckTitle">A checked link is not the same as a fact-checked source</h4>
+                          <p id="sourceCheckText">
+                            FamilyPD can confirm that a public HTTPS link responds and identify its domain.
+                            You still need to review the author, date, purpose, evidence, and possible bias.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div class="section-heading-row compact-row">
+                        <div>
+                          <h4 id="learningResourcesLabel">Learning resources</h4>
+                          <p id="learningResourcesHelp">
+                            Add articles, videos, books, courses, podcasts, guides, or community resources.
+                          </p>
+                        </div>
+                        <button id="addLearningResourceButton" class="secondary-button" type="button">
+                          + Add Resource
+                        </button>
+                      </div>
+                      <div id="learningResourcesEditor" class="learning-resource-editor"></div>
+                    </div>
+                  </details>
+
+                  <details class="planner-step" open>
+                    <summary>
+                      <span class="planner-step-number">3</span>
+                      <span id="learningExperienceHeading">Plan the learning experience</span>
+                    </summary>
+
+                    <div class="planner-step-content">
+                      <div class="section-heading-row compact-row">
+                        <div>
+                          <h4 id="learningActivitiesLabel">Activities or practice</h4>
+                          <p id="learningActivitiesHelp">Add steps that help members do something with the information.</p>
+                        </div>
+                        <button id="addLearningActivityButton" class="secondary-button" type="button">
+                          + Add Activity
+                        </button>
+                      </div>
+                      <div id="learningActivitiesEditor" class="repeat-editor"></div>
+
+                      <div class="section-heading-row compact-row">
+                        <div>
+                          <h4 id="learningPromptsLabel">Discussion questions</h4>
+                          <p id="learningPromptsHelp">Use open questions that support thinking, not one-word answers.</p>
+                        </div>
+                        <button id="addLearningPromptButton" class="secondary-button" type="button">
+                          + Add Question
+                        </button>
+                      </div>
+                      <div id="learningPromptsEditor" class="repeat-editor"></div>
+
+                      <label class="field full">
+                        <span id="learningActionLabel">What should happen after the learning?</span>
+                        <textarea id="learningActionInput" rows="3" maxlength="1200" spellcheck="true"></textarea>
+                        <small id="learningActionHelp">Choose one realistic action, practice, decision, or follow-up.</small>
+                      </label>
+
+                      <label class="field full">
+                        <span id="learningReflectionLabel">Reflection prompt</span>
+                        <textarea id="learningReflectionInput" rows="3" maxlength="1200" spellcheck="true"></textarea>
+                      </label>
+
+                      <label class="field full">
+                        <span id="learningNotesLabel">General notes</span>
+                        <textarea id="learningNotesInput" rows="4" maxlength="3000" spellcheck="true"></textarea>
+                      </label>
+                    </div>
+                  </details>
+
+                  <details class="planner-step">
+                    <summary>
+                      <span class="planner-step-number">4</span>
+                      <span id="learningAiHeading">Use AI as a tool—not a replacement for thinking</span>
+                    </summary>
+
+                    <div class="planner-step-content">
+                      <p id="learningAiIntro">
+                        FamilyPD can create a safe, copy-ready prompt using the topic and objective.
+                        Do not add private information. Review the response and compare important claims with trustworthy sources.
+                      </p>
+                      <label class="field full">
+                        <span id="learningAiPromptLabel">Copy-ready AI prompt</span>
+                        <textarea id="learningAiPromptOutput" rows="10" readonly></textarea>
+                      </label>
+                      <div class="button-row">
+                        <button id="buildLearningAiPromptButton" class="secondary-button" type="button">
+                          Build Prompt
+                        </button>
+                        <button id="copyLearningAiPromptButton" class="primary-button" type="button">
+                          Copy Prompt
+                        </button>
+                      </div>
+                    </div>
+                  </details>
+
+                  <div class="button-row">
+                    <button id="saveLearningPlanButton" class="primary-button" type="button">
+                      Save Learning Plan
+                    </button>
+                  </div>
+                </section>
+
+                <section id="learningReflectionCard" class="edit-card hidden">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="learningReflectionEyebrow">PRIVATE REFLECTION</span>
+                      <h3 id="learningReflectionTitle">Reflect on the learning</h3>
+                      <p id="learningReflectionPlanName"></p>
+                    </div>
+                    <button id="cancelLearningReflectionButton" class="text-button" type="button">Cancel</button>
+                  </div>
+
+                  <input id="learningResponseIdInput" type="hidden">
+                  <input id="learningResponsePlanIdInput" type="hidden">
+
+                  <div class="form-grid">
+                    <label class="field full">
+                      <span id="learningKeyLearningLabel">What did I learn?</span>
+                      <textarea id="learningKeyLearningInput" rows="4" maxlength="1800" spellcheck="true"></textarea>
+                    </label>
+                    <label class="field full">
+                      <span id="learningQuestionsLabel">What questions remain?</span>
+                      <textarea id="learningQuestionsInput" rows="3" maxlength="1400" spellcheck="true"></textarea>
+                    </label>
+                    <label class="field full">
+                      <span id="learningPersonalActionLabel">What will I do with this information?</span>
+                      <textarea id="learningPersonalActionInput" rows="3" maxlength="1200" spellcheck="true"></textarea>
+                    </label>
+                    <label class="choice-chip">
+                      <input id="learningCompletedInput" type="checkbox">
+                      <span id="learningCompletedLabel">I completed this learning activity.</span>
+                    </label>
+                  </div>
+
+                  <div class="button-row">
+                    <button id="saveLearningReflectionButton" class="primary-button" type="button">
+                      Save Private Reflection
+                    </button>
+                  </div>
+                </section>
+
+                <section class="learning-list-layout">
+                  <div>
+                    <div class="section-heading-row">
+                      <div>
+                        <h3 id="sharedLearningHeading">Household learning plans</h3>
+                        <p id="sharedLearningHelp">
+                          Household Lead workspaces can edit these plans. Family Members receive them through verified Update Packs.
+                        </p>
+                      </div>
+                    </div>
+                    <div id="sharedLearningList" class="learning-plan-list"></div>
+                  </div>
+
+                  <div>
+                    <div class="section-heading-row">
+                      <div>
+                        <h3 id="personalLearningHeading">My personal learning plans</h3>
+                        <p id="personalLearningHelp">
+                          These plans and reflections stay private in this workspace.
+                        </p>
+                      </div>
+                    </div>
+                    <div id="personalLearningList" class="learning-plan-list"></div>
+                  </div>
+                </section>
+              </section>
+
+
+
+              <section id="projectStudioPanel" class="workspace-panel hidden">
+                <div class="panel-heading">
+                  <div>
+                    <span class="eyebrow">IDEA → TASKS → PORTFOLIO</span>
+                    <h2>Project Studio</h2>
+                    <p>Generate age-appropriate project ideas, turn one into a task plan, connect a Google Drive folder when needed, and share a finished public review link only when you choose.</p>
+                  </div>
+                </div>
+                <section class="edit-card project-idea-generator">
+                  <div class="section-heading-row"><div><h3>Generate project ideas</h3><p>Choose from the lists. No writing is required. Older grade bands receive more advanced research, planning, technical, leadership, and presentation expectations.</p></div></div>
+                  <div class="form-grid">
+                    <label class="field"><span>Creator level</span><select id="projectGradeBand"><option value="elementary">Elementary (grades 3–5)</option><option value="middle">Middle school (grades 6–8)</option><option value="high">High school (grades 9–12)</option><option value="adult">Adult / family team</option></select></label>
+                    <label class="field"><span>Project area</span><select id="projectArea"><option>Robotics</option><option>Coding & Apps</option><option>Cybersecurity</option><option>AI & Data</option><option>Entrepreneurship</option><option>Community Service</option><option>Family History</option><option>Health & Wellness</option><option>Art & Design</option><option>Writing & Media</option><option>Science & Engineering</option><option>Financial Literacy</option></select></label>
+                    <label class="field"><span>What do you want to do?</span><select id="projectPurpose"><option>Build something</option><option>Solve a problem</option><option>Teach others</option><option>Help the community</option><option>Research and explain</option><option>Create a product or business</option><option>Compete or showcase</option></select></label>
+                    <label class="field"><span>Time available</span><select id="projectTime"><option value="short">1–3 days</option><option value="week">1–2 weeks</option><option value="month">3–6 weeks</option><option value="long">2–3 months</option></select></label>
+                    <label class="field"><span>Budget</span><select id="projectBudget"><option value="free">Free / use what we have</option><option value="low">Under $25</option><option value="medium">$25–$100</option><option value="flexible">Flexible</option></select></label>
+                    <div class="field"><span>Generate</span><button id="generateProjectIdeasButton" class="primary-button" type="button">Show Project Ideas</button><small>Need something different? Ask FamilyPD AI for more ideas after reviewing these.</small></div>
+                  </div>
+                  <div id="projectIdeaResults" class="project-idea-grid"></div>
+                </section>
+                <section class="edit-card">
+                  <div class="section-heading-row"><div><h3>My project task tracker</h3><p>Projects you create appear here. Open a project to add tasks, mark progress, connect Drive, and complete a reflection.</p></div></div>
+                  <div id="projectTrackerList" class="project-tracker-list"><div class="empty-state">Choose a generated idea and select <strong>Create Project</strong>.</div></div>
+                </section>
+                <div id="projectEditorModal" class="project-editor-shell hidden" aria-live="polite"></div>
+              </section>
+
+              <section id="familyAiPanel" class="workspace-panel hidden">
+                <div class="panel-heading ai-panel-heading">
+                  <div>
+                    <span class="eyebrow">FAMILYPD AI EXPERIENCE</span>
+                    <h2>Ask Family AI</h2>
+                    <p>
+                      Ask for explanations, ideas, planning help, study support, or a
+                      starting point. Do not enter passwords, account numbers, exact
+                      addresses, medical records, identification numbers, or other
+                      confidential information.
+                    </p>
+                  </div>
+                  <span class="ai-connection-badge" id="familyAiConnectionBadge">Frontend ready</span>
+                </div>
+
+                <div class="family-ai-layout">
+                  <aside class="family-ai-guide-card">
+                    <h3>What can I ask?</h3>
+                    <p>Describe what you are trying to understand or accomplish.</p>
+                    <div class="family-ai-example-list">
+                      <button type="button" class="ai-example-prompt">Help me turn a family goal into small weekly steps.</button>
+                      <button type="button" class="ai-example-prompt">Explain this school topic in simple language and quiz me one question at a time.</button>
+                      <button type="button" class="ai-example-prompt">Help me prepare respectful questions for a family meeting.</button>
+                      <button type="button" class="ai-example-prompt">Give me a beginner-friendly plan for learning a new skill with free resources.</button>
+                    </div>
+                    <p class="field-note">
+                      The response is generated by the connected backend. Review important
+                      health, legal, financial, safety, and school information with a
+                      qualified person or official source.
+                    </p>
+                  </aside>
+
+                  <section class="family-ai-chat-card" aria-label="Family AI conversation">
+                    <div id="familyAiConversation" class="family-ai-conversation" aria-live="polite">
+                      <div class="family-ai-message assistant-message">
+                        <strong>Family AI</strong>
+                        <p>What would you like help understanding, planning, or learning?</p>
+                      </div>
+                    </div>
+
+                    <form id="familyAiForm" class="family-ai-composer">
+                      <label for="familyAiQuestion">Your question</label>
+                      <textarea id="familyAiQuestion" rows="4" maxlength="4000"
+                        placeholder="Example: Help me create a realistic four-week plan to improve my study habits. Ask me any questions you need first."></textarea>
+                      <div class="family-ai-composer-footer">
+                        <span id="familyAiStatus" class="field-note">The user interface is ready for your son's backend connector.</span>
+                        <button id="familyAiSubmitButton" class="primary-button" type="submit">Submit Question</button>
+                      </div>
+                    </form>
+                  </section>
+                </div>
+              </section>
+
+              <section id="opportunitiesPanel" class="workspace-panel hidden">
+                <div class="panel-heading">
+                  <div>
+                    <span class="eyebrow" id="opportunitiesEyebrow">DISCOVER · VERIFY · PLAN · ACT</span>
+                    <h2 id="opportunitiesPanelTitle">Opportunities & Socioeconomic Mobility</h2>
+                    <p id="opportunitiesPanelIntro">
+                      Start with an official search tool or paste one public opportunity link.
+                      Save only the opportunities worth considering and turn each one into clear next steps.
+                    </p>
+                  </div>
+                  <button id="newOpportunityButton" class="primary-button" type="button">
+                    Create Opportunity Plan
+                  </button>
+                </div>
+
+                <section class="guidance-banner opportunity-guidance-banner">
+                  <div class="guidance-icon">🧰</div>
+                  <div>
+                    <h3 id="opportunityGuidanceTitle">Skills, credentials, connections, and access can expand options</h3>
+                    <p id="opportunityGuidanceText">
+                      FamilyPD helps households compare trustworthy sources, understand requirements,
+                      and move from “this looks interesting” to a realistic next action.
+                    </p>
+                    <span id="opportunityGuidanceCitation" class="citation-line">
+                      (Hall, 2025, pp. 34–41, 106–108)
+                    </span>
+                  </div>
+                </section>
+
+                <section class="privacy-card compact">
+                  <div class="privacy-icon">🛡️</div>
+                  <div>
+                    <h3 id="opportunityPrivacyTitle">Research broadly; save privately and carefully</h3>
+                    <p id="opportunityPrivacyText">
+                      Keep only general planning information in FamilyPD. Do not enter identification
+                      numbers, account details, passwords, documents, medical information, or exact addresses.
+                    </p>
+                  </div>
+                </section>
+
+                <section class="guided-flow-shell opportunity-guided-flow">
+                  <div class="guided-flow-summary">
+                    <div>
+                      <span class="eyebrow" id="opportunityGuideEyebrow">FOLLOW ONE STEP AT A TIME</span>
+                      <strong id="opportunityGuideStatus">Step 1 of 5 · Learn</strong>
+                      <p id="opportunityGuideInstruction">Start by learning what socioeconomic mobility means and which pathways may expand a family’s options.</p>
+                    </div>
+                    <div class="guided-flow-controls">
+                      <button id="opportunityPreviousStepButton" class="secondary-button compact-button" type="button">Previous</button>
+                      <button id="opportunityNextStepButton" class="primary-button compact-button" type="button">Next step</button>
+                    </div>
+                  </div>
+                  <nav id="opportunityStepNav" class="guided-step-nav" aria-label="Opportunity guided steps">
+                    <button type="button" data-opportunity-step="learn"><span>1</span><strong id="opportunityStepLearnText">Learn</strong></button>
+                    <button type="button" data-opportunity-step="find"><span>2</span><strong id="opportunityStepFindText">Find Sources</strong></button>
+                    <button type="button" data-opportunity-step="link"><span>3</span><strong id="opportunityStepLinkText">Check a Link</strong></button>
+                    <button type="button" data-opportunity-step="plan"><span>4</span><strong id="opportunityStepPlanText">Build a Plan</strong></button>
+                    <button type="button" data-opportunity-step="saved"><span>5</span><strong id="opportunityStepSavedText">Saved Plans</strong></button>
+                  </nav>
+                </section>
+
+                <section id="mobilityLearningCard" class="mobility-learning-card">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="mobilityLearningEyebrow">UNDERSTAND THE BIGGER PICTURE</span>
+                      <h3 id="mobilityLearningTitle">What does socioeconomic mobility mean?</h3>
+                      <p id="mobilityLearningExplanation">
+                        Socioeconomic mobility is the ability of a person or family to increase stability,
+                        options, decision-making power, and wellbeing over time or across generations.
+                      </p>
+                    </div>
+                    <button id="readMobilitySectionButton" class="secondary-button" type="button">
+                      🔊 Read this section
+                    </button>
+                  </div>
+
+                  <div id="mobilityPathwayGrid" class="mobility-pathway-grid"></div>
+
+                  <div class="mobility-caution-box">
+                    <strong id="mobilityCautionTitle">Data should guide questions—not label people</strong>
+                    <p id="mobilityCautionText">
+                      Community data describe patterns across groups and places. They do not determine one
+                      person’s potential, character, or future.
+                    </p>
+                  </div>
+
+                  <div class="mobility-starter-box">
+                    <h4 id="mobilityStarterTitle">Five ways a family can begin</h4>
+                    <div id="mobilityStarterActions" class="choice-grid"></div>
+                  </div>
+
+                  <div class="section-heading-row mobility-resource-heading">
+                    <div>
+                      <span class="eyebrow" id="mobilityResourcesEyebrow">LEARN WITH TRUSTWORTHY DATA</span>
+                      <h3 id="mobilityResourcesTitle">Mobility data and community tools</h3>
+                      <p id="mobilityResourcesIntro">
+                        Use these tools to understand neighborhood, county, income, social-capital, and
+                        community conditions. Then connect what you learn to a goal, meeting, learning plan,
+                        system, or opportunity search.
+                      </p>
+                    </div>
+                  </div>
+                  <div id="mobilityResourceList" class="mobility-resource-list"></div>
+                </section>
+
+                <section id="opportunityFinderCard" class="source-finder-card">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="opportunityFinderEyebrow">QUICK OFFICIAL-SOURCE FINDER</span>
+                      <h3 id="opportunityFinderTitle">Where should we start?</h3>
+                      <p id="opportunityFinderIntro">
+                        Choose the type of opportunity and who it is for. Keyword and location are optional.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="form-grid opportunity-search-grid">
+                    <label class="field">
+                      <span id="opportunitySearchCategoryLabel">Opportunity type</span>
+                      <select id="opportunitySearchCategorySelect"></select>
+                    </label>
+                    <label class="field">
+                      <span id="opportunitySearchAudienceLabel">Who is exploring?</span>
+                      <select id="opportunitySearchAudienceSelect"></select>
+                    </label>
+                    <label class="field">
+                      <span id="opportunitySearchKeywordLabel">Career, skill, program, or keyword</span>
+                      <input id="opportunitySearchKeywordInput" type="text" maxlength="160"
+                        spellcheck="true" placeholder="Optional">
+                    </label>
+                    <label class="field">
+                      <span id="opportunitySearchLocationLabel">City, state, or ZIP code</span>
+                      <input id="opportunitySearchLocationInput" type="text" maxlength="160"
+                        spellcheck="true" placeholder="Optional">
+                    </label>
+                  </div>
+
+                  <div class="button-row">
+                    <button id="searchOpportunitySourcesButton" class="primary-button" type="button">
+                      Find Official Starting Points
+                    </button>
+                    <button id="showAllOpportunitySourcesButton" class="secondary-button" type="button">
+                      Show All Sources
+                    </button>
+                  </div>
+
+                  <p id="opportunitySourceReminder" class="field-note">
+                    Open the official tool to see current listings. FamilyPD does not claim that every opportunity is still open.
+                  </p>
+                  <div id="opportunitySourceResults" class="opportunity-source-results"></div>
+                </section>
+
+                <section id="opportunityLinkCard" class="link-check-card">
+                  <div>
+                    <span class="eyebrow" id="opportunityLinkEyebrow">ALREADY FOUND SOMETHING?</span>
+                    <h3 id="opportunityLinkTitle">Check one public opportunity link</h3>
+                    <p id="opportunityLinkIntro">
+                      Paste the exact job, scholarship, program, apprenticeship, benefit, or service page.
+                    </p>
+                  </div>
+                  <div class="link-check-row">
+                    <input id="opportunityLinkInput" type="url" maxlength="2000"
+                      placeholder="https://..." autocomplete="url">
+                    <button id="checkOpportunityLinkButton" class="secondary-button" type="button">
+                      Check & Use Link
+                    </button>
+                  </div>
+                  <div id="opportunityLinkResult" class="link-check-result hidden"></div>
+                </section>
+
+                <section id="opportunityBuilderCard" class="edit-card opportunity-builder-card hidden">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="opportunityBuilderEyebrow">OPPORTUNITY ACTION PLANNER</span>
+                      <h3 id="opportunityBuilderTitle">Save an opportunity and plan the next step</h3>
+                      <p id="opportunityBuilderIntro">
+                        Complete only what is useful now. Unknown information can become a question to research.
+                      </p>
+                    </div>
+                    <button id="cancelOpportunityEditButton" class="text-button" type="button">Cancel</button>
+                  </div>
+
+                  <input id="opportunityRecordIdInput" type="hidden">
+                  <input id="opportunityDomainInput" type="hidden">
+                  <input id="opportunitySourceTierInput" type="hidden">
+                  <input id="opportunityVerificationInput" type="hidden">
+                  <input id="opportunityLastCheckedInput" type="hidden">
+
+                  <div class="form-grid">
+                    <label class="field">
+                      <span id="opportunityScopeLabel">Save as</span>
+                      <select id="opportunityScopeSelect"></select>
+                      <small id="opportunityScopeHelp">
+                        Household opportunities are shared through Update Packs. Personal opportunities remain in this workspace.
+                      </small>
+                    </label>
+
+                    <label class="field">
+                      <span id="opportunityCategoryLabel">Category</span>
+                      <select id="opportunityCategorySelect"></select>
+                    </label>
+
+                    <label class="field full">
+                      <span id="opportunityTitleLabel">Opportunity title</span>
+                      <input id="opportunityTitleInput" type="text" maxlength="240" spellcheck="true">
+                    </label>
+
+                    <label class="field">
+                      <span id="opportunityProviderLabel">Provider or organization</span>
+                      <input id="opportunityProviderInput" type="text" maxlength="220" spellcheck="true">
+                    </label>
+
+                    <label class="field">
+                      <span id="opportunityAudienceLabel">General audience</span>
+                      <select id="opportunityAudienceSelect"></select>
+                    </label>
+
+                    <label class="field full">
+                      <span id="opportunityUrlLabel">Public opportunity link</span>
+                      <div class="inline-field-button">
+                        <input id="opportunityUrlInput" type="url" maxlength="2000"
+                          placeholder="https://..." autocomplete="url">
+                        <button id="recheckOpportunityUrlButton" class="secondary-button" type="button">
+                          Check Link
+                        </button>
+                      </div>
+                      <small id="opportunityVerificationStatusText">Not yet checked</small>
+                      <div id="opportunityBuilderLinkResult" class="link-check-result hidden"></div>
+                    </label>
+
+                    <label class="field">
+                      <span id="opportunityLocationLabel">General location</span>
+                      <input id="opportunityLocationInput" type="text" maxlength="160"
+                        spellcheck="true" placeholder="Example: Las Vegas area or Remote">
+                    </label>
+
+                    <label class="field">
+                      <span id="opportunityDeadlineLabel">Deadline</span>
+                      <input id="opportunityDeadlineInput" type="date">
+                    </label>
+
+                    <label class="field">
+                      <span id="opportunityStatusLabel">Status</span>
+                      <select id="opportunityStatusSelect"></select>
+                    </label>
+
+                    <label class="field">
+                      <span id="opportunityPriorityLabel">Priority</span>
+                      <select id="opportunityPrioritySelect"></select>
+                    </label>
+                  </div>
+
+                  <details class="planner-step" open>
+                    <summary>
+                      <span class="planner-step-number">1</span>
+                      <span id="opportunityDetailsHeading">What do we know?</span>
+                    </summary>
+                    <div class="form-grid planner-step-content">
+                      <label class="field full">
+                        <span id="opportunityBenefitsLabel">What could this provide?</span>
+                        <textarea id="opportunityBenefitsInput" rows="3" maxlength="1600"
+                          spellcheck="true"></textarea>
+                      </label>
+                      <label class="field full">
+                        <span id="opportunityEligibilityLabel">Known eligibility</span>
+                        <textarea id="opportunityEligibilityInput" rows="3" maxlength="1600"
+                          spellcheck="true"></textarea>
+                      </label>
+                      <label class="field full">
+                        <span id="opportunityCostLabel">Cost, pay, aid, or other financial information</span>
+                        <textarea id="opportunityCostInput" rows="3" maxlength="800"
+                          spellcheck="true"></textarea>
+                      </label>
+                    </div>
+                  </details>
+
+                  <details class="planner-step" open>
+                    <summary>
+                      <span class="planner-step-number">2</span>
+                      <span id="opportunityRequirementsHeading">What must be confirmed?</span>
+                    </summary>
+                    <div class="planner-step-content">
+                      <div class="section-heading-row compact-row">
+                        <p id="opportunityRequirementsHelp">
+                          Add known requirements or items to verify before applying.
+                        </p>
+                        <button id="addOpportunityRequirementButton" class="secondary-button" type="button">
+                          + Add Requirement
+                        </button>
+                      </div>
+                      <div id="opportunityRequirementsEditor" class="repeat-editor"></div>
+                    </div>
+                  </details>
+
+                  <details class="planner-step" open>
+                    <summary>
+                      <span class="planner-step-number">3</span>
+                      <span id="opportunityActionHeading">What happens next?</span>
+                    </summary>
+                    <div class="planner-step-content">
+                      <label class="field full">
+                        <span id="opportunityNextActionLabel">Most important next action</span>
+                        <textarea id="opportunityNextActionInput" rows="2" maxlength="1200"
+                          spellcheck="true"></textarea>
+                      </label>
+
+                      <div class="section-heading-row compact-row">
+                        <p id="opportunityActionStepsHelp">
+                          Break the opportunity into small actions with optional due dates.
+                        </p>
+                        <button id="addOpportunityActionButton" class="secondary-button" type="button">
+                          + Add Action
+                        </button>
+                      </div>
+                      <div id="opportunityActionEditor" class="repeat-editor opportunity-action-editor"></div>
+                    </div>
+                  </details>
+
+                  <details class="planner-step">
+                    <summary>
+                      <span class="planner-step-number">?</span>
+                      <span id="opportunityQuestionsHeading">Questions and general notes</span>
+                    </summary>
+                    <div class="planner-step-content">
+                      <div class="section-heading-row compact-row">
+                        <p id="opportunityQuestionsHelp">
+                          Turn unknown requirements, deadlines, or costs into questions.
+                        </p>
+                        <button id="addOpportunityQuestionButton" class="secondary-button" type="button">
+                          + Add Question
+                        </button>
+                      </div>
+                      <div id="opportunityQuestionsEditor" class="repeat-editor"></div>
+
+                      <label class="field full">
+                        <span id="opportunityNotesLabel">General notes</span>
+                        <textarea id="opportunityNotesInput" rows="3" maxlength="3000"
+                          spellcheck="true"></textarea>
+                      </label>
+                    </div>
+                  </details>
+
+                  <div class="button-row">
+                    <button id="saveOpportunityButton" class="primary-button" type="button">
+                      Save Opportunity Plan
+                    </button>
+                  </div>
+                </section>
+
+                <section id="opportunitySavedSection" class="opportunity-saved-section">
+                <section class="opportunity-toolbar">
+                  <label class="field">
+                    <span id="opportunityRecordFilterLabel">Show</span>
+                    <select id="opportunityRecordFilterSelect">
+                      <option value="CURRENT">Current opportunities</option>
+                      <option value="ACTION">Action needed</option>
+                      <option value="DEADLINE">Upcoming deadlines</option>
+                      <option value="SHARED">Shared household opportunities</option>
+                      <option value="PERSONAL">My personal opportunities</option>
+                      <option value="ARCHIVED">Archived</option>
+                      <option value="ALL">All records</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span id="opportunityCategoryFilterLabel">Category</span>
+                    <select id="opportunityCategoryFilterSelect">
+                      <option value="ALL">All categories</option>
+                    </select>
+                  </label>
+                </section>
+
+                <div id="opportunityRecordList" class="opportunity-record-list"></div>
+                </section>
+              </section>
+
+              <section id="systemsPanel" class="workspace-panel hidden">
+                <div class="panel-heading">
+                  <div>
+                    <span class="eyebrow" id="systemsEyebrow">PLAN · TEACH · PRACTICE · REVIEW</span>
+                    <h2 id="systemsPanelTitle">Systems, Policies & Safety</h2>
+                    <p id="systemsPanelIntro">
+                      Use guided templates to turn household expectations into clear,
+                      repeatable steps that can be taught, assigned, reviewed, and improved.
+                    </p>
+                  </div>
+                  <button id="newSystemRecordButton" class="primary-button" type="button">
+                    Create a Household System
+                  </button>
+                </div>
+
+                <section class="guidance-banner">
+                  <div class="guidance-icon">⚙️</div>
+                  <div>
+                    <h3 id="systemsGuidanceTitle">Structure should reduce stress—not create more of it</h3>
+                    <p id="systemsGuidanceText">
+                      Start with one useful policy, routine, checklist, or general safety plan.
+                      Teach the steps, share responsibility, and review what is working.
+                    </p>
+                    <span id="systemsGuidanceCitation" class="citation-line">
+                      (Hall, 2025, pp. 15–20, 57–63)
+                    </span>
+                  </div>
+                </section>
+
+                <section class="privacy-card compact">
+                  <div class="privacy-icon">🛡️</div>
+                  <div>
+                    <h3 id="systemsPrivacyTitle">Keep private emergency and account details elsewhere</h3>
+                    <p id="systemsPrivacyText">
+                      Use general role labels and general instructions. Do not enter exact addresses,
+                      emergency contacts, diagnoses, account numbers, passwords, identification
+                      documents, or information that reveals when the home is empty.
+                    </p>
+                  </div>
+                </section>
+
+                <section class="safety-notice-card">
+                  <strong id="systemsSafetyNoticeTitle">General planning—not professional or emergency guidance</strong>
+                  <p id="systemsSafetyNoticeText">
+                    Use official sources and qualified professionals for specific safety, medical,
+                    legal, financial, or emergency needs.
+                  </p>
+                </section>
+
+                <section id="systemBuilderCard" class="edit-card hidden">
+                  <div class="section-heading-row">
+                    <div>
+                      <span class="eyebrow" id="systemBuilderEyebrow">GUIDED SYSTEM BUILDER</span>
+                      <h3 id="systemBuilderTitle">Create or edit a household system</h3>
+                      <p id="systemBuilderIntro">
+                        Choose a pillar and template. FamilyPD fills in an editable purpose,
+                        agreement, steps, role, and review rhythm.
+                      </p>
+                    </div>
+                    <button id="cancelSystemEditButton" class="text-button" type="button">Cancel</button>
+                  </div>
+
+                  <input id="systemRecordIdInput" type="hidden">
+                  <input id="systemTemplateIdInput" type="hidden">
+
+                  <div class="form-grid">
+                    <label class="field">
+                      <span id="systemPillarLabel">FamilyPD area</span>
+                      <select id="systemPillarSelect"></select>
+                    </label>
+
+                    <label class="field">
+                      <span id="systemTemplateLabel">Suggested template</span>
+                      <select id="systemTemplateSelect"></select>
+                      <small id="systemTemplateHelp">
+                        Each area includes policies, routines, checklists, and general safety plans.
+                      </small>
+                    </label>
+
+                    <div class="field full">
+                      <button id="useSystemTemplateButton" class="secondary-button" type="button">
+                        Use Selected Template
+                      </button>
+                    </div>
+
+                    <label class="field full">
+                      <span id="systemTitleLabel">Title</span>
+                      <input id="systemTitleInput" type="text" maxlength="220" spellcheck="true">
+                    </label>
+
+                    <label class="field">
+                      <span id="systemTypeLabel">Type</span>
+                      <select id="systemTypeSelect"></select>
+                    </label>
+
+                    <label class="field">
+                      <span id="systemStatusLabel">Status</span>
+                      <select id="systemStatusSelect"></select>
+                    </label>
+
+                    <label class="field">
+                      <span id="systemOwnerLabel">Responsible role</span>
+                      <select id="systemOwnerSelect"></select>
+                      <small id="systemOwnerHelp">
+                        This is the role that coordinates the system—not the only person who contributes.
+                      </small>
+                    </label>
+
+                    <label class="field">
+                      <span id="systemPriorityLabel">Priority</span>
+                      <select id="systemPrioritySelect"></select>
+                    </label>
+
+                    <div class="field full">
+                      <span id="systemAppliesToLabel">Who should understand or use this?</span>
+                      <div id="systemAppliesToOptions" class="choice-grid compact-choice-grid"></div>
+                      <small id="systemAppliesToHelp">Select general role labels. Legal names are not required.</small>
+                    </div>
+
+                    <label class="field full">
+                      <span id="systemPurposeLabel">Why does this system matter?</span>
+                      <textarea id="systemPurposeInput" rows="3" maxlength="1600" spellcheck="true"></textarea>
+                    </label>
+
+                    <label class="field full">
+                      <span id="systemStatementLabel">Agreement or system description</span>
+                      <textarea id="systemStatementInput" rows="4" maxlength="2500" spellcheck="true"></textarea>
+                    </label>
+                  </div>
+
+                  <div class="section-heading-row compact-row">
+                    <div>
+                      <h4 id="systemStepsLabel">Steps or checklist</h4>
+                      <p id="systemStepsHelp">
+                        Keep the steps clear enough that another household member can learn and follow them.
+                      </p>
+                    </div>
+                    <button id="addSystemStepButton" class="secondary-button" type="button">
+                      + Add Step
+                    </button>
+                  </div>
+                  <div id="systemStepsEditor" class="repeat-editor"></div>
+
+                  <details class="planner-step" open>
+                    <summary>
+                      <span class="planner-step-number">✓</span>
+                      <span id="systemReviewHeading">Review and follow-through</span>
+                    </summary>
+                    <div class="form-grid planner-step-content">
+                      <label class="field">
+                        <span id="systemFrequencyLabel">Review frequency</span>
+                        <select id="systemFrequencySelect"></select>
+                      </label>
+
+                      <label class="field">
+                        <span id="systemEffectiveDateLabel">Effective or start date</span>
+                        <input id="systemEffectiveDateInput" type="date">
+                      </label>
+
+                      <label class="field">
+                        <span id="systemNextReviewLabel">Next review date</span>
+                        <input id="systemNextReviewInput" type="date">
+                        <small id="systemNextReviewHelp">
+                          Leave blank and FamilyPD can calculate it from the start date and review frequency.
+                        </small>
+                      </label>
+
+                      <label class="field full">
+                        <span id="systemNotesLabel">General notes</span>
+                        <textarea id="systemNotesInput" rows="3" maxlength="3000" spellcheck="true"></textarea>
+                      </label>
+                    </div>
+                  </details>
+
+                  <div class="button-row">
+                    <button id="saveSystemRecordButton" class="primary-button" type="button">
+                      Save Household System
+                    </button>
+                  </div>
+                </section>
+
+                <section class="systems-toolbar">
+                  <label class="field">
+                    <span id="systemsFilterLabel">Show</span>
+                    <select id="systemsFilterSelect">
+                      <option value="CURRENT">Current records</option>
+                      <option value="REVIEW">Review needed</option>
+                      <option value="ALL">All records</option>
+                      <option value="ARCHIVED">Archived</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span id="systemsPillarFilterLabel">Area</span>
+                    <select id="systemsPillarFilterSelect">
+                      <option value="ALL">All areas</option>
+                    </select>
+                  </label>
+                </section>
+
+                <div id="systemsRecordList" class="systems-record-list"></div>
+              </section>
+
+
+              <section id="discPanel" class="workspace-panel hidden">
+                <div class="panel-heading"><div><span class="eyebrow">UNDERSTAND HOW WE COMMUNICATE</span><h2>FamilyPD Communication Style Profile</h2><p>This short, non-clinical activity uses the familiar D, i, S, and C communication-style framework. It is a reflection tool—not a diagnosis or official licensed DiSC assessment.</p></div></div>
+                <section class="edit-card">
+                  <h3>Create my profile</h3>
+                  <p>For each row, choose the statement that sounds most like you. There are no right or wrong answers.</p>
+                  <div id="discQuestionList" class="disc-question-list"></div>
+                  <div class="button-row"><button id="calculateDiscProfileButton" class="primary-button" type="button">Create My Communication Profile</button><button id="resetDiscProfileButton" class="secondary-button" type="button">Start Over</button></div>
+                  <div id="discProfileResult" class="result-box hidden" aria-live="polite"></div>
+                </section>
+                <section class="edit-card"><h3>Sharing choice</h3><p>Your result stays private unless you intentionally copy or download it. Use it during family meetings to discuss communication, teamwork, and conflict respectfully.</p><div class="button-row"><button id="copyDiscProfileButton" class="secondary-button hidden" type="button">Copy My Profile</button><button id="downloadDiscProfileButton" class="secondary-button hidden" type="button">Download My Profile</button></div></section>
+              </section>
+
+              <section id="updatePanel" class="workspace-panel hidden">
+                <div class="panel-heading"><div><span class="eyebrow">CONNECT AND SHARE</span><h2>Family Sharing</h2><p>Join a household with one invitation link, or share selected FamilyPD work with someone else. Private information stays private unless you choose to share it.</p></div></div>
+
+                <section id="leadTools" class="tool-panel hidden">
+                  <div class="edit-card"><span class="eyebrow">HOUSEHOLD LEAD</span><h3>Invite a family member</h3><p>Create and publish the Family Profile first. Then create one invitation link. The link includes the approved shared household information needed to join—there is no second file to send.</p>
+                    <div class="button-row"><button id="createHouseholdInviteButton" class="primary-button" type="button">Create Invitation Link</button><button id="copyHouseholdInviteButton" class="secondary-button hidden" type="button">Copy Link</button></div>
+                    <label class="field"><span>Invitation link</span><input id="householdInviteOutput" type="text" readonly placeholder="Your invitation link will appear here"></label><div id="householdInviteResult" class="result-box hidden" aria-live="polite"></div>
+                  </div>
+                </section>
+
+                <section id="memberTools" class="tool-panel hidden">
+                  <div id="memberNotConnectedView" class="edit-card"><span class="eyebrow">FAMILY MEMBER</span><h3>Join a household</h3><p>Paste the complete invitation link sent by your Household Lead. FamilyPD will check the link before the Join button becomes available.</p>
+                    <label class="field"><span>Invitation link</span><input id="joinHouseholdLinkInput" type="url" spellcheck="false" placeholder="Paste the FamilyPD invitation link here"></label>
+                    <div class="button-row"><button id="checkHouseholdInviteButton" class="secondary-button" type="button">Check Link</button><button id="joinHouseholdByLinkButton" class="primary-button" type="button" disabled>Join Household</button></div><div id="joinHouseholdPreview" class="result-box hidden" aria-live="polite"></div>
+                  </div>
+                  <div id="memberConnectedView" class="connected-household-card hidden"><span class="eyebrow">CONNECTED HOUSEHOLD</span><h3 id="connectedHouseholdName">Connected to a household</h3><p id="connectedHouseholdDetails"></p><button id="disconnectSharedHouseholdButton" class="secondary-button danger-button" type="button">Disconnect Household</button><p class="warning-text"><strong>Warning:</strong> Disconnecting removes imported household information from this workspace. Your private projects, goals, notes, and files remain.</p></div>
+                </section>
+
+                <section class="edit-card"><span class="eyebrow">LEADS AND MEMBERS</span><h3>Share something from FamilyPD</h3><p>Create a review link for one Family Profile, project, or goal. The recipient previews it before choosing <strong>Add to My FamilyPD</strong>.</p>
+                  <div class="form-grid"><label class="field"><span>Choose what to share</span><select id="shareableItemSelect"><option value="">Loading available items…</option></select></label><div class="field"><span>Ready?</span><button id="createItemShareButton" class="primary-button" type="button" disabled>Create Sharing Link</button></div></div>
+                  <label class="field"><span>Sharing link</span><input id="itemShareLinkOutput" type="text" readonly placeholder="Your sharing link will appear here"></label><div class="button-row"><button id="copyItemShareButton" class="secondary-button hidden" type="button">Copy Link</button></div><div id="itemShareResult" class="result-box hidden"></div>
+                </section>
+
+                <section id="incomingSharedItemCard" class="edit-card hidden"><span class="eyebrow">SHARED WITH YOU</span><h3 id="incomingSharedItemTitle">Preview shared information</h3><div id="incomingSharedItemPreview" class="result-box"></div><button id="addSharedItemButton" class="primary-button" type="button">Add to My FamilyPD</button></section>
+
+                <section class="edit-card"><h3>Items added to my FamilyPD</h3><p>These items were intentionally shared with you and added to this workspace.</p><div id="receivedItemsList" class="shared-items-list"></div></section>
+              </section>
+
+              <section id="helpPanel" class="workspace-panel hidden">
+                <div class="panel-heading">
+                  <div>
+                    <span class="eyebrow">GUIDANCE BUILT INTO THE WORKSPACE</span>
+                    <h2 id="helpPanelTitle">Help & Tutorials</h2>
+                    <p id="helpPanelIntro">Use short tutorials, plain-language instructions, read-aloud support, and copy-ready prompts. No advanced writing or technology skills are required.</p>
+                  </div>
+                  <button id="restartTutorialButton" class="primary-button" type="button">Restart Tutorial</button>
+                </div>
+
+                <section class="edit-card">
+                  <h3 id="tutorialStepsTitle">Workspace quick-start tutorial</h3>
+                  <div id="tutorialStepsList" class="tutorial-list"></div>
+                </section>
+
+                <section class="edit-card">
+                  <h3 id="meetingHelpTitle">Meeting Planner quick guide</h3>
+                  <div class="help-grid">
+                    <article class="help-card">
+                      <span class="help-icon">1</span>
+                      <h4 id="meetingHelpPlanTitle">Plan first</h4>
+                      <p id="meetingHelpPlanText">Choose the purpose, date, facilitator, participants, materials, and a realistic length.</p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">2</span>
+                      <h4 id="meetingHelpTopicsTitle">Use guided topics</h4>
+                      <p id="meetingHelpTopicsText">Select prewritten FamilyPD topics or add your own. Edit every question so it fits the household.</p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">3</span>
+                      <h4 id="meetingHelpLeadTitle">Share leadership</h4>
+                      <p id="meetingHelpLeadText">Any capable member—including a teen or young adult—may facilitate with support.</p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">4</span>
+                      <h4 id="meetingHelpFollowTitle">Record the next step</h4>
+                      <p id="meetingHelpFollowText">Save decisions and assign clear action items so the conversation leads to action.</p>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="edit-card">
+                  <h3 id="learningHelpTitle">Learning & Research quick guide</h3>
+                  <div class="help-grid">
+                    <article class="help-card">
+                      <span class="help-icon">1</span>
+                      <h4 id="learningHelpChooseTitle">Choose one useful topic</h4>
+                      <p id="learningHelpChooseText">Start with what the household needs now. You do not need to learn everything at once.</p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">2</span>
+                      <h4 id="learningHelpSourceTitle">Check the source</h4>
+                      <p id="learningHelpSourceText">Look for the author or organization, date, purpose, evidence, and a working link.</p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">3</span>
+                      <h4 id="learningHelpPracticeTitle">Practice and discuss</h4>
+                      <p id="learningHelpPracticeText">Use an activity, demonstration, question, or short discussion so members do more than read.</p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">4</span>
+                      <h4 id="learningHelpApplyTitle">Apply one lesson</h4>
+                      <p id="learningHelpApplyText">End with one realistic action and a reflection on what was learned.</p>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="edit-card">
+                  <h3 id="opportunityHelpTitle">Opportunities & Mobility quick guide</h3>
+                  <div class="help-grid">
+                    <article class="help-card">
+                      <span class="help-icon">1</span>
+                      <h4 id="opportunityHelpExploreTitle">Start with an official source</h4>
+                      <p id="opportunityHelpExploreText">
+                        Choose a category and audience. Open one or two official search tools instead of completing a long questionnaire.
+                      </p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">2</span>
+                      <h4 id="opportunityHelpVerifyTitle">Confirm the exact opportunity</h4>
+                      <p id="opportunityHelpVerifyText">
+                        Open the provider page and confirm the current deadline, eligibility, cost, location, and application process.
+                      </p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">3</span>
+                      <h4 id="opportunityHelpPlanTitle">Save only promising options</h4>
+                      <p id="opportunityHelpPlanText">
+                        Record the next action, questions, requirements, and small steps. Unknown information does not need to become guesswork.
+                      </p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">4</span>
+                      <h4 id="opportunityHelpProtectTitle">Protect private information</h4>
+                      <p id="opportunityHelpProtectText">
+                        Apply on the official provider site. Do not store identification numbers, accounts, passwords, documents, or exact addresses in FamilyPD.
+                      </p>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="edit-card">
+                  <h3 id="systemsHelpTitle">Systems, Policies & Safety quick guide</h3>
+                  <div class="help-grid">
+                    <article class="help-card">
+                      <span class="help-icon">1</span>
+                      <h4 id="systemsHelpChooseTitle">Choose one repeated problem</h4>
+                      <p id="systemsHelpChooseText">
+                        Start with something that causes confusion, repeated reminders,
+                        unfair workload, missed steps, or avoidable risk.
+                      </p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">2</span>
+                      <h4 id="systemsHelpTemplateTitle">Use a template</h4>
+                      <p id="systemsHelpTemplateText">
+                        Select a FamilyPD area and template. Keep only the wording and
+                        steps that fit the household.
+                      </p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">3</span>
+                      <h4 id="systemsHelpTeachTitle">Teach and practice the steps</h4>
+                      <p id="systemsHelpTeachText">
+                        Do not assume a member already knows the process. Explain,
+                        demonstrate, practice, and provide support.
+                      </p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">4</span>
+                      <h4 id="systemsHelpReviewTitle">Review and improve</h4>
+                      <p id="systemsHelpReviewText">
+                        A system is useful only when it works. Review it, notice problems,
+                        adjust responsibilities, and update the next review date.
+                      </p>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="edit-card">
+                  <h3 id="browserToolsTitle">Use the tools already in your browser</h3>
+                  <div class="help-grid">
+                    <article class="help-card">
+                      <span class="help-icon">✓</span>
+                      <h4 id="spellcheckHelpTitle">Spellcheck</h4>
+                      <p id="spellcheckHelpText">A red or colored underline may mean a word is misspelled. Right-click the word and review the suggested spelling before choosing it.</p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">🎤</span>
+                      <h4 id="voiceHelpTitle">Voice typing</h4>
+                      <p id="voiceHelpText">Your device may let you tap a microphone on the keyboard and speak instead of typing. Review the words before saving.</p>
+                    </article>
+                    <article class="help-card">
+                      <span class="help-icon">🔊</span>
+                      <h4 id="readHelpTitle">Read aloud</h4>
+                      <p id="readHelpText">Use the Read aloud button in the header to hear the main instructions on the current page.</p>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="edit-card ai-help-card">
+                  <div class="section-heading-row">
+                    <div>
+                      <h3 id="aiHelpTitle">Need more ideas? Use an AI tool safely.</h3>
+                      <p id="aiHelpWarning"></p>
+                    </div>
+                    <button type="button" class="info-button" data-help="AI can help brainstorm, but it can make mistakes. Never include private information, and always review the response before using it." aria-label="About AI assistance">i</button>
+                  </div>
+                  <ol id="aiHelpSteps"></ol>
+                  <label class="field full">
+                    <span id="aiPromptLabel">Copy-ready prompt</span>
+                    <textarea id="aiPromptText" rows="9" readonly></textarea>
+                    <small id="aiPromptHelp">Copy this prompt into an AI tool, review the response, and edit the ideas so they fit the household.</small>
+                  </label>
+                  <div class="button-row">
+                    <button id="copyAiPromptButton" class="primary-button" type="button">Copy Prompt</button>
+                  </div>
+                </section>
+
+                <section class="edit-card">
+                  <h3 id="guidebookResourceTitle">FamilyPD guidebook resource</h3>
+                  <p id="guidebookResourceText">Workspace guidance is based on <em>The Family Personal Development Guidebook: If charity starts at home, growth and success should too.</em> by Toni Hall. Available in Kindle Edition and paperback.</p>
+                  <a id="guidebookLink" class="secondary-button link-button" target="_blank" rel="noopener">Open Guidebook Resource</a>
+                </section>
+              </section>
+
+              <section id="workspacePanel" class="workspace-panel hidden">
+                <div class="panel-heading">
+                  <div>
+                    <span class="eyebrow">WORKSPACE SETTINGS</span>
+                    <h2>Connection & Recovery</h2>
+                    <p>
+                      Repair checks only saved FamilyPD file IDs. Disconnecting clears
+                      the saved connection but does not delete Drive files.
+                    </p>
+                  </div>
+                </div>
+
+                <section class="settings-panel">
+                  <div class="settings-actions">
+                    <a id="openDriveSettingsButton" class="primary-button link-button" target="_blank">Open FamilyPD Drive Folder</a>
+                    <button id="downloadRecoveryButton" class="secondary-button">Download Recovery Key</button>
+                    <button id="repairButton" class="secondary-button">Repair FamilyPD Structure</button>
+                    <button id="disconnectButton" class="danger-button">Disconnect Workspace</button>
+                  </div>
+                </section>
+
+                <section class="privacy-card compact">
+                  <div class="privacy-icon">🛡️</div>
+                  <div>
+                    <h3>Permanent FamilyPD privacy rule</h3>
+                    <p>
+                      When a feature would require exact sensitive information,
+                      FamilyPD should redesign the feature instead of collecting the information.
+                    </p>
+                  </div>
+                </section>
+              </section>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <div id="securityModal" class="modal-backdrop hidden" role="dialog"
+           aria-modal="true" aria-labelledby="securityModalTitle">
+        <div class="modal-card">
+          <button id="closeSecurityModalButton" class="modal-close" aria-label="Close">×</button>
+          <span class="eyebrow" id="securityModalEyebrow">SECURITY & AUTHENTICITY CHECK</span>
+          <h2 id="securityModalTitle">Verify before continuing</h2>
+          <div id="securityModeNotice" class="security-mode-notice"></div>
+          <ol class="security-checklist">
+            <li id="securityStep1">Start from <strong>familypd.org</strong>. Check spelling carefully.</li>
+            <li id="securityStep2">This prototype may open on a Google Apps Script hostname ending in <strong>-script.googleusercontent.com</strong>.</li>
+            <li id="securityStep3">Google passwords should be entered only on a Google-owned authentication page—not in a FamilyPD form.</li>
+            <li id="securityStep4">Do not enter sensitive or confidential information into FamilyPD.</li>
+            <li id="securityStep5">A lock icon means the connection is encrypted, but the domain still must be checked.</li>
+          </ol>
+          <label class="security-confirmation">
+            <input id="securityAcknowledgement" type="checkbox">
+            <span id="securityAcknowledgementText">I checked the address and understand these security rules.</span>
+          </label>
+          <button id="continueSecurityButton" class="primary-button" disabled>Continue to FamilyPD</button>
+        </div>
+      </div>
+
+      <div id="tutorialModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="tutorialModalTitle">
+        <div class="modal-card tutorial-modal-card">
+          <button id="closeTutorialModalButton" class="modal-close" aria-label="Close">×</button>
+          <span class="eyebrow" id="tutorialEyebrow">FAMILYPD QUICK START</span>
+          <div class="tutorial-progress" id="tutorialProgress"></div>
+          <h2 id="tutorialModalTitle">Welcome to FamilyPD</h2>
+          <p id="tutorialModalBody"></p>
+          <div class="button-row between">
+            <button id="tutorialBackButton" class="secondary-button" type="button">Back</button>
+            <button id="tutorialSkipButton" class="text-button" type="button">Close tutorial</button>
+            <button id="tutorialOpenFeatureButton" class="secondary-button" type="button">Open this feature</button>
+            <button id="tutorialNextButton" class="primary-button" type="button">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <aside id="fieldSupportDrawer" class="field-support-drawer hidden" role="complementary"
+             aria-labelledby="fieldSupportTitle" aria-live="polite">
+        <div class="field-support-header">
+          <div>
+            <span class="eyebrow" id="fieldSupportEyebrow">READING & WRITING SUPPORT</span>
+            <h2 id="fieldSupportTitle">Help with this question</h2>
+          </div>
+          <button id="closeFieldSupportButton" class="modal-close" type="button"
+                  aria-label="Close support">×</button>
+        </div>
+
+        <section class="field-support-section">
+          <h3 id="fieldSupportQuestionHeading">What is being asked?</h3>
+          <p id="fieldSupportQuestionText">Choose a field or section.</p>
+        </section>
+
+        <section class="field-support-section">
+          <h3 id="fieldSupportExplanationHeading">What this means</h3>
+          <p id="fieldSupportExplanationText">
+            Click a Choices button beside any question for an explanation and editable examples.
+          </p>
+        </section>
+
+        <div class="field-support-actions">
+          <button id="supportReadQuestionButton" class="secondary-button" type="button">Read question</button>
+          <button id="supportReadAnswerButton" class="secondary-button" type="button">Read my answer</button>
+          <button id="supportReadSectionButton" class="secondary-button" type="button">Read current section</button>
+          <button id="supportStopReadingButton" class="secondary-button stop-reading-button" type="button">Stop reading</button>
+          <button id="supportClearAnswerButton" class="text-button danger-text" type="button">Clear answer</button>
+        </div>
+
+        <section class="field-support-section examples-section">
+          <h3 id="fieldSupportExamplesHeading">Choose a starting answer</h3>
+          <div id="fieldSupportExamples" class="field-support-examples"></div>
+        </section>
+      </aside>
+
+      <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+    </div>
+
+    <?!= include('Scripts'); ?>
+    <?!= include('MeetingClient'); ?>
+    <?!= include('LearningClient'); ?>
+    <?!= include('ResourceHubClient'); ?>
+    <?!= include('ProjectStudioClient'); ?>
+    <?!= include('DiscProfileClient'); ?>
+    <?!= include('FamilyAiClient'); ?>
+    <?!= include('OpportunityClient'); ?>
+    <?!= include('SystemsClient'); ?>
+    <?!= include('AccessibilitySupportClient'); ?>
+  </body>
+</html>

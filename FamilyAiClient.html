@@ -1,0 +1,95 @@
+<script>
+  let familyAiInitialized = false;
+
+  function initializeFamilyAi() {
+    if (familyAiInitialized) return;
+    const form = document.getElementById('familyAiForm');
+    const input = document.getElementById('familyAiQuestion');
+    if (!form || !input) return;
+    familyAiInitialized = true;
+
+    form.addEventListener('submit', handleFamilyAiSubmit);
+    document.querySelectorAll('.ai-example-prompt').forEach(function(button) {
+      button.addEventListener('click', function() {
+        input.value = button.textContent.trim();
+        input.focus();
+      });
+    });
+
+    updateFamilyAiConnectionState();
+  }
+
+  function updateFamilyAiConnectionState() {
+    const connected = Boolean(window.FPD_SON_AI_CONNECTOR &&
+      typeof window.FPD_SON_AI_CONNECTOR.ask === 'function');
+    const badge = document.getElementById('familyAiConnectionBadge');
+    const status = document.getElementById('familyAiStatus');
+    if (badge) badge.textContent = connected ? 'Backend connected' : 'Frontend ready';
+    if (status) status.textContent = connected
+      ? 'Connected to the AI backend.'
+      : 'Ready for your son to connect his backend adapter.';
+  }
+
+  async function handleFamilyAiSubmit(event) {
+    event.preventDefault();
+    const input = document.getElementById('familyAiQuestion');
+    const button = document.getElementById('familyAiSubmitButton');
+    const question = (input.value || '').trim();
+    if (!question) {
+      toast('Enter a question first.', true);
+      input.focus();
+      return;
+    }
+    if (!clientPrivacyCheck({ question: question })) return;
+
+    appendFamilyAiMessage('user', 'You', question);
+    input.value = '';
+    setBusy(button, true, 'Thinkingâ€¦');
+
+    try {
+      if (!window.FPD_SON_AI_CONNECTOR ||
+          typeof window.FPD_SON_AI_CONNECTOR.ask !== 'function') {
+        throw new Error(
+          'The Family AI page is installed, but the backend connector has not been added yet. ' +
+          'Your son can connect it by defining window.FPD_SON_AI_CONNECTOR.ask(question, context).'
+        );
+      }
+
+      const context = {
+        language: state.language || 'en',
+        role: state.workspace && state.workspace.role || '',
+        app: 'FamilyPD Workspace',
+        privacyMode: 'non-sensitive-planning-only'
+      };
+      const result = await window.FPD_SON_AI_CONNECTOR.ask(question, context);
+      const answer = typeof result === 'string'
+        ? result
+        : (result && (result.answer || result.text || result.message));
+      if (!answer) throw new Error('The AI backend returned an empty response.');
+      appendFamilyAiMessage('assistant', 'Family AI', answer);
+    } catch (error) {
+      appendFamilyAiMessage('error', 'Connection note', error.message || String(error));
+    } finally {
+      setBusy(button, false, 'Submit Question');
+      updateFamilyAiConnectionState();
+    }
+  }
+
+  function appendFamilyAiMessage(type, label, text) {
+    const box = document.getElementById('familyAiConversation');
+    if (!box) return;
+    const message = document.createElement('div');
+    message.className = 'family-ai-message ' + (
+      type === 'user' ? 'user-message' :
+      type === 'error' ? 'family-ai-error' : 'assistant-message'
+    );
+    const strong = document.createElement('strong');
+    const paragraph = document.createElement('p');
+    strong.textContent = label;
+    paragraph.textContent = text;
+    message.appendChild(strong);
+    message.appendChild(paragraph);
+    box.appendChild(message);
+    box.scrollTop = box.scrollHeight;
+  }
+</script>

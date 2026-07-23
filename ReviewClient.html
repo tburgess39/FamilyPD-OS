@@ -1,0 +1,885 @@
+<style>
+  :root {
+    --fpdrc-bg: #f7f8fb;
+    --fpdrc-card: #ffffff;
+    --fpdrc-text: #1f2937;
+    --fpdrc-muted: #667085;
+    --fpdrc-border: #dfe3ea;
+    --fpdrc-accent: #5b4b9a;
+    --fpdrc-accent-soft: #efecfa;
+    --fpdrc-danger: #b42318;
+    --fpdrc-warning: #b54708;
+    --fpdrc-success: #027a48;
+  }
+
+  .fpdrc-launch {
+    appearance: none;
+    border: 0;
+    border-radius: 10px;
+    background: var(--fpdrc-accent);
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    padding: 10px 14px;
+    margin: 6px;
+  }
+
+
+  .fpdrc-shell[hidden] { display: none !important; }
+  .fpdrc-shell {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: rgba(17, 24, 39, .58);
+    display: grid;
+    place-items: center;
+    padding: 16px;
+  }
+
+  .fpdrc-app {
+    width: min(1180px, 100%);
+    height: min(900px, 96vh);
+    overflow: hidden;
+    background: var(--fpdrc-bg);
+    color: var(--fpdrc-text);
+    border-radius: 18px;
+    box-shadow: 0 30px 80px rgba(17, 24, 39, .32);
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+  }
+
+  .fpdrc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px 22px;
+    background: var(--fpdrc-card);
+    border-bottom: 1px solid var(--fpdrc-border);
+  }
+
+  .fpdrc-header h2 { margin: 0; font-size: 1.35rem; }
+  .fpdrc-header p { margin: 4px 0 0; color: var(--fpdrc-muted); }
+  .fpdrc-header-actions { display: flex; gap: 8px; }
+
+  .fpdrc-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 10px 16px;
+    background: var(--fpdrc-card);
+    border-bottom: 1px solid var(--fpdrc-border);
+  }
+
+  .fpdrc-tab, .fpdrc-btn {
+    appearance: none;
+    border: 1px solid var(--fpdrc-border);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--fpdrc-text);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 650;
+    padding: 9px 12px;
+  }
+
+  .fpdrc-tab.active, .fpdrc-btn.primary {
+    border-color: var(--fpdrc-accent);
+    background: var(--fpdrc-accent);
+    color: #fff;
+  }
+
+  .fpdrc-btn.danger { color: var(--fpdrc-danger); }
+  .fpdrc-btn.small { padding: 6px 9px; font-size: .86rem; }
+  .fpdrc-btn:disabled { cursor: not-allowed; opacity: .58; }
+
+  .fpdrc-content { overflow-y: auto; padding: 20px; }
+  .fpdrc-view[hidden] { display: none !important; }
+  .fpdrc-grid { display: grid; gap: 14px; }
+  .fpdrc-grid.stats { grid-template-columns: repeat(5, minmax(130px, 1fr)); }
+  .fpdrc-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .fpdrc-card {
+    background: var(--fpdrc-card);
+    border: 1px solid var(--fpdrc-border);
+    border-radius: 14px;
+    padding: 16px;
+  }
+
+  .fpdrc-card h3, .fpdrc-card h4 { margin: 0 0 10px; }
+  .fpdrc-card p { margin: 7px 0; }
+  .fpdrc-muted { color: var(--fpdrc-muted); }
+  .fpdrc-stat strong { display: block; font-size: 1.7rem; margin-top: 6px; }
+
+  .fpdrc-section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 10px;
+  }
+
+  .fpdrc-section-head h3 { margin: 0; }
+  .fpdrc-pillar { display: grid; grid-template-columns: 140px 1fr 52px; gap: 10px; align-items: center; margin: 11px 0; }
+  .fpdrc-progress { height: 12px; border-radius: 999px; background: #eceff4; overflow: hidden; }
+  .fpdrc-progress span { display: block; height: 100%; background: var(--fpdrc-accent); border-radius: inherit; }
+
+  .fpdrc-badge {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 3px 8px;
+    background: var(--fpdrc-accent-soft);
+    color: var(--fpdrc-accent);
+    font-size: .78rem;
+    font-weight: 750;
+  }
+
+  .fpdrc-badge.overdue { background: #fee4e2; color: var(--fpdrc-danger); }
+  .fpdrc-badge.soon { background: #fef0c7; color: var(--fpdrc-warning); }
+  .fpdrc-badge.complete { background: #d1fadf; color: var(--fpdrc-success); }
+
+  .fpdrc-list { display: grid; gap: 10px; }
+  .fpdrc-item {
+    border: 1px solid var(--fpdrc-border);
+    border-radius: 12px;
+    padding: 12px;
+    background: #fff;
+  }
+
+  .fpdrc-item-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .fpdrc-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+  .fpdrc-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+  .fpdrc-field { display: grid; gap: 5px; }
+  .fpdrc-field.full { grid-column: 1 / -1; }
+  .fpdrc-field label { font-weight: 700; font-size: .9rem; }
+
+  .fpdrc-field input, .fpdrc-field select, .fpdrc-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--fpdrc-border);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--fpdrc-text);
+    font: inherit;
+    padding: 10px;
+  }
+
+  .fpdrc-field textarea { min-height: 86px; resize: vertical; }
+  .fpdrc-rating-grid { display: grid; grid-template-columns: repeat(5, minmax(100px, 1fr)); gap: 10px; }
+  .fpdrc-notice { border-radius: 10px; background: #f2f4f7; padding: 11px; margin-bottom: 14px; }
+  .fpdrc-notice.warn { background: #fffaeb; color: #7a2e0e; }
+  .fpdrc-notice.error, .fpdrc-message.error { background: #fee4e2; color: #7a271a; border: 1px solid #fda29b; }
+  .fpdrc-message { margin: 0 0 14px; border-radius: 10px; padding: 11px; background: #eef4ff; color: #243b6b; border: 1px solid #b2ccff; }
+  .fpdrc-message[hidden] { display: none !important; }
+  .fpdrc-tab:focus-visible, .fpdrc-btn:focus-visible, .fpdrc-launch:focus-visible,
+  .fpdrc-field input:focus-visible, .fpdrc-field select:focus-visible, .fpdrc-field textarea:focus-visible,
+  .fpdrc-link:focus-visible { outline: 3px solid #f4b740; outline-offset: 3px; }
+
+  .fpdrc-empty { text-align: center; padding: 26px; color: var(--fpdrc-muted); }
+  .fpdrc-link { color: var(--fpdrc-accent); font-weight: 700; text-decoration: none; }
+  .fpdrc-loading { display: grid; place-items: center; min-height: 260px; color: var(--fpdrc-muted); }
+
+  .fpdrc-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%) translateY(20px);
+    opacity: 0;
+    z-index: 9999;
+    background: #111827;
+    color: #fff;
+    border-radius: 10px;
+    padding: 11px 15px;
+    transition: .2s ease;
+    pointer-events: none;
+  }
+
+  .fpdrc-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .fpdrc-toast.error { background: var(--fpdrc-danger); }
+
+  @media (max-width: 850px) {
+    .fpdrc-grid.stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fpdrc-grid.two, .fpdrc-form { grid-template-columns: 1fr; }
+    .fpdrc-rating-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fpdrc-field.full { grid-column: auto; }
+  }
+
+  @media (max-width: 520px) {
+    .fpdrc-shell { padding: 0; }
+    .fpdrc-app { height: 100vh; border-radius: 0; }
+    .fpdrc-content { padding: 13px; }
+    .fpdrc-grid.stats { grid-template-columns: 1fr 1fr; }
+    .fpdrc-pillar { grid-template-columns: 105px 1fr 42px; }
+  }
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  const state = {
+    data: null,
+    activeTab: 'overview',
+    editingGoalId: '',
+    editingReviewId: '',
+    busy: false,
+    lastFocus: null,
+    menuObserver: null
+  };
+
+  function start() {
+    if (document.getElementById('fpdrcShell')) return;
+    injectApp_();
+    bindEvents_();
+    installMenuLauncher_();
+  }
+
+  function installMenuLauncher_() {
+    removeLegacyMenuLinks_();
+    if (document.getElementById('fpdrcLaunch')) return true;
+    const target = findAppMenu_();
+    if (!target) {
+      if (!state.menuObserver && document.body) {
+        state.menuObserver = new MutationObserver(function () {
+          if (installMenuLauncher_() && state.menuObserver) {
+            state.menuObserver.disconnect();
+            state.menuObserver = null;
+          }
+        });
+        state.menuObserver.observe(document.body, { childList: true, subtree: true });
+      }
+      return false;
+    }
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.id = 'fpdrcLaunch';
+    button.className = 'fpdrc-launch';
+    button.textContent = 'Family Progress';
+    button.setAttribute('aria-label', 'Open Family Progress Review Center');
+    button.addEventListener('click', open_);
+
+    if (/^(UL|OL)$/i.test(target.tagName)) {
+      const item = document.createElement('li');
+      item.className = 'fpdrc-menu-item';
+      item.appendChild(button);
+      target.appendChild(item);
+    } else {
+      target.appendChild(button);
+    }
+    return true;
+  }
+
+  function findAppMenu_() {
+    const selectors = [
+      '[data-fpd-nav]', '[data-app-nav]', '.sidebar nav', 'nav.sidebar',
+      '.app-nav', '.main-nav', '.sidebar-menu', '.nav-menu', 'aside nav'
+    ];
+    for (let i = 0; i < selectors.length; i += 1) {
+      const nodes = document.querySelectorAll(selectors[i]);
+      for (let j = 0; j < nodes.length; j += 1) {
+        if (!nodes[j].closest('#fpdrcShell, #fpfShell')) return nodes[j];
+      }
+    }
+    return null;
+  }
+
+  function removeLegacyMenuLinks_() {
+    const obsoleteLabels = [
+      'household identity', 'household identity center', 'family identity',
+      'family identity & values', 'family identity and values',
+      'family identity & values center', 'family identity and values center'
+    ];
+    document.querySelectorAll('a, button, [role="button"]').forEach(function (element) {
+      if (element.closest('#fpdrcShell, #fpfShell')) return;
+      const text = String(element.textContent || '').trim().toLowerCase().replace(/\s+/g, ' ');
+      const view = String(element.getAttribute('data-view') || element.getAttribute('data-page') || '').toLowerCase();
+      if (obsoleteLabels.indexOf(text) >= 0 || /^(household-?identity|family-?identity)$/.test(view)) {
+        const wrapper = element.closest('li');
+        (wrapper || element).remove();
+      }
+    });
+  }
+
+  function injectApp_() {
+    const shell = document.createElement('div');
+    shell.id = 'fpdrcShell';
+    shell.className = 'fpdrc-shell';
+    shell.hidden = true;
+    shell.innerHTML = `
+      <section class="fpdrc-app" role="dialog" aria-modal="true" aria-labelledby="fpdrcTitle" aria-describedby="fpdrcDescription">
+        <header class="fpdrc-header">
+          <div>
+            <h2 id="fpdrcTitle">Family Progress Review Center</h2>
+            <p id="fpdrcDescription">Goals, check-ins, prior files, and progress PDFs in one place.</p>
+          </div>
+          <div class="fpdrc-header-actions">
+            <button type="button" class="fpdrc-btn" id="fpdrcRefresh">Refresh</button>
+            <button type="button" class="fpdrc-btn" id="fpdrcClose" aria-label="Close">Close</button>
+          </div>
+        </header>
+        <nav class="fpdrc-tabs" aria-label="Progress review sections">
+          <button type="button" class="fpdrc-tab active" data-fpdrc-tab="overview">Overview</button>
+          <button type="button" class="fpdrc-tab" data-fpdrc-tab="goals">Goals</button>
+          <button type="button" class="fpdrc-tab" data-fpdrc-tab="reviews">Reviews</button>
+          <button type="button" class="fpdrc-tab" data-fpdrc-tab="files">Prior Files</button>
+        </nav>
+        <main class="fpdrc-content">
+          <div id="fpdrcMessage" class="fpdrc-message" role="status" aria-live="polite" tabindex="-1" hidden></div>
+          <div id="fpdrcLoading" class="fpdrc-loading" role="status" aria-live="polite">Loading family progress…</div>
+          <section id="fpdrcOverview" class="fpdrc-view" hidden></section>
+          <section id="fpdrcGoals" class="fpdrc-view" hidden></section>
+          <section id="fpdrcReviews" class="fpdrc-view" hidden></section>
+          <section id="fpdrcFiles" class="fpdrc-view" hidden></section>
+        </main>
+      </section>`;
+    document.body.appendChild(shell);
+
+    const toast = document.createElement('div');
+    toast.id = 'fpdrcToast';
+    toast.className = 'fpdrc-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    document.body.appendChild(toast);
+  }
+
+  function bindEvents_() {
+    document.getElementById('fpdrcClose').addEventListener('click', close_);
+    document.getElementById('fpdrcRefresh').addEventListener('click', function () { load_(true); });
+    document.getElementById('fpdrcShell').addEventListener('click', function (event) {
+      if (event.target === event.currentTarget) close_();
+    });
+    document.querySelectorAll('[data-fpdrc-tab]').forEach(function (button) {
+      button.addEventListener('click', function () { showTab_(button.dataset.fpdrcTab); });
+    });
+    document.addEventListener('keydown', function (event) {
+      const shell = document.getElementById('fpdrcShell');
+      if (shell.hidden) return;
+      if (event.key === 'Escape') close_();
+      if (event.key === 'Tab') trapFocus_(event);
+    });
+  }
+
+  function open_() {
+    state.lastFocus = document.activeElement;
+    document.getElementById('fpdrcShell').hidden = false;
+    document.body.style.overflow = 'hidden';
+    document.getElementById('fpdrcClose').focus();
+    if (!state.data) load_(false);
+  }
+
+  function close_() {
+    document.getElementById('fpdrcShell').hidden = true;
+    document.body.style.overflow = '';
+    if (state.lastFocus && typeof state.lastFocus.focus === 'function') state.lastFocus.focus();
+  }
+
+  function trapFocus_(event) {
+    const shell = document.getElementById('fpdrcShell');
+    const focusable = Array.prototype.slice.call(shell.querySelectorAll(
+      'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(function (element) { return element.offsetParent !== null; });
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault(); last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault(); first.focus();
+    }
+  }
+
+  async function load_(forceRefresh) {
+    setBusy_(true);
+    try {
+      clearMessage_();
+      state.data = await server_('fpdGetReviewCenterData', Boolean(forceRefresh));
+      renderAll_();
+    } catch (error) {
+      showMessage_('The progress center could not load. ' + error.message, true, true);
+      toast_(error.message, true);
+      const loading = document.getElementById('fpdrcLoading');
+      loading.hidden = true;
+    } finally {
+      setBusy_(false);
+    }
+  }
+
+  function renderAll_() {
+    document.getElementById('fpdrcLoading').hidden = true;
+    renderOverview_();
+    renderGoals_();
+    renderReviews_();
+    renderFiles_();
+    showTab_(state.activeTab);
+  }
+
+  function renderOverview_() {
+    const data = state.data;
+    const summary = data.summary || {};
+    const meeting = data.nextMeeting;
+    const latest = summary.latestReview;
+    const dueGoals = (data.goals || []).filter(function (goal) {
+      return goal.status === 'active' && (goal.isOverdue || goal.isDueSoon);
+    }).slice(0, 6);
+
+    document.getElementById('fpdrcOverview').innerHTML = `
+      <div class="fpdrc-notice warn"><strong>Privacy reminder:</strong> Use general family goals and summaries only. Do not enter passwords, financial account numbers, identification numbers, exact dates of birth, addresses, medical records, or school IDs.</div>
+      ${workspaceNotice_()}
+      <div class="fpdrc-grid stats">
+        ${statCard_('Active goals', summary.activeGoals || 0)}
+        ${statCard_('Average progress', (summary.averageProgress || 0) + '%')}
+        ${statCard_('Due soon', summary.dueSoonGoals || 0)}
+        ${statCard_('Overdue', summary.overdueGoals || 0)}
+        ${statCard_('Reviews saved', summary.totalReviews || 0)}
+      </div>
+
+      <div class="fpdrc-grid two" style="margin-top:14px">
+        <article class="fpdrc-card">
+          <h3>Next family meeting</h3>
+          ${meeting ? `
+            <p><strong>${escapeHtml_(meeting.title || 'Family meeting')}</strong></p>
+            <p>${formatDate_(meeting.date)} ${meeting.time ? 'at ' + escapeHtml_(meeting.time) : ''}</p>
+            <p class="fpdrc-muted">Source: ${escapeHtml_(meeting.source || 'Workspace')}</p>
+            ${meeting.url ? `<a class="fpdrc-link" href="${escapeAttr_(meeting.url)}" target="_blank" rel="noopener">Open meeting file</a>` : ''}
+          ` : '<p class="fpdrc-muted">No future meeting was found yet.</p>'}
+        </article>
+        <article class="fpdrc-card">
+          <h3>Latest progress review</h3>
+          ${latest ? `
+            <p><strong>${escapeHtml_(latest.periodLabel)}</strong></p>
+            <p>${formatDate_(latest.reviewDate)}</p>
+            <button type="button" class="fpdrc-btn small" data-action="edit-review" data-id="${escapeAttr_(latest.id)}">Open review</button>
+          ` : '<p class="fpdrc-muted">Complete the first monthly or quarterly review to establish a baseline.</p>'}
+        </article>
+      </div>
+
+      <div class="fpdrc-section-head"><h3>Five-pillar progress</h3></div>
+      <article class="fpdrc-card">
+        ${(data.pillars || []).map(function (pillar) {
+          return `<div class="fpdrc-pillar">
+            <strong>${escapeHtml_(pillar.label)}</strong>
+            <div><div class="fpdrc-progress"><span style="width:${Number(pillar.score || 0)}%"></span></div><small class="fpdrc-muted">${escapeHtml_(pillar.source)}</small></div>
+            <span>${Number(pillar.score || 0)}%</span>
+          </div>`;
+        }).join('')}
+      </article>
+
+      <div class="fpdrc-section-head"><h3>Upcoming and overdue checkpoints</h3></div>
+      <div class="fpdrc-list">
+        ${dueGoals.length ? dueGoals.map(goalCard_).join('') : '<div class="fpdrc-card fpdrc-empty">No goals are due within the next 14 days and none are overdue.</div>'}
+      </div>`;
+
+    bindActionButtons_(document.getElementById('fpdrcOverview'));
+    bindWorkspaceButtons_();
+  }
+
+  function renderGoals_() {
+    const goals = state.data.goals || [];
+    document.getElementById('fpdrcGoals').innerHTML = `
+      <article class="fpdrc-card">
+        <h3>${state.editingGoalId ? 'Edit goal' : 'Add a goal'}</h3>
+        <form id="fpdrcGoalForm" class="fpdrc-form">
+          <input type="hidden" id="fpdrcGoalId" value="">
+          <div class="fpdrc-field full"><label for="fpdrcGoalTitle">Goal</label><input id="fpdrcGoalTitle" maxlength="160" required placeholder="Example: Complete one family learning activity each month"></div>
+          <div class="fpdrc-field"><label for="fpdrcGoalPillar">Pillar</label><select id="fpdrcGoalPillar">${optionList_(state.data.options.pillars, 'key', 'label')}</select></div>
+          <div class="fpdrc-field"><label for="fpdrcGoalCadence">Cadence</label><select id="fpdrcGoalCadence">${optionList_(state.data.options.cadences, 'value', 'label')}</select></div>
+          <div class="fpdrc-field"><label for="fpdrcGoalTarget">Target date</label><input id="fpdrcGoalTarget" type="date"></div>
+          <div class="fpdrc-field"><label for="fpdrcGoalStatus">Status</label><select id="fpdrcGoalStatus">${optionList_(state.data.options.goalStatuses, 'value', 'label')}</select></div>
+          <div class="fpdrc-field"><label for="fpdrcGoalProgress">Progress: <span id="fpdrcGoalProgressValue">0%</span></label><input id="fpdrcGoalProgress" type="range" min="0" max="100" step="5" value="0"></div>
+          <div class="fpdrc-field full"><label for="fpdrcGoalCheckpoint">Next checkpoint</label><input id="fpdrcGoalCheckpoint" maxlength="220" placeholder="The next visible action or milestone"></div>
+          <div class="fpdrc-field full"><label for="fpdrcGoalNotes">Notes</label><textarea id="fpdrcGoalNotes" maxlength="1200" placeholder="Keep this general and non-sensitive."></textarea></div>
+          <div class="fpdrc-field full"><div class="fpdrc-actions"><button class="fpdrc-btn primary" type="submit">Save goal</button><button class="fpdrc-btn" type="button" id="fpdrcCancelGoal">Clear form</button></div></div>
+        </form>
+      </article>
+      <div class="fpdrc-section-head"><h3>Saved goals</h3><span class="fpdrc-muted">${goals.length} total</span></div>
+      <div class="fpdrc-list">${goals.length ? goals.map(goalCard_).join('') : '<div class="fpdrc-card fpdrc-empty">No goals have been added yet.</div>'}</div>`;
+
+    const form = document.getElementById('fpdrcGoalForm');
+    form.addEventListener('submit', saveGoal_);
+    document.getElementById('fpdrcCancelGoal').addEventListener('click', resetGoalForm_);
+    document.getElementById('fpdrcGoalProgress').addEventListener('input', function (event) {
+      document.getElementById('fpdrcGoalProgressValue').textContent = event.target.value + '%';
+    });
+    bindActionButtons_(document.getElementById('fpdrcGoals'));
+  }
+
+  function renderReviews_() {
+    const reviews = state.data.reviews || [];
+    document.getElementById('fpdrcReviews').innerHTML = `
+      <article class="fpdrc-card">
+        <h3>${state.editingReviewId ? 'Edit progress review' : 'Create a progress review'}</h3>
+        <form id="fpdrcReviewForm" class="fpdrc-form">
+          <input type="hidden" id="fpdrcReviewId" value="">
+          <div class="fpdrc-field"><label for="fpdrcPeriodType">Review type</label><select id="fpdrcPeriodType">${optionList_(state.data.options.reviewPeriods, 'value', 'label')}</select></div>
+          <div class="fpdrc-field"><label for="fpdrcPeriodLabel">Month or quarter</label><input id="fpdrcPeriodLabel" required maxlength="100" placeholder="Example: July 2026 or Q3 2026"></div>
+          <div class="fpdrc-field"><label for="fpdrcReviewDate">Review date</label><input id="fpdrcReviewDate" type="date" value="${escapeAttr_(state.data.today)}"></div>
+          <div class="fpdrc-field"><label for="fpdrcNextMeeting">Next meeting date</label><input id="fpdrcNextMeeting" type="date"></div>
+          <div class="fpdrc-field full"><label>Rate each pillar from 1 to 5</label><div class="fpdrc-rating-grid">${ratingFields_()}</div></div>
+          <div class="fpdrc-field full"><label for="fpdrcWins">Wins and progress</label><textarea id="fpdrcWins" maxlength="2000"></textarea></div>
+          <div class="fpdrc-field full"><label for="fpdrcNeeds">Needs attention</label><textarea id="fpdrcNeeds" maxlength="2000"></textarea></div>
+          <div class="fpdrc-field full"><label for="fpdrcDecisions">Decisions made</label><textarea id="fpdrcDecisions" maxlength="2000"></textarea></div>
+          <div class="fpdrc-field full"><label for="fpdrcNextSteps">Next steps</label><textarea id="fpdrcNextSteps" maxlength="2000"></textarea></div>
+          <div class="fpdrc-field full"><label for="fpdrcReviewNotes">Additional notes</label><textarea id="fpdrcReviewNotes" maxlength="2000"></textarea></div>
+          <div class="fpdrc-field full"><div class="fpdrc-actions"><button class="fpdrc-btn primary" type="submit">Save review</button><button class="fpdrc-btn" type="button" id="fpdrcCancelReview">Clear form</button></div></div>
+        </form>
+      </article>
+      <div class="fpdrc-section-head"><h3>Saved reviews</h3><span class="fpdrc-muted">${reviews.length} total</span></div>
+      <div class="fpdrc-list">${reviews.length ? reviews.map(reviewCard_).join('') : '<div class="fpdrc-card fpdrc-empty">No monthly or quarterly reviews have been saved yet.</div>'}</div>`;
+
+    document.getElementById('fpdrcReviewForm').addEventListener('submit', saveReview_);
+    document.getElementById('fpdrcCancelReview').addEventListener('click', resetReviewForm_);
+    bindActionButtons_(document.getElementById('fpdrcReviews'));
+  }
+
+  function renderFiles_() {
+    const files = state.data.files || {};
+    const recent = files.recent || [];
+    const workspace = state.data.workspace || {};
+    document.getElementById('fpdrcFiles').innerHTML = `
+      <div class="fpdrc-notice">The review center lists recent editable documents and PDFs already stored in the FamilyPD Workspace. Opening a Google document lets the family continue editing the original instead of creating a duplicate.</div>
+      <article class="fpdrc-card">
+        <h3>Workspace connection</h3>
+        ${workspace.connected ? `<p><strong>${escapeHtml_(workspace.rootName)}</strong></p><p>${escapeHtml_(workspace.message || 'Workspace connected.')}</p><a class="fpdrc-link" target="_blank" rel="noopener" href="${escapeAttr_(workspace.rootUrl)}">Open workspace</a>` : `<p>${escapeHtml_(workspace.message || 'The FamilyPD Workspace is not connected.')}</p><button type="button" class="fpdrc-btn" id="fpdrcOpenWorkspace">Open Workspace Setup</button>`}
+      </article>
+      <div class="fpdrc-section-head"><h3>Recent FamilyPD files</h3><span class="fpdrc-muted">Most recently modified first</span></div>
+      <div class="fpdrc-list">
+        ${recent.length ? recent.map(fileCard_).join('') : '<div class="fpdrc-card fpdrc-empty">No prior files were found in the profile, meetings, goals, or generated-PDF folders.</div>'}
+      </div>`;
+    const workspaceButton = document.getElementById('fpdrcOpenWorkspace');
+    if (workspaceButton) workspaceButton.addEventListener('click', openWorkspaceSetup_);
+  }
+
+  async function saveGoal_(event) {
+    event.preventDefault();
+    const payload = {
+      id: value_('fpdrcGoalId'),
+      title: value_('fpdrcGoalTitle'),
+      pillar: value_('fpdrcGoalPillar'),
+      cadence: value_('fpdrcGoalCadence'),
+      targetDate: value_('fpdrcGoalTarget'),
+      status: value_('fpdrcGoalStatus'),
+      progress: Number(value_('fpdrcGoalProgress') || 0),
+      checkpoint: value_('fpdrcGoalCheckpoint'),
+      notes: value_('fpdrcGoalNotes')
+    };
+    state.editingGoalId = '';
+    await mutate_('fpdSaveReviewGoal', payload, 'Goal saved.');
+  }
+
+  async function saveReview_(event) {
+    event.preventDefault();
+    const ratings = {};
+    (state.data.options.pillars || []).forEach(function (pillar) {
+      ratings[pillar.key] = Number(value_('fpdrcRating_' + pillar.key) || 1);
+    });
+    const payload = {
+      id: value_('fpdrcReviewId'),
+      periodType: value_('fpdrcPeriodType'),
+      periodLabel: value_('fpdrcPeriodLabel'),
+      reviewDate: value_('fpdrcReviewDate'),
+      nextMeetingDate: value_('fpdrcNextMeeting'),
+      ratings: ratings,
+      wins: value_('fpdrcWins'),
+      needsAttention: value_('fpdrcNeeds'),
+      decisions: value_('fpdrcDecisions'),
+      nextSteps: value_('fpdrcNextSteps'),
+      notes: value_('fpdrcReviewNotes')
+    };
+    state.editingReviewId = '';
+    await mutate_('fpdSaveProgressReview', payload, 'Progress review saved.');
+  }
+
+  async function mutate_(functionName, payload, successMessage) {
+    setBusy_(true);
+    try {
+      const response = await server_(functionName, payload);
+      state.data = response.data || await server_('fpdGetReviewCenterData', true);
+      renderAll_();
+      toast_(successMessage, false);
+    } catch (error) {
+      showMessage_(error.message, true, true);
+      toast_(error.message, true);
+    } finally {
+      setBusy_(false);
+    }
+  }
+
+  function bindActionButtons_(root) {
+    root.querySelectorAll('[data-action]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        const id = button.dataset.id;
+        const action = button.dataset.action;
+        if (action === 'edit-goal') editGoal_(id);
+        if (action === 'delete-goal') deleteGoal_(id);
+        if (action === 'edit-review') editReview_(id);
+        if (action === 'delete-review') deleteReview_(id);
+        if (action === 'pdf-review') createPdf_(id, button);
+      });
+    });
+  }
+
+  function editGoal_(id) {
+    const goal = (state.data.goals || []).find(function (item) { return item.id === id; });
+    if (!goal) return;
+    state.editingGoalId = id;
+    showTab_('goals');
+    setValue_('fpdrcGoalId', goal.id);
+    setValue_('fpdrcGoalTitle', goal.title);
+    setValue_('fpdrcGoalPillar', goal.pillar);
+    setValue_('fpdrcGoalCadence', goal.cadence);
+    setValue_('fpdrcGoalTarget', goal.targetDate);
+    setValue_('fpdrcGoalStatus', goal.status);
+    setValue_('fpdrcGoalProgress', goal.progress);
+    setValue_('fpdrcGoalCheckpoint', goal.checkpoint);
+    setValue_('fpdrcGoalNotes', goal.notes);
+    document.getElementById('fpdrcGoalProgressValue').textContent = Number(goal.progress || 0) + '%';
+    document.getElementById('fpdrcGoalTitle').focus();
+  }
+
+  async function deleteGoal_(id) {
+    if (!confirm('Delete this goal from the Progress Review Center?')) return;
+    await mutate_('fpdDeleteReviewGoal', id, 'Goal deleted.');
+  }
+
+  function editReview_(id) {
+    const review = (state.data.reviews || []).find(function (item) { return item.id === id; });
+    if (!review) return;
+    state.editingReviewId = id;
+    showTab_('reviews');
+    setValue_('fpdrcReviewId', review.id);
+    setValue_('fpdrcPeriodType', review.periodType);
+    setValue_('fpdrcPeriodLabel', review.periodLabel);
+    setValue_('fpdrcReviewDate', review.reviewDate);
+    setValue_('fpdrcNextMeeting', review.nextMeetingDate);
+    (state.data.options.pillars || []).forEach(function (pillar) {
+      setValue_('fpdrcRating_' + pillar.key, review.ratings && review.ratings[pillar.key] || 1);
+    });
+    setValue_('fpdrcWins', review.wins);
+    setValue_('fpdrcNeeds', review.needsAttention);
+    setValue_('fpdrcDecisions', review.decisions);
+    setValue_('fpdrcNextSteps', review.nextSteps);
+    setValue_('fpdrcReviewNotes', review.notes);
+    document.getElementById('fpdrcPeriodLabel').focus();
+  }
+
+  async function deleteReview_(id) {
+    if (!confirm('Delete this saved progress review? Existing Drive files will not be deleted.')) return;
+    await mutate_('fpdDeleteProgressReview', id, 'Review deleted.');
+  }
+
+  async function createPdf_(id, button) {
+    if (!workspaceConnected_()) {
+      showMessage_((state.data.workspace && state.data.workspace.message) || 'Open Workspace Setup before creating a PDF.', true, true);
+      return;
+    }
+    button.disabled = true;
+    const oldText = button.textContent;
+    button.textContent = 'Generating…';
+    try {
+      const result = await server_('fpdCreateProgressReviewPdf', id);
+      toast_('Progress review PDF created.', false);
+      window.open(result.pdfUrl, '_blank', 'noopener');
+      state.data = await server_('fpdGetReviewCenterData', true);
+      renderAll_();
+    } catch (error) {
+      showMessage_(error.message, true, true);
+      toast_(error.message, true);
+      button.disabled = false;
+      button.textContent = oldText;
+    }
+  }
+
+  function resetGoalForm_() {
+    state.editingGoalId = '';
+    renderGoals_();
+  }
+
+  function resetReviewForm_() {
+    state.editingReviewId = '';
+    renderReviews_();
+  }
+
+  function showTab_(tab) {
+    state.activeTab = tab;
+    document.querySelectorAll('[data-fpdrc-tab]').forEach(function (button) {
+      button.classList.toggle('active', button.dataset.fpdrcTab === tab);
+    });
+    const map = {
+      overview: 'fpdrcOverview',
+      goals: 'fpdrcGoals',
+      reviews: 'fpdrcReviews',
+      files: 'fpdrcFiles'
+    };
+    Object.keys(map).forEach(function (key) {
+      document.getElementById(map[key]).hidden = key !== tab;
+    });
+  }
+
+  function goalCard_(goal) {
+    let badge = '<span class="fpdrc-badge">' + escapeHtml_(goal.status) + '</span>';
+    if (goal.status === 'completed') badge = '<span class="fpdrc-badge complete">Completed</span>';
+    else if (goal.isOverdue) badge = '<span class="fpdrc-badge overdue">Overdue</span>';
+    else if (goal.isDueSoon) badge = '<span class="fpdrc-badge soon">Due soon</span>';
+    return `<article class="fpdrc-item">
+      <div class="fpdrc-item-head"><div><strong>${escapeHtml_(goal.title)}</strong><p class="fpdrc-muted">${labelForPillar_(goal.pillar)} · ${capitalize_(goal.cadence)}${goal.targetDate ? ' · ' + formatDate_(goal.targetDate) : ''}</p></div>${badge}</div>
+      <div class="fpdrc-progress"><span style="width:${Number(goal.progress || 0)}%"></span></div>
+      <p><strong>${Number(goal.progress || 0)}%</strong>${goal.checkpoint ? ' · Next: ' + escapeHtml_(goal.checkpoint) : ''}</p>
+      <div class="fpdrc-actions"><button type="button" class="fpdrc-btn small" data-action="edit-goal" data-id="${escapeAttr_(goal.id)}">Edit</button><button type="button" class="fpdrc-btn small danger" data-action="delete-goal" data-id="${escapeAttr_(goal.id)}">Delete</button></div>
+    </article>`;
+  }
+
+  function reviewCard_(review) {
+    const average = averageRating_(review.ratings);
+    return `<article class="fpdrc-item">
+      <div class="fpdrc-item-head"><div><strong>${escapeHtml_(review.periodLabel)}</strong><p class="fpdrc-muted">${capitalize_(review.periodType)} review · ${formatDate_(review.reviewDate)}</p></div><span class="fpdrc-badge">${average.toFixed(1)} / 5</span></div>
+      ${review.nextSteps ? `<p><strong>Next steps:</strong> ${escapeHtml_(review.nextSteps)}</p>` : ''}
+      <div class="fpdrc-actions"><button type="button" class="fpdrc-btn small" data-action="edit-review" data-id="${escapeAttr_(review.id)}">Edit</button><button type="button" class="fpdrc-btn small primary" data-action="pdf-review" data-id="${escapeAttr_(review.id)}" ${workspaceConnected_() ? '' : 'disabled aria-disabled="true" title="Connect the FamilyPD Workspace before creating a PDF."'}>Create PDF</button><button type="button" class="fpdrc-btn small danger" data-action="delete-review" data-id="${escapeAttr_(review.id)}">Delete</button></div>
+    </article>`;
+  }
+
+  function fileCard_(file) {
+    return `<article class="fpdrc-item"><div class="fpdrc-item-head"><div><strong>${escapeHtml_(file.name)}</strong><p class="fpdrc-muted">${capitalize_(file.category)} · Updated ${formatDateTime_(file.modifiedAt)}</p></div>${file.editable ? '<span class="fpdrc-badge">Editable</span>' : '<span class="fpdrc-badge">File</span>'}</div><div class="fpdrc-actions"><a class="fpdrc-btn small fpdrc-link" href="${escapeAttr_(file.url)}" target="_blank" rel="noopener">Open</a></div></article>`;
+  }
+
+  function statCard_(label, value) {
+    return `<article class="fpdrc-card fpdrc-stat"><span class="fpdrc-muted">${escapeHtml_(label)}</span><strong>${escapeHtml_(value)}</strong></article>`;
+  }
+
+  function ratingFields_() {
+    return (state.data.options.pillars || []).map(function (pillar) {
+      return `<div class="fpdrc-field"><label for="fpdrcRating_${escapeAttr_(pillar.key)}">${escapeHtml_(pillar.label)}</label><select id="fpdrcRating_${escapeAttr_(pillar.key)}"><option value="1">1 - Focus needed</option><option value="2">2 - Improving</option><option value="3" selected>3 - Stable</option><option value="4">4 - Strong</option><option value="5">5 - Excellent</option></select></div>`;
+    }).join('');
+  }
+
+  function optionList_(items, valueKey, labelKey) {
+    return (items || []).map(function (item) {
+      return `<option value="${escapeAttr_(item[valueKey])}">${escapeHtml_(item[labelKey])}</option>`;
+    }).join('');
+  }
+
+  function averageRating_(ratings) {
+    const values = Object.keys(ratings || {}).map(function (key) { return Number(ratings[key] || 0); }).filter(Boolean);
+    return values.length ? values.reduce(function (sum, value) { return sum + value; }, 0) / values.length : 0;
+  }
+
+  function labelForPillar_(key) {
+    const item = (state.data.options.pillars || []).find(function (pillar) { return pillar.key === key; });
+    return item ? escapeHtml_(item.label) : capitalize_(key);
+  }
+
+  function setBusy_(busy) {
+    state.busy = busy;
+    const loading = document.getElementById('fpdrcLoading');
+    if (busy && !state.data) loading.hidden = false;
+    document.querySelectorAll('#fpdrcShell button').forEach(function (button) {
+      if (button.id === 'fpdrcClose') return;
+      if (busy) {
+        button.dataset.fpdrcBusyDisabled = button.disabled ? 'preserve' : 'restore';
+        button.disabled = true;
+      } else if (button.dataset.fpdrcBusyDisabled === 'restore') {
+        button.disabled = false;
+        delete button.dataset.fpdrcBusyDisabled;
+      } else if (button.dataset.fpdrcBusyDisabled === 'preserve') {
+        delete button.dataset.fpdrcBusyDisabled;
+      }
+    });
+  }
+
+  function server_(functionName) {
+    const args = Array.prototype.slice.call(arguments, 1);
+    return new Promise(function (resolve, reject) {
+      let runner = google.script.run
+        .withSuccessHandler(resolve)
+        .withFailureHandler(function (error) {
+          reject(new Error(error && error.message ? error.message : String(error)));
+        });
+      runner[functionName](...args);
+    });
+  }
+
+  function toast_(message, isError) {
+    const toast = document.getElementById('fpdrcToast');
+    toast.textContent = message;
+    toast.classList.toggle('error', Boolean(isError));
+    toast.setAttribute('role', isError ? 'alert' : 'status');
+    toast.setAttribute('aria-live', isError ? 'assertive' : 'polite');
+    toast.classList.add('show');
+    clearTimeout(toast.timer);
+    toast.timer = setTimeout(function () { toast.classList.remove('show'); }, 4200);
+  }
+
+  function showMessage_(message, isError, focusMessage) {
+    const region = document.getElementById('fpdrcMessage');
+    region.textContent = String(message || '');
+    region.classList.toggle('error', Boolean(isError));
+    region.setAttribute('role', isError ? 'alert' : 'status');
+    region.setAttribute('aria-live', isError ? 'assertive' : 'polite');
+    region.hidden = !message;
+    if (message && focusMessage) region.focus();
+  }
+
+  function clearMessage_() {
+    showMessage_('', false, false);
+  }
+
+  function workspaceConnected_() {
+    return Boolean(state.data && state.data.workspace && state.data.workspace.connected);
+  }
+
+  function workspaceNotice_() {
+    const workspace = state.data && state.data.workspace || {};
+    if (workspace.connected) return '';
+    return `<div class="fpdrc-notice error" role="note"><strong>Drive files are unavailable.</strong> ${escapeHtml_(workspace.message || 'Open Workspace Setup to connect the FamilyPD Workspace.')} Goals and reviews can still be saved. Only file lists and PDF generation are disabled. <button type="button" class="fpdrc-btn small" id="fpdrcOpenWorkspaceFromOverview">Open Workspace Setup</button></div>`;
+  }
+
+  function openWorkspaceSetup_() {
+    close_();
+    const candidates = Array.prototype.slice.call(document.querySelectorAll('button, a, [role="button"]'));
+    const target = candidates.find(function (element) {
+      if (element.closest('#fpdrcShell, #fpfShell')) return false;
+      const text = String(element.textContent || '').trim().toLowerCase();
+      const view = String(element.getAttribute('data-view') || element.getAttribute('data-page') || '').toLowerCase();
+      return text === 'workspace setup' || text === 'google workspace' || text === 'workspace' || /workspace/.test(view);
+    });
+    if (target) {
+      target.click();
+      target.focus();
+    } else {
+      toast_('Open Workspace Setup from the main menu.', true);
+    }
+  }
+
+  function bindWorkspaceButtons_() {
+    const overview = document.getElementById('fpdrcOpenWorkspaceFromOverview');
+    if (overview) overview.addEventListener('click', openWorkspaceSetup_);
+  }
+
+  function value_(id) { return document.getElementById(id).value.trim(); }
+  function setValue_(id, value) { document.getElementById(id).value = value === null || value === undefined ? '' : value; }
+  function capitalize_(value) { const text = String(value || ''); return text ? text.charAt(0).toUpperCase() + text.slice(1) : ''; }
+
+  function formatDate_(value) {
+    const match = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+    return match ? match[2] + '/' + match[3] + '/' + match[1] : escapeHtml_(value || '');
+  }
+
+  function formatDateTime_(value) {
+    if (!value) return '';
+    const date = new Date(value);
+    return isNaN(date.getTime()) ? escapeHtml_(value) : date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  }
+
+  function escapeHtml_(value) {
+    return String(value === null || value === undefined ? '' : value)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+  }
+
+  function escapeAttr_(value) { return escapeHtml_(value).replace(/`/g, '&#096;'); }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+}());
+</script>
