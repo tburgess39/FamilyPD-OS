@@ -27,10 +27,10 @@
     <div id="app" class="app-shell hidden">
       <header class="topbar">
         <a class="brand" href="#" onclick="return false;">
-          <?!= include('BrandAssets'); ?>
+          <span class="brand-mark">FPD</span>
           <span>
-            <strong>FamilyPD OS</strong>
-            <small id="brandSubtitle">Connected to Google Drive</small>
+            <strong>FamilyPD</strong>
+            <small id="brandSubtitle">Privacy-First Workspace</small>
           </span>
         </a>
 
@@ -54,8 +54,6 @@
           <button id="switchGoogleAccountButton" class="topbar-tool-button account-switch-button" type="button" title="Sign out of Google and reopen FamilyPD OS with another account">
             ⇄ <span id="switchGoogleAccountButtonText">Switch Google account</span>
           </button>
-          <a id="donateButton" class="donate-button" href="https://www.zeffy.com/en-US/donation-form/fuel-a-familys-future" target="_blank" rel="noopener noreferrer">❤ <span>Donate</span></a>
-          <a class="admin-contact" href="mailto:admin@familypd.org" title="Contact FamilyPD">admin@familypd.org</a>
           <button id="securityBannerButton" class="security-banner-button">
             <span class="security-dot"></span>
             <span id="securityBannerText">Checking site authenticity…</span>
@@ -108,15 +106,27 @@
             </div>
           </section>
 
-          <h2 class="section-title" id="roleChoiceTitle">Create your FamilyPD workspace</h2>
+          <h2 class="section-title" id="roleChoiceTitle">How will this workspace be used?</h2>
 
-          <div class="role-grid single-workspace-choice">
+          <div class="role-grid">
             <button class="role-card" data-role="HOUSEHOLD_LEAD">
               <span class="role-icon">🏠</span>
               <span>
-                <strong id="leadRoleTitle">Create My FamilyPD Workspace</strong>
+                <strong id="leadRoleTitle">Set Up and Manage a Household</strong>
                 <small id="leadRoleText">
-                  Create your own private FamilyPD workspace. Share only the profiles, goals, projects, meetings, and resources you choose.
+                  Organize shared FamilyPD identity, meetings, goals, learning,
+                  policies, safety planning, and update packs.
+                </small>
+              </span>
+            </button>
+
+            <button class="role-card" data-role="FAMILY_MEMBER">
+              <span class="role-icon">👤</span>
+              <span>
+                <strong id="memberRoleTitle">Join as a Family Member</strong>
+                <small id="memberRoleText">
+                  Review shared household information and manage personal
+                  goals, learning, meeting preparation, and selected progress.
                 </small>
               </span>
             </button>
@@ -124,7 +134,7 @@
 
           <section id="buildPanel" class="form-card hidden">
             <div>
-              <span class="eyebrow" id="readyToBuildText">READY TO CREATE</span>
+              <span class="eyebrow" id="readyToBuildText">READY TO BUILD</span>
               <h2 id="selectedRoleTitle">FamilyPD workspace</h2>
               <p id="selectedRoleDescription"></p>
             </div>
@@ -142,7 +152,7 @@
             <div class="button-row">
               <button class="text-button" id="changeRoleButton">Change role</button>
               <button class="primary-button" id="buildButton" disabled>
-                Create My FamilyPD Workspace
+                Build My FamilyPD Workspace
               </button>
             </div>
           </section>
@@ -202,9 +212,6 @@
               <button class="nav-item" data-panel="updatePanel">
                 <span>↔</span> <span id="sharingNavText">Family Sharing</span>
               </button>
-              <a class="nav-item website-nav-link" href="https://familypd.org" target="_blank" rel="noopener noreferrer" aria-label="Open the FamilyPD website in a new tab">
-                <span>🌐</span> <span id="websiteNavText">FamilyPD Website</span>
-              </a>
               <button class="nav-item" data-panel="helpPanel">
                 <span>?</span> <span id="helpNavText">Help & Tutorials</span>
               </button>
@@ -273,27 +280,6 @@
                   <button class="primary-button" id="goToIdentityButton">Open Identity</button>
                 </div>
 
-
-
-                <section id="dashboardIdentityCard" class="dashboard-identity-card">
-                  <div class="section-heading-row">
-                    <div>
-                      <span class="eyebrow">YOUR HOUSEHOLD FOUNDATION</span>
-                      <h3 id="dashboardIdentityName">My Household</h3>
-                      <p id="dashboardIdentityPublishNotice" class="identity-publish-notice">Your Family Profile has not been published yet.</p>
-                    </div>
-                    <button id="dashboardOpenIdentityButton" class="secondary-button" type="button">Open Family Profile</button>
-                  </div>
-                  <div class="dashboard-identity-grid">
-                    <article><span>Mission</span><p id="dashboardIdentityMission">Add a mission to keep your household focused.</p></article>
-                    <article><span>Vision</span><p id="dashboardIdentityVision">Add a vision to describe what your household is building.</p></article>
-                    <article><span>Motto</span><p id="dashboardIdentityMotto">Add a short reminder your household can remember.</p></article>
-                  </div>
-                  <div class="dashboard-identity-reminders">
-                    <div><strong>Values</strong><div id="dashboardIdentityValues" class="identity-chip-list"><span class="identity-chip muted">Not selected yet</span></div></div>
-                    <div><strong>Commitments</strong><ul id="dashboardIdentityCommitments"><li>Choose commitments your household will practice.</li></ul></div>
-                  </div>
-                </section>
 
                 <section id="dashboardUpcomingMeetingsCard" class="dashboard-upcoming-card">
                   <div class="section-heading-row">
@@ -420,9 +406,9 @@
                 <section class="guided-flow-shell identity-guided-flow">
                   <div class="guided-flow-summary">
                     <div>
-                      <span class="eyebrow" id="identityGuideEyebrow">CREATE, REVIEW, AND SAVE</span>
-                      <strong id="identityGuideStatus">Choose a starting profile or answer the basic questions below.</strong>
-                      <p id="identityGuideInstruction">Your selections stay on this page. Generate an editable profile, review it, then save or publish when ready.</p>
+                      <span class="eyebrow" id="identityGuideEyebrow">ONE SECTION AT A TIME</span>
+                      <strong id="identityGuideStatus">Step 1 of 7 · Start here</strong>
+                      <p id="identityGuideInstruction">Begin with the Guided Builder. Choose simple answers and create editable mission, vision, and motto ideas.</p>
                     </div>
                     <div class="guided-flow-controls">
                       <button id="identityPreviousStepButton" class="secondary-button compact-button" type="button">Previous</button>
@@ -441,37 +427,66 @@
                 </section>
 
                 <div id="leadIdentityView" class="hidden">
+                  <section id="identityWelcomeSection" class="identity-welcome-card" aria-labelledby="identityWelcomeTitle">
+                    <div class="identity-welcome-copy">
+                      <span class="eyebrow">WELCOME HOME</span>
+                      <h3 id="identityWelcomeTitle">Build the foundation your household will stand on.</h3>
+                      <p>Your Household Identity turns the FamilyPD framework into words your family can use: who you are, what you believe, how you treat one another, and what you are building together.</p>
+                    </div>
+                    <div class="identity-path-grid" aria-label="Choose how to begin">
+                      <button class="identity-path-card" type="button" data-identity-path="foundation">
+                        <span class="identity-path-icon" aria-hidden="true">🏠</span>
+                        <strong>Start with a foundation</strong>
+                        <small>Choose a ready-made household profile, then edit every word.</small>
+                      </button>
+                      <button class="identity-path-card" type="button" data-identity-path="guided">
+                        <span class="identity-path-icon" aria-hidden="true">✨</span>
+                        <strong>Customize with guided ideas</strong>
+                        <small>Answer simple questions and create editable mission, vision, and motto ideas.</small>
+                      </button>
+                      <button class="identity-path-card" type="button" data-identity-path="blank">
+                        <span class="identity-path-icon" aria-hidden="true">✍️</span>
+                        <strong>Start with a blank template</strong>
+                        <small>Write your household identity in your own words from the beginning.</small>
+                      </button>
+                    </div>
+                    <p class="identity-welcome-note">Nothing is final until you review and publish it. Your draft stays editable.</p>
+                  </section>
                   <section id="identityStarterProfilesSection" class="edit-card identity-starter-card">
                     <div class="section-heading-row">
                       <div>
-                        <span class="eyebrow">CHOOSE ONE WAY TO BEGIN</span>
-                        <h3>Create your Household Identity</h3>
-                        <p>Choose one simple starting point. Nothing is stored in Google Drive until you publish.</p>
+                        <span class="eyebrow">START WITH A STRONG FOUNDATION</span>
+                        <h3>Choose a Family Identity starting profile</h3>
+                        <p>Pick a profile that feels closest to your household. FamilyPD will fill in editable mission, vision, motto, values, and commitments. Nothing is final until you review and publish it.</p>
                       </div>
                     </div>
-                    <label class="field full identity-name-first">
-                      <span>Household name <strong aria-hidden="true">*</strong></span>
-                      <input id="identityStartHouseholdName" maxlength="100" value="Our Household" placeholder="Example: Our Household" spellcheck="true">
-                      <small>A household name is the only item required to generate a profile.</small>
-                    </label>
-                    <div class="identity-start-options" role="group" aria-label="Ways to create a Family Profile">
-                      <button id="randomIdentityProfileButton" class="identity-start-option selected" type="button" aria-pressed="true">
-                        <strong>1. Foundational Family Identity</strong>
-                        <span>Recommended. General household basics are already selected. Click Generate Profile, then edit anything you want.</span>
-                      </button>
-                      <button id="editableIdeasIdentityButton" class="identity-start-option" type="button">
-                        <strong>2. Editable Options</strong>
-                        <span>Answer a few questions, then choose mission, vision, and motto ideas.</span>
-                      </button>
-                      <button id="blankIdentityProfileButton" class="identity-start-option" type="button">
-                        <strong>3. Blank Template</strong>
-                        <span>Open a blank profile and write everything yourself.</span>
-                      </button>
+                    <div class="form-grid">
+                      <label class="field">
+                        <span>Starting profile</span>
+                        <select id="identityStarterProfileSelect">
+                          <option value="foundation">Foundation Household</option>
+                          <option value="academic">Learning & Academic Growth</option>
+                          <option value="wellness">Health & Wellness</option>
+                          <option value="faith">Faith-Centered</option>
+                          <option value="career">Career & Financial Growth</option>
+                          <option value="creative">Creative & Entrepreneurial</option>
+                          <option value="service">Service & Community</option>
+                          <option value="stem">STEM & Innovation</option>
+                          <option value="single">Single-Parent Strong</option>
+                          <option value="blended">Blended Family</option>
+                          <option value="grandparent">Grandparent-Led Household</option>
+                          <option value="newhousehold">Newly Formed Household</option>
+                          <option value="legacy">Family Legacy & Traditions</option>
+                          <option value="custom">Start from scratch</option>
+                        </select>
+                        <small>Choose a helpful starting point. You can change every word.</small>
+                      </label>
+                      <div class="field identity-starter-actions">
+                        <span>Ready?</span>
+                        <button id="applyIdentityStarterProfileButton" class="primary-button" type="button">Create Profile</button>
+                        <small>Creates an editable profile in seconds. Review it, save it, and publish it before sharing.</small>
+                      </div>
                     </div>
-                    <div class="button-row right identity-generate-row">
-                      <button id="generateSelectedIdentityProfileButton" class="primary-button" type="button">Generate Foundational Profile</button>
-                    </div>
-                    <div id="identityIncompleteNotice" class="result-box warning-box hidden" aria-live="polite"></div>
                     <div id="identityStarterProfilePreview" class="result-box hidden" aria-live="polite"></div>
                   </section>
                   <section id="identityExamplesSection" class="edit-card identity-examples-card">
@@ -549,7 +564,7 @@
                       </label>
                     </div>
                     <div class="button-row right">
-                      <button id="generateIdentityButton" class="primary-button" type="button">Generate My Editable Profile Ideas</button>
+                      <button id="generateIdentityButton" class="primary-button" type="button">Create Editable Ideas</button>
                     </div>
                     <div id="generatedIdentityResults" class="generated-results hidden">
                       <div class="generated-column">
@@ -561,10 +576,7 @@
                         <div id="generatedMissionOptions"></div>
                       </div>
                       <div class="generated-column">
-                        <div class="generated-heading-row">
-                          <h4 id="generatedMottoHeading">Motto ideas</h4>
-                          <button id="refreshMottoIdeasButton" class="text-button compact-button" type="button">Show different mottos</button>
-                        </div>
+                        <h4 id="generatedMottoHeading">Motto ideas</h4>
                         <div id="generatedMottoOptions"></div>
                       </div>
                     </div>
@@ -577,7 +589,6 @@
                         <p>Draft privately, then publish the version intended for household members.</p>
                       </div>
                       <span id="draftStatusBadge" class="draft-badge">Draft</span>
-                      <span id="identityUnsavedBadge" class="draft-badge warning-badge hidden">Unsaved changes</span>
                     </div>
 
                     <div class="prompt-box">
@@ -611,7 +622,7 @@
                     </div>
 
                     <div class="button-row right">
-                      <button id="saveIdentityButton" class="primary-button" type="button">Save Draft in This Browser</button>
+                      <button id="saveIdentityButton" class="primary-button">Save Identity Draft</button>
                     </div>
                   </section>
 
@@ -625,7 +636,7 @@
                       </p>
                     </div>
                     <div class="symbol-editor">
-                      <div><div id="symbolPreview" class="symbol-preview">FPD</div><div id="symbolUploadStatus" class="symbol-upload-status" aria-live="polite">No logo uploaded yet.</div></div>
+                      <div id="symbolPreview" class="symbol-preview">FPD</div>
                       <div class="symbol-controls">
                         <input id="symbolFileInput" type="file" accept="image/png,image/jpeg,image/webp">
                         <label class="compact-check">
@@ -633,10 +644,10 @@
                           <span>I confirmed this is a non-sensitive symbol with no faces or private information.</span>
                         </label>
                         <div class="button-row">
-                          <button id="uploadSymbolButton" class="secondary-button" type="button">Use Logo in Draft</button>
-                          <button id="clearSymbolButton" class="text-button" type="button">Remove Logo</button>
+                          <button id="uploadSymbolButton" class="secondary-button">Save Symbol to Draft</button>
+                          <button id="clearSymbolButton" class="text-button">Remove from Draft</button>
                         </div>
-                        <small>PNG, JPEG, or WebP · 2 MB maximum</small>
+                        <small>PNG, JPEG, or WebP · 1 MB maximum</small>
                       </div>
                     </div>
                   </section>
@@ -678,17 +689,19 @@
                       <span class="eyebrow">SHARE THE APPROVED VERSION</span>
                       <h3>Publish household identity</h3>
                       <p>
-                        Publishing saves the approved Household Identity and logo to your FamilyPD Google Drive workspace. The dashboard will then show the published household name, mission, vision, motto, values, and commitments as gentle reminders.
+                        Publishing copies the draft identity, values, commitments,
+                        and general role roster into the shared household record.
+                        Update Packs and PDFs use only the published version.
                       </p>
                     </div>
                     <div class="button-row">
-                      <button id="publishIdentityButton" class="primary-button" type="button" disabled>Publish Household Identity</button>
-                      <button id="generatePdfButton" class="secondary-button" type="button">Create PDF from Published Profile</button>
+                      <button id="generatePdfButton" class="secondary-button">Generate Published PDF</button>
+                      <button id="publishIdentityButton" class="primary-button">Publish New Version</button>
                     </div>
                     <div id="pdfResult" class="result-box hidden"></div>
                   </section>
 
-                  <section id="identityHistorySection" class="edit-card hidden" aria-hidden="true">
+                  <section id="identityHistorySection" class="edit-card">
                     <div class="section-heading-row">
                       <div>
                         <h3>Version history</h3>

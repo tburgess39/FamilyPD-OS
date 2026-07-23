@@ -1,0 +1,22 @@
+FamilyPD OS Household Builder v7 — GitHub Update
+
+Changed files only:
+- Index.html
+- Scripts.html
+- Styles.html
+
+What this update adds:
+- A real “Welcome Home” Household Identity entry screen.
+- Three clear paths: foundation profile, guided ideas, or blank template.
+- Button behavior that moves users to the correct existing builder section.
+- Responsive styling for desktop and mobile.
+
+Install:
+1. Confirm branch: git branch --show-current
+2. Extract this ZIP into ~/FamilyPD-OS and replace matching files.
+3. Verify: git diff --stat
+4. Verify marker: grep -n "Welcome Home" Index.html
+5. Review: git diff -- Index.html Scripts.html Styles.html
+6. Commit and push only after review.
+
+Do not run clasp push until Git shows the expected changes and the diff has been reviewed.

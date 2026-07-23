@@ -876,9 +876,9 @@
     'Symbolic household image': 'Imagen simbólica del hogar',
     'Add a logo, icon, drawing, or other non-personal symbol. Do not upload photographs of people, identification, addresses, documents, or private information.': 'Agregue un logotipo, icono, dibujo u otro símbolo no personal. No cargue fotos de personas, identificaciones, direcciones, documentos ni información privada.',
     'I confirmed this is a non-sensitive symbol with no faces or private information.': 'Confirmo que es un símbolo no sensible, sin rostros ni información privada.',
-    'Save Logo to Draft': 'Guardar símbolo en el borrador',
+    'Save Symbol to Draft': 'Guardar símbolo en el borrador',
     'Remove from Draft': 'Quitar del borrador',
-    'PNG, JPEG, or WebP · 2 MB maximum': 'PNG, JPEG o WebP · máximo 2 MB',
+    'PNG, JPEG, or WebP · 1 MB maximum': 'PNG, JPEG o WebP · máximo 1 MB',
     'Household commitments': 'Compromisos del hogar',
     'Write clear agreements the household will practice and revisit.': 'Escriba acuerdos claros que el hogar practicará y revisará.',
     '+ Add Commitment': '+ Agregar compromiso',
@@ -932,7 +932,7 @@
     'Family Sharing Files': 'Archivos para compartir con la familia',
     'Signed CSV files transfer only published, shared FamilyPD information. Personal goals, reflections, suggestions, and files remain separate.': 'Los archivos CSV firmados transfieren solo información publicada y compartida. Las metas personales, reflexiones, sugerencias y archivos permanecen separados.',
     'Create a verified Family Sharing File': 'Crear un archivo verificado para compartir',
-    'The file opens in Google Sheets or Excel. A published symbolic image is included only when it meets the 2 MB privacy-first limit.': 'El archivo se abre en Google Sheets o Excel. La imagen simbólica se incluye solo si cumple el límite de 1 MB.',
+    'The file opens in Google Sheets or Excel. A published symbolic image is included only when it meets the 1 MB privacy-first limit.': 'El archivo se abre en Google Sheets o Excel. La imagen simbólica se incluye solo si cumple el límite de 1 MB.',
     'Create Update Pack': 'Crear archivo para compartir',
     'Import a Family Sharing File': 'Importar un archivo para compartir',
     'Select the CSV file from this device. FamilyPD does not browse Google Drive. The signature is verified before anything is applied.': 'Seleccione el archivo CSV de este dispositivo. FamilyPD no explora Google Drive. Se verifica la firma antes de aplicar información.',
@@ -1352,6 +1352,11 @@
         activateIdentityGuideStep(button.dataset.identityStep, true);
       });
     });
+    document.querySelectorAll('[data-identity-path]').forEach(function(button) {
+      button.addEventListener('click', function() {
+        beginIdentityPath(button.dataset.identityPath);
+      });
+    });
     document.getElementById('identityPreviousStepButton').addEventListener(
       'click',
       function() { moveIdentityGuideStep(-1); }
@@ -1441,8 +1446,8 @@
     const es = state.language === 'es';
     document.getElementById('securityBannerText').textContent =
       isProduction
-        ? (es ? 'Conectado a Google Drive — ' : 'Connected to Google Drive — ') + hostname
-        : (es ? 'Conectado a Google Drive — alojamiento seguro de Google' : 'Connected to Google Drive — securely hosted by Google');
+        ? (es ? 'Sitio oficial de FamilyPD — ' : 'Official FamilyPD site — ') + hostname
+        : (es ? 'Prototipo autorizado de FamilyPD — alojado por Google' : 'Authorized FamilyPD prototype — Google hosted');
 
     document.getElementById('securityModeNotice').innerHTML = isProduction
       ? (es
@@ -1531,12 +1536,12 @@
 
   function selectRole(role) {
     state.selectedRole = role;
-    const isLead = true;
+    const isLead = role === 'HOUSEHOLD_LEAD';
 
     const es = state.language === 'es';
     document.getElementById('selectedRoleTitle').textContent = isLead
-      ? (es ? 'Mi espacio de FamilyPD' : 'My FamilyPD workspace')
-      : (es ? 'Mi espacio de FamilyPD' : 'My FamilyPD workspace');
+      ? (es ? 'Espacio de Líder del hogar' : 'Household Lead workspace')
+      : (es ? 'Espacio de Miembro de la familia' : 'Family Member workspace');
     document.getElementById('selectedRoleDescription').textContent = isLead
       ? (es
           ? 'Este espacio administra la planificación compartida de FamilyPD y crea paquetes de actualización con protección de privacidad.'
@@ -2192,26 +2197,40 @@
   }
 
   async function handleLanguageChange(event) {
-    const nextLanguage = event && event.target && event.target.value === 'es' ? 'es' : 'en';
+    const nextLanguage = event && event.target && event.target.value === 'es'
+      ? 'es'
+      : 'en';
     if (state.languageRefreshInProgress) return;
+
     state.languageRefreshInProgress = true;
-    try {
-      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-      state.language = nextLanguage;
-      localStorage.setItem('FPD_LANGUAGE', state.language);
-      document.documentElement.lang = state.language;
-      applyInitialLanguage();
-      refreshWorkspaceFrameLanguage();
-      if (typeof applyAccessibilitySupportLanguage === 'function') applyAccessibilitySupportLanguage();
-      if (state.workspace) await saveCurrentInterfacePreferences();
-      if (state.workspace && typeof loadIdentityWorkspace === 'function') await loadIdentityWorkspace();
-      toast(state.language === 'es' ? 'Idioma actualizado.' : 'Language updated.');
-    } catch (error) {
-      console.warn('FamilyPD could not finish the language update:', error);
-      toast(error.message || String(error), true);
-    } finally {
-      state.languageRefreshInProgress = false;
+    state.language = nextLanguage;
+    localStorage.setItem('FPD_LANGUAGE', state.language);
+    document.documentElement.lang = state.language;
+
+    const activePanel = document.querySelector('.workspace-panel.active');
+    if (activePanel && activePanel.id) {
+      sessionStorage.setItem('FPD_REOPEN_PANEL', activePanel.id);
     }
+
+    // Show the requested language immediately, then perform one controlled
+    // reload. The reload rebuilds every dynamic card and dropdown from a clean
+    // language state, preventing English and Spanish fragments from mixing.
+    applyInitialLanguage();
+    refreshWorkspaceFrameLanguage();
+    if (typeof applyAccessibilitySupportLanguage === 'function') {
+      applyAccessibilitySupportLanguage();
+    }
+
+    try {
+      if (state.workspace) await saveCurrentInterfacePreferences();
+    } catch (error) {
+      console.warn('FamilyPD could not save the language preference:', error);
+    }
+
+    toast(ui().languageRefreshing);
+    window.setTimeout(function() {
+      window.location.reload();
+    }, 450);
   }
 
 
@@ -3119,8 +3138,6 @@
       target.innerHTML = result.available
         ? '<img src="' + escapeAttribute(result.dataUrl) + '" alt="Household symbol">'
         : 'FPD';
-      const symbolStatus = document.getElementById('symbolUploadStatus');
-      if (symbolStatus) symbolStatus.textContent = result.available ? 'Logo uploaded successfully and saved to this draft.' : 'No logo uploaded yet.';
     } catch (error) {
       // A missing or removed symbol should not block the identity screen.
     }
@@ -3137,8 +3154,8 @@
       return;
     }
 
-    if (file.size > 2 * 1024 * 1024) {
-      toast('The symbolic image must be 2 MB or smaller.', true);
+    if (file.size > 1024 * 1024) {
+      toast('The symbolic image must be 1 MB or smaller.', true);
       event.target.value = '';
       return;
     }
@@ -3148,8 +3165,6 @@
     reader.onload = function() {
       const preview = document.getElementById('symbolPreview');
       preview.innerHTML = '<img src="' + escapeAttribute(String(reader.result || '')) + '" alt="Selected symbolic image preview">';
-      const status = document.getElementById('symbolUploadStatus');
-      if (status) status.textContent = 'Preview ready. Click Save Logo to finish uploading.';
     };
     reader.readAsDataURL(file);
   }
@@ -3165,7 +3180,7 @@
     }
 
     const button = document.getElementById('uploadSymbolButton');
-    setBusy(button, true, 'Saving logo…');
+    setBusy(button, true, 'Saving symbol…');
 
     try {
       const base64 = await fileToBase64(state.symbolFile);
@@ -3175,26 +3190,17 @@
         base64: base64,
         privacyConfirmed: true
       });
-      const savedSymbol = result && result.symbol ? result.symbol : result;
-      const savedDataUrl = savedSymbol && savedSymbol.dataUrl
-        ? savedSymbol.dataUrl
-        : (savedSymbol && savedSymbol.data
-          ? 'data:' + (savedSymbol.mimeType || state.symbolFile.type || 'image/png') + ';base64,' + savedSymbol.data
-          : '');
-      if (!savedDataUrl) throw new Error('The logo was saved, but FamilyPD could not display the preview. Refresh the Family Profile and try again.');
       document.getElementById('symbolPreview').innerHTML =
-        '<img src="' + escapeAttribute(savedDataUrl) + '" alt="Household symbol">';
+        '<img src="' + escapeAttribute(result.dataUrl) + '" alt="Household symbol">';
       state.symbolFile = null;
       document.getElementById('symbolFileInput').value = '';
       document.getElementById('symbolPrivacyCheck').checked = false;
-      const status = document.getElementById('symbolUploadStatus');
-      if (status) status.textContent = 'Logo uploaded successfully. You can see the saved logo above.';
-      toast('Logo uploaded successfully.');
+      toast(result.message);
       await loadIdentityWorkspace();
     } catch (error) {
       toast(error.message || String(error), true);
     } finally {
-      setBusy(button, false, 'Save Logo to Draft');
+      setBusy(button, false, 'Save Symbol to Draft');
     }
   }
 
@@ -3207,8 +3213,6 @@
     try {
       const result = await callServer('clearHouseholdSymbol');
       document.getElementById('symbolPreview').textContent = 'FPD';
-      const status = document.getElementById('symbolUploadStatus');
-      if (status) status.textContent = 'Logo removed from this draft.';
       toast(result.message);
       await loadIdentityWorkspace();
     } catch (error) {
@@ -3353,12 +3357,11 @@
 
     try {
       const result = await callServer('generateIdentityPdf');
-      const downloadable = result && (result.base64Content || result.base64 || result.data || result.content);
-      if (downloadable) downloadBase64File(result.filename, result.mimeType, downloadable);
+      downloadBase64File(result.filename, result.mimeType, result.base64Content);
       const box = document.getElementById('pdfResult');
-      box.innerHTML = '<strong>' + escapeHtml(result.message || 'Published profile PDF created.') + '</strong><br>' +
-        (result.driveFileUrl ? '<a href="' + escapeAttribute(result.driveFileUrl) + '" target="_blank">Open the copy saved in Drive</a><br>' : '') +
-        '<span>' + (downloadable ? 'A local PDF copy was also downloaded.' : 'The PDF was saved to your FamilyPD Drive folder.') + '</span>';
+      box.innerHTML = '<strong>' + escapeHtml(result.message) + '</strong><br>' +
+        '<a href="' + escapeAttribute(result.driveFileUrl) + '" target="_blank">Open the copy saved in Drive</a><br>' +
+        '<span>A local PDF copy was also downloaded.</span>';
       show('pdfResult');
       toast('Published identity PDF generated.');
     } catch (error) {
@@ -4240,7 +4243,7 @@
 
   function identityGuideGroups_() {
     return {
-      start: ['guidedIdentityBuilder'],
+      start: ['identityWelcomeSection', 'identityStarterProfilesSection', 'guidedIdentityBuilder'],
       examples: ['identityExamplesSection'],
       statements: ['identityStatementsSection', 'identitySymbolSection'],
       values: ['identityValuesSection', 'identityCommitmentsSection'],
@@ -4270,26 +4273,63 @@
 
 
   function activateIdentityGuideStep(step, scroll) {
-    if (!state.workspace) return;
-    state.identityGuideStep = 'start';
+    if (!state.workspace || state.workspace.role !== 'HOUSEHOLD_LEAD') return;
+    if (IDENTITY_GUIDE_STEPS.indexOf(step) < 0) step = 'start';
+    state.identityGuideStep = step;
+
     const groups = identityGuideGroups_();
+    const allIds = [];
     Object.keys(groups).forEach(function(key) {
       groups[key].forEach(function(id) {
-        const element = document.getElementById(id);
-        if (element) element.classList.remove('guided-section-hidden');
+        if (allIds.indexOf(id) < 0) allIds.push(id);
       });
     });
-    const nav = document.getElementById('identitySectionNav');
-    if (nav) nav.classList.add('hidden');
-    const previous = document.getElementById('identityPreviousStepButton');
-    const next = document.getElementById('identityNextStepButton');
-    if (previous) previous.classList.add('hidden');
-    if (next) next.classList.add('hidden');
-    setText('identityGuideStatus', state.language === 'es' ? 'Crear, revisar y guardar' : 'Create, review, and save');
-    setText('identityGuideInstruction', state.language === 'es'
-      ? 'Sus selecciones permanecen en esta página. Genere un perfil editable y guárdelo cuando esté listo.'
-      : 'Your selections stay on this page. Generate an editable profile and save it when ready.');
+    allIds.forEach(function(id) {
+      const element = document.getElementById(id);
+      if (element) element.classList.add('guided-section-hidden');
+    });
+    (groups[step] || []).forEach(function(id) {
+      const element = document.getElementById(id);
+      if (element) element.classList.remove('guided-section-hidden');
+    });
+
+    document.querySelectorAll('[data-identity-step]').forEach(function(button) {
+      button.classList.toggle('active', button.dataset.identityStep === step);
+    });
+
+    const index = IDENTITY_GUIDE_STEPS.indexOf(step);
+    const text = identityGuideText_();
+    setText(
+      'identityGuideStatus',
+      (state.language === 'es' ? 'Paso ' : 'Step ') +
+        (index + 1) + (state.language === 'es' ? ' de ' : ' of ') +
+        IDENTITY_GUIDE_STEPS.length + ' · ' + text.labels[step]
+    );
+    setText('identityGuideInstruction', text.instructions[step]);
+    document.getElementById('identityPreviousStepButton').disabled = index === 0;
+    document.getElementById('identityNextStepButton').disabled =
+      index === IDENTITY_GUIDE_STEPS.length - 1;
+
+    if (scroll) {
+      document.getElementById('identitySectionNav').scrollIntoView({
+        behavior: 'smooth', block: 'start'
+      });
+    }
     if (typeof attachSupportToFields_ === 'function') attachSupportToFields_();
+  }
+
+
+  function beginIdentityPath(path) {
+    if (!state.workspace || state.workspace.role !== 'HOUSEHOLD_LEAD') return;
+    const targets = {
+      foundation: 'identityStarterProfilesSection',
+      guided: 'guidedIdentityBuilder',
+      blank: 'identityStatementsSection'
+    };
+    if (path === 'blank') activateIdentityGuideStep('statements', false);
+    else activateIdentityGuideStep('start', false);
+    const target = document.getElementById(targets[path] || 'guidedIdentityBuilder');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
 
@@ -4652,7 +4692,7 @@
 
 <script>
 (function(){
- window.FPD_IDENTITY_STARTERS = window.FPD_IDENTITY_STARTERS || {
+ const STARTERS={
  foundation:{label:'Our Household',vision:'A healthy, supportive, learning household where every member feels valued and prepared to grow.',mission:'We care for our health, communicate with respect, keep learning, use our resources responsibly, and work toward meaningful goals together.',motto:'Grow together. Succeed together.',values:['Health','Respect','Responsibility','Learning','Teamwork'],commitments:['We will speak to one another with respect.','We will ask for help and offer support.','We will keep learning and working toward our goals.']},
  academic:{label:'Our Learning Household',vision:'A household where curiosity, education, skills, and lifelong learning create greater choices for every generation.',mission:'We support school success, explore careers, build useful skills, and help one another learn without shame.',motto:'Keep learning. Keep growing.',values:['Education','Curiosity','Discipline','Support','Opportunity'],commitments:['We will check progress before problems become emergencies.','We will ask questions when we do not understand.','We will celebrate effort, growth, and achievement.']},
  wellness:{label:'Our Wellness Household',vision:'A peaceful household that protects physical, mental, emotional, and spiritual well-being.',mission:'We practice healthy routines, make space for feelings, seek trustworthy help, rest when needed, and care for one another.',motto:'Health first. Grace always.',values:['Health','Peace','Compassion','Safety','Balance'],commitments:['We will take mental health seriously.','We will not shame bodies, feelings, or requests for help.','We will make small healthy choices consistently.']},
@@ -4687,7 +4727,7 @@
      window.toast&&toast('Blank editable Family Profile created.');
      return;
    }
-   const p=window.FPD_IDENTITY_STARTERS[key];
+   const p=STARTERS[key];
    if(!p)return;
    if(!confirm('Create this editable Family Profile? Any unsaved mission, vision, motto, values, and commitments currently shown will be replaced.'))return;
    setv('identityLabelInput',p.label);
@@ -4748,393 +4788,5 @@
     if(ctx.sharedToken)previewIncoming(ctx.sharedToken);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
-})();
-
-
-/* FamilyPD Identity UX refinement — July 2026 v4 */
-(function () {
-  'use strict';
-  let identityDirty = false;
-  let identityInitialized = false;
-  let selectedStartMode = 'foundation';
-  let profileGenerated = false;
-  let publishedSnapshot = '';
-
-  const DEFAULT_COMMITMENTS = [
-    'We will speak to one another with respect, even when we disagree.',
-    'We will ask for help and offer support without shame.',
-    'We will take responsibility for our choices and work to repair harm.',
-    'We will keep learning and share useful knowledge with one another.',
-    'We will care for our health, our home, and our shared resources.',
-    'We will review our goals and celebrate progress together.',
-    'We will protect time for connection, rest, and meaningful traditions.',
-    'We will make important decisions with honesty and fairness.'
-  ];
-
-  function el(id) { return document.getElementById(id); }
-  function value(id) { const node = el(id); return node ? String(node.value || '').trim() : ''; }
-  function htmlEscape(v){ return String(v == null ? '' : v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
-  function snapshot() {
-    return JSON.stringify({
-      label:value('identityLabelInput'), vision:value('visionInput'), mission:value('missionInput'), motto:value('mottoInput'),
-      values:collectText('#valuesEditor input, #valuesEditor textarea'),
-      commitments:collectText('#commitmentsEditor input, #commitmentsEditor textarea')
-    });
-  }
-  function collectText(selector){ return Array.from(document.querySelectorAll(selector)).map(function(n){return String(n.value||'').trim();}).filter(Boolean); }
-  function setDirty(on) {
-    identityDirty = Boolean(on);
-    const badge = el('identityUnsavedBadge');
-    if (badge) badge.classList.toggle('hidden', !identityDirty);
-    const draft = el('draftStatusBadge');
-    if (draft) draft.textContent = identityDirty ? 'Changes not saved' : 'Draft saved';
-    updatePublishButton();
-  }
-  function updatePublishButton(){
-    const button=el('publishIdentityButton'); if(!button)return;
-    const hasGenerated=profileGenerated || Boolean(value('visionInput')||value('missionInput'));
-    const changedSincePublished=snapshot()!==publishedSnapshot;
-    button.disabled=!hasGenerated || !changedSincePublished;
-    button.title=!hasGenerated?'Generate a profile before publishing.':(!changedSincePublished?'This profile is already published. Make a change before publishing a new version.':'Publish the current Family Profile.');
-    const pdf=el('generatePdfButton'); if(pdf) pdf.disabled=!(state.identityData && state.identityData.packStatus && Number(state.identityData.packStatus.publishedVersion||0));
-  }
-  function householdName() { return value('identityStartHouseholdName') || value('identityLabelInput') || 'Our Household'; }
-  function syncHouseholdName() {
-    const name = householdName();
-    if (el('identityLabelInput')) el('identityLabelInput').value = name;
-    if (el('identityStartHouseholdName')) el('identityStartHouseholdName').value = name;
-    return name;
-  }
-  function selectMode(mode){
-    selectedStartMode=mode;
-    [['randomIdentityProfileButton','foundation'],['editableIdeasIdentityButton','ideas'],['blankIdentityProfileButton','blank']].forEach(function(pair){
-      const n=el(pair[0]); if(!n)return; const active=pair[1]===mode; n.classList.toggle('selected',active); n.setAttribute('aria-pressed',String(active));
-    });
-    const button=el('generateSelectedIdentityProfileButton'); if(button)button.textContent=mode==='blank'?'Open Blank Template':(mode==='ideas'?'Open Editable Options':'Generate Profile');
-  }
-  function starter(){ return (window.FPD_IDENTITY_STARTERS && window.FPD_IDENTITY_STARTERS.foundation) || {
-    label:'Our Household',
-    vision:'A healthy, supportive, learning household where every member feels valued and prepared to grow.',
-    mission:'We care for our health, communicate with respect, keep learning, use our resources responsibly, and work toward meaningful goals together.',
-    motto:'Grow together. Succeed together.',
-    values:['Health','Respect','Responsibility','Learning','Teamwork'],
-    commitments:DEFAULT_COMMITMENTS.slice(0,6)
-  }; }
-  function renderDefaultCommitmentChoices(){
-    const host=el('commitmentsEditor'); if(!host || el('prepopulatedCommitmentChoices'))return;
-    const box=document.createElement('div'); box.id='prepopulatedCommitmentChoices'; box.className='prepopulated-commitments';
-    box.innerHTML='<strong>Suggested commitments</strong><p>Select any commitments you want to add.</p><div class="commitment-choice-grid">'+DEFAULT_COMMITMENTS.map(function(c,i){return '<label><input type="checkbox" data-default-commitment="'+i+'"><span>'+htmlEscape(c)+'</span></label>';}).join('')+'</div><button type="button" id="addSelectedCommitmentsButton" class="secondary-button small-button">Add Selected Commitments</button>';
-    host.parentNode.insertBefore(box,host);
-    el('addSelectedCommitmentsButton').addEventListener('click',function(){
-      const chosen=Array.from(box.querySelectorAll('[data-default-commitment]:checked')).map(function(n){return DEFAULT_COMMITMENTS[Number(n.dataset.defaultCommitment)];});
-      if(!chosen.length){ if(window.toast)toast('Select at least one commitment.'); return; }
-      const existing=collectText('#commitmentsEditor input, #commitmentsEditor textarea');
-      const rows=existing.concat(chosen.filter(function(c){return existing.indexOf(c)<0;})).map(function(statement,i){return {id:'commitment-'+Date.now()+'-'+i,statement:statement,description:''};});
-      if(typeof renderCommitmentsEditor==='function')renderCommitmentsEditor(rows);
-      box.querySelectorAll('input').forEach(function(n){n.checked=false;});
-      setDirty(true);
-      if(window.toast)toast('Selected commitments were added.');
-    });
-  }
-  function applyFoundation() {
-    const name=syncHouseholdName(); const p=starter();
-    if(typeof setv==='function'){
-      setv('identityLabelInput',name); setv('visionInput',p.vision); setv('missionInput',p.mission); setv('mottoInput',p.motto);
-    } else {
-      if(el('identityLabelInput'))el('identityLabelInput').value=name;
-      if(el('visionInput'))el('visionInput').value=p.vision;
-      if(el('missionInput'))el('missionInput').value=p.mission;
-      if(el('mottoInput'))el('mottoInput').value=p.motto;
-    }
-    const vals=(p.values||[]).map(function(label,i){return {id:'starter-v-'+Date.now()+'-'+i,label:label,description:'This value guides how our household treats people, makes decisions, and works toward shared goals.'};});
-    const commitments=(p.commitments&&p.commitments.length?p.commitments:DEFAULT_COMMITMENTS.slice(0,6)).map(function(statement,i){return {id:'starter-c-'+Date.now()+'-'+i,statement:statement,description:''};});
-    if(typeof renderValuesEditor==='function')renderValuesEditor(vals);
-    if(typeof renderCommitmentsEditor==='function')renderCommitmentsEditor(commitments);
-    profileGenerated=true; setDirty(true); updatePublishButton();
-    const box=el('identityStarterProfilePreview'); if(box){box.innerHTML='<strong>Foundational Family Profile generated.</strong><br>Review the general wording below and edit it so it reflects '+htmlEscape(name)+'.';box.classList.remove('hidden');}
-    if(typeof activateIdentityGuideStep==='function')activateIdentityGuideStep('statements',true);
-    el('identityStatementsSection')?.scrollIntoView({behavior:'smooth',block:'start'});
-    if(window.toast)toast('Foundational Family Profile generated.');
-  }
-  function openEditableIdeas(){
-    syncHouseholdName();
-    const target=el('guidedIdentityBuilder'); if(target){target.classList.remove('hidden');target.scrollIntoView({behavior:'smooth',block:'start'});}
-    if(window.toast)toast('Choose the editable options, then generate your wording ideas.');
-  }
-  function startBlank(){
-    const name=syncHouseholdName();
-    if(identityDirty && !confirm('Open a blank template? Unsaved Family Profile wording will be cleared.'))return;
-    ['visionInput','missionInput','mottoInput'].forEach(function(id){if(el(id))el(id).value='';});
-    if(el('identityLabelInput'))el('identityLabelInput').value=name;
-    if(typeof renderValuesEditor==='function')renderValuesEditor([]);
-    if(typeof renderCommitmentsEditor==='function')renderCommitmentsEditor([]);
-    profileGenerated=true; setDirty(true); updatePublishButton();
-    if(typeof activateIdentityGuideStep==='function')activateIdentityGuideStep('statements',true);
-    el('identityStatementsSection')?.scrollIntoView({behavior:'smooth',block:'start'});
-    if(window.toast)toast('Blank Family Profile template opened.');
-  }
-  function generateSelected(){ if(selectedStartMode==='foundation')applyFoundation(); else if(selectedStartMode==='ideas')openEditableIdeas(); else startBlank(); }
-  function currentMissingAreas(){
-    const missing=[]; if(!value('visionInput'))missing.push('vision'); if(!value('missionInput'))missing.push('mission');
-    if(!collectText('#valuesEditor input, #valuesEditor textarea').length)missing.push('values');
-    if(!collectText('#commitmentsEditor input, #commitmentsEditor textarea').length)missing.push('commitments');
-    return missing;
-  }
-  function showIncompleteWarning(actionText){
-    const missing=currentMissingAreas(); if(!missing.length)return true;
-    return confirm('You can continue because a household name is present. These areas are not complete: '+missing.join(', ')+'.\n\nContinue to '+actionText+' anyway?');
-  }
-  function refreshMottos(){ const button=el('generateIdentityButton'); if(button)button.click(); setTimeout(function(){el('generatedMottoOptions')?.scrollIntoView({behavior:'smooth',block:'center'});},250); }
-  function renderDashboardIdentity(data){
-    if(!data)return; const pub=data.publishedVersion&&data.publishedVersion.exists?data.publishedVersion:null; const draft=data.draft||{}; const profile=pub?(pub.profile||{}):draft;
-    const name=profile.label||profile.householdLabel||'My Household';
-    if(el('dashboardIdentityName'))el('dashboardIdentityName').textContent=name;
-    if(el('dashboardIdentityMission'))el('dashboardIdentityMission').textContent=profile.mission||'Add a mission to keep your household focused.';
-    if(el('dashboardIdentityVision'))el('dashboardIdentityVision').textContent=profile.vision||'Add a vision to describe what your household is building.';
-    if(el('dashboardIdentityMotto'))el('dashboardIdentityMotto').textContent=profile.motto||'Add a short reminder your household can remember.';
-    const notice=el('dashboardIdentityPublishNotice'); if(notice){notice.textContent=pub?'Published Family Profile reminders':'Your Family Profile has not been published yet. Finish it and publish when your household is ready.';notice.classList.toggle('published',!!pub);}
-    const vals=(profile.values||[]).map(function(v){return typeof v==='string'?v:(v.label||v.name||'');}).filter(Boolean).slice(0,6);
-    if(el('dashboardIdentityValues'))el('dashboardIdentityValues').innerHTML=vals.length?vals.map(function(v){return '<span class="identity-chip">'+htmlEscape(v)+'</span>';}).join(''):'<span class="identity-chip muted">Not selected yet</span>';
-    const commits=(profile.commitments||[]).map(function(c){return typeof c==='string'?c:(c.statement||c.text||'');}).filter(Boolean).slice(0,3);
-    if(el('dashboardIdentityCommitments'))el('dashboardIdentityCommitments').innerHTML=commits.length?commits.map(function(c){return '<li>'+htmlEscape(c)+'</li>';}).join(''):'<li>Choose commitments your household will practice.</li>';
-    publishedSnapshot=pub?JSON.stringify({label:profile.label||'',vision:profile.vision||'',mission:profile.mission||'',motto:profile.motto||'',values:(profile.values||[]),commitments:(profile.commitments||[])}):'';
-    profileGenerated=Boolean(profile.label&&(profile.vision||profile.mission||profile.values?.length||profile.commitments?.length));
-    updatePublishButton();
-  }
-  function bind(){
-    if(identityInitialized)return; identityInitialized=true;
-    selectMode('foundation');
-    const startName=el('identityStartHouseholdName'),label=el('identityLabelInput');
-    if(startName&&label){ if(!startName.value)startName.value=label.value||'Our Household'; if(!label.value)label.value=startName.value; startName.addEventListener('input',function(){label.value=startName.value;setDirty(true);}); label.addEventListener('input',function(){startName.value=label.value;setDirty(true);}); }
-    el('randomIdentityProfileButton')?.addEventListener('click',function(){selectMode('foundation');});
-    el('editableIdeasIdentityButton')?.addEventListener('click',function(){selectMode('ideas');});
-    el('blankIdentityProfileButton')?.addEventListener('click',function(){selectMode('blank');});
-    el('generateSelectedIdentityProfileButton')?.addEventListener('click',generateSelected);
-    el('refreshMottoIdeasButton')?.addEventListener('click',refreshMottos);
-    el('dashboardOpenIdentityButton')?.addEventListener('click',function(){openPanel('identityPanel');});
-    renderDefaultCommitmentChoices();
-    ['identityLabelInput','visionInput','missionInput','mottoInput','valuesEditor','commitmentsEditor'].forEach(function(id){const n=el(id);if(n){n.addEventListener('input',function(){profileGenerated=true;setDirty(true);});n.addEventListener('change',function(){profileGenerated=true;setDirty(true);});}});
-    ['saveIdentityButton','saveValuesButton','saveCommitmentsButton','uploadSymbolButton'].forEach(function(id){el(id)?.addEventListener('click',function(){setTimeout(function(){setDirty(false);},1000);});});
-    const publish=el('publishIdentityButton'); if(publish)publish.addEventListener('click',function(event){if(publish.disabled||!showIncompleteWarning('publish')){event.preventDefault();event.stopImmediatePropagation();}},true);
-    const save=el('saveIdentityButton'); if(save)save.addEventListener('click',function(event){syncHouseholdName();if(!showIncompleteWarning('save the draft')){event.preventDefault();event.stopImmediatePropagation();}},true);
-    document.querySelectorAll('.nav-item').forEach(function(n){n.addEventListener('click',function(event){if(identityDirty&&!confirm('You have Family Profile changes that have not been saved. Leave this section anyway?')){event.preventDefault();event.stopImmediatePropagation();}},true);});
-    window.addEventListener('beforeunload',function(event){if(identityDirty){event.preventDefault();event.returnValue='';}});
-    const originalRender=window.renderIdentityWorkspace; if(typeof originalRender==='function'){window.renderIdentityWorkspace=function(data){const r=originalRender(data);setTimeout(function(){renderDashboardIdentity(data);renderDefaultCommitmentChoices();},0);return r;};}
-    if(state.identityData)renderDashboardIdentity(state.identityData);
-    updatePublishButton();
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
-})();
-
-</script>
-
-<script>
-/* FamilyPD Identity v5 — simple local draft + publish-to-Drive workflow */
-(function () {
-  'use strict';
-  const STORAGE_KEY = 'familypd.householdIdentityDraft.v5';
-  const GENERATED_KEY = 'familypd.householdIdentityGenerated.v5';
-  let localLogoDataUrl = '';
-  let localLogoName = '';
-  let generated = false;
-  let publishing = false;
-
-  function el(id) { return document.getElementById(id); }
-  function value(id) { const n = el(id); return n ? String(n.value || '').trim() : ''; }
-  function html(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-  function call(name, arg) {
-    return new Promise((resolve, reject) => {
-      let runner = google.script.run.withSuccessHandler(resolve).withFailureHandler(e => reject(new Error(e && e.message ? e.message : String(e))));
-      runner[name](arg);
-    });
-  }
-  function callNoArg(name) {
-    return new Promise((resolve, reject) => {
-      google.script.run.withSuccessHandler(resolve).withFailureHandler(e => reject(new Error(e && e.message ? e.message : String(e))))[name]();
-    });
-  }
-  function collectValues() {
-    return Array.from(document.querySelectorAll('#valuesEditor .value-row')).map(row => ({
-      id: row.dataset.id || '', libraryId: row.dataset.libraryId || '',
-      label: row.querySelector('.value-label') ? row.querySelector('.value-label').value.trim() : '',
-      description: row.querySelector('.value-description') ? row.querySelector('.value-description').value.trim() : ''
-    })).filter(v => v.label);
-  }
-  function collectCommitments() {
-    return Array.from(document.querySelectorAll('#commitmentsEditor .commitment-row, #commitmentsEditor [data-id]')).map(row => {
-      const fields = row.querySelectorAll('input, textarea');
-      return { id: row.dataset.id || '', statement: fields[0] ? fields[0].value.trim() : '', description: fields[1] ? fields[1].value.trim() : '' };
-    }).filter(c => c.statement);
-  }
-  function snapshot() {
-    return {
-      label: value('identityLabelInput') || value('identityStartHouseholdName') || 'Our Household',
-      vision: value('visionInput'), mission: value('missionInput'), motto: value('mottoInput'),
-      values: collectValues(), commitments: collectCommitments(),
-      logoDataUrl: localLogoDataUrl, logoName: localLogoName, generated: generated,
-      savedAt: new Date().toISOString()
-    };
-  }
-  function setField(id, v) { if (el(id)) el(id).value = v || ''; }
-  function restoreDraft(d) {
-    if (!d) return;
-    setField('identityStartHouseholdName', d.label || 'Our Household');
-    setField('identityLabelInput', d.label || 'Our Household');
-    setField('visionInput', d.vision); setField('missionInput', d.mission); setField('mottoInput', d.motto);
-    if (typeof renderValuesEditor === 'function') renderValuesEditor(d.values || []);
-    if (typeof renderCommitmentsEditor === 'function') renderCommitmentsEditor(d.commitments || []);
-    localLogoDataUrl = d.logoDataUrl || ''; localLogoName = d.logoName || '';
-    if (localLogoDataUrl && el('symbolPreview')) el('symbolPreview').innerHTML = '<img src="' + localLogoDataUrl + '" alt="Household logo preview">';
-    if (localLogoDataUrl && el('symbolUploadStatus')) el('symbolUploadStatus').textContent = 'Logo is saved in this browser draft and will upload when you publish.';
-    generated = Boolean(d.generated);
-    updatePublish();
-  }
-  function saveLocal(showMessage) {
-    const d = snapshot();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
-    localStorage.setItem(GENERATED_KEY, generated ? '1' : '0');
-    const badge = el('identityUnsavedBadge'); if (badge) badge.classList.add('hidden');
-    if (showMessage && window.toast) toast('Draft saved in this browser. Nothing was uploaded to Google Drive.');
-    updatePublish();
-  }
-  function markDirty() {
-    const badge = el('identityUnsavedBadge'); if (badge) { badge.textContent = 'Changes not saved in this browser'; badge.classList.remove('hidden'); }
-    updatePublish();
-  }
-  function foundationalProfile(name) {
-    return {
-      label: name || 'Our Household',
-      vision: 'We are building a safe, loving, healthy, and growing household where every person feels valued, supported, and prepared to thrive.',
-      mission: 'We communicate with respect, learn together, care for our well-being, use resources wisely, and take consistent steps toward shared and personal goals.',
-      motto: 'Grow together. Thrive together.',
-      values: [
-        ['Respect','We listen, speak with care, and honor each person’s dignity.'],
-        ['Responsibility','We take ownership of our choices, tasks, and impact.'],
-        ['Growth','We learn from mistakes and keep improving.'],
-        ['Honesty','We tell the truth with care and build trust.'],
-        ['Support','We help one another while encouraging independence.']
-      ].map((x,i)=>({id:'foundation-v-'+i,label:x[0],description:x[1]})),
-      commitments: [
-        'We will speak to one another with respect, even when we disagree.',
-        'We will communicate honestly and listen before reacting.',
-        'We will support learning, health, financial responsibility, relationships, and meaningful goals.',
-        'We will complete agreed responsibilities and ask for help when needed.',
-        'We will hold regular check-ins and make adjustments when something is not working.',
-        'We will celebrate progress, effort, and one another.'
-      ].map((x,i)=>({id:'foundation-c-'+i,statement:x,description:''}))
-    };
-  }
-  function generateFoundation() {
-    const name = value('identityStartHouseholdName') || 'Our Household';
-    const p = foundationalProfile(name);
-    setField('identityLabelInput', p.label); setField('visionInput', p.vision); setField('missionInput', p.mission); setField('mottoInput', p.motto);
-    if (typeof renderValuesEditor === 'function') renderValuesEditor(p.values);
-    if (typeof renderCommitmentsEditor === 'function') renderCommitmentsEditor(p.commitments);
-    generated = true; saveLocal(false); markDirty();
-    const box = el('identityStarterProfilePreview');
-    if (box) { box.innerHTML = '<strong>Foundational Household Identity generated.</strong><br>General wording, values, and commitments are ready below. Edit anything before publishing.'; box.classList.remove('hidden'); }
-    el('identityStatementsSection')?.scrollIntoView({behavior:'smooth', block:'start'});
-    if (window.toast) toast('Foundational Household Identity generated.');
-  }
-  function openIdeas() {
-    generated = false; updatePublish();
-    el('guidedIdentityBuilder')?.scrollIntoView({behavior:'smooth', block:'start'});
-    if (window.toast) toast('Choose the editable options, then generate your ideas.');
-  }
-  function blankTemplate() {
-    const name = value('identityStartHouseholdName') || 'Our Household';
-    setField('identityLabelInput', name); setField('visionInput',''); setField('missionInput',''); setField('mottoInput','');
-    if (typeof renderValuesEditor === 'function') renderValuesEditor([]);
-    if (typeof renderCommitmentsEditor === 'function') renderCommitmentsEditor([]);
-    generated = true; saveLocal(false); markDirty();
-    el('identityStatementsSection')?.scrollIntoView({behavior:'smooth', block:'start'});
-    if (window.toast) toast('Blank Household Identity template opened.');
-  }
-  function selectedMode() {
-    return el('randomIdentityProfileButton')?.classList.contains('selected') ? 'foundation' : el('editableIdeasIdentityButton')?.classList.contains('selected') ? 'ideas' : 'blank';
-  }
-  function generateSelected(e) {
-    e.preventDefault(); e.stopImmediatePropagation();
-    const mode = selectedMode();
-    if (mode === 'foundation') generateFoundation(); else if (mode === 'ideas') openIdeas(); else blankTemplate();
-  }
-  function updatePublish() {
-    const b = el('publishIdentityButton'); if (!b) return;
-    b.disabled = publishing || !generated || !value('identityLabelInput');
-    b.title = !generated ? 'Generate or open a Household Identity first.' : (!value('identityLabelInput') ? 'Add a household name first.' : 'Save the approved Household Identity to Google Drive.');
-  }
-  function handleLogoSelection(e) {
-    const file = e.target.files && e.target.files[0]; if (!file) return;
-    if (!['image/png','image/jpeg','image/webp'].includes(file.type)) { alert('Use a PNG, JPEG, or WebP image.'); e.target.value=''; return; }
-    if (file.size > 2 * 1024 * 1024) { alert('The image must be 2 MB or smaller.'); e.target.value=''; return; }
-    const r = new FileReader();
-    r.onload = () => {
-      localLogoDataUrl = String(r.result || ''); localLogoName = file.name;
-      if (el('symbolPreview')) el('symbolPreview').innerHTML = '<img src="' + localLogoDataUrl + '" alt="Selected household logo">';
-      if (el('symbolUploadStatus')) el('symbolUploadStatus').textContent = 'Logo selected successfully. It is visible in this browser draft and will upload when you publish.';
-      markDirty(); saveLocal(false);
-    };
-    r.readAsDataURL(file);
-  }
-  function useLogo(e) {
-    e.preventDefault(); e.stopImmediatePropagation();
-    if (!localLogoDataUrl) { if (window.toast) toast('Choose a logo first.', true); return; }
-    saveLocal(true);
-  }
-  function clearLogo(e) {
-    e.preventDefault(); e.stopImmediatePropagation();
-    localLogoDataUrl=''; localLogoName='';
-    if (el('symbolPreview')) el('symbolPreview').textContent='FPD';
-    if (el('symbolUploadStatus')) el('symbolUploadStatus').textContent='No logo selected.';
-    if (el('symbolFileInput')) el('symbolFileInput').value='';
-    markDirty(); saveLocal(false);
-  }
-  function missingAreas(d) {
-    const m=[]; if(!d.mission)m.push('mission'); if(!d.vision)m.push('vision'); if(!d.values.length)m.push('values'); if(!d.commitments.length)m.push('commitments'); return m;
-  }
-  async function publish(e) {
-    e.preventDefault(); e.stopImmediatePropagation();
-    if (publishing || !generated) return;
-    saveLocal(false);
-    const d = snapshot();
-    if (!d.label) { alert('Add a household name before publishing.'); return; }
-    const missing = missingAreas(d);
-    if (missing.length && !confirm('These areas are not complete: ' + missing.join(', ') + '.\n\nPublish anyway?')) return;
-    publishing=true; updatePublish(); const b=el('publishIdentityButton'); const old=b.textContent; b.textContent='Publishing…';
-    try {
-      await call('saveIdentityDraft', {label:d.label, vision:d.vision, mission:d.mission, motto:d.motto});
-      await call('saveHouseholdValues', d.values);
-      await call('saveHouseholdCommitments', d.commitments);
-      if (d.logoDataUrl) {
-        await call('uploadHouseholdSymbol', {name:d.logoName || 'Household-logo.png', mimeType:d.logoDataUrl.slice(5,d.logoDataUrl.indexOf(';')) || 'image/png', base64:d.logoDataUrl.split(',')[1], privacyConfirmed:true});
-      }
-      const result = await callNoArg('publishIdentity');
-      localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(GENERATED_KEY);
-      if (el('identityUnsavedBadge')) el('identityUnsavedBadge').classList.add('hidden');
-      if (window.toast) toast((result && result.message) || 'Household Identity published to Google Drive.');
-      if (typeof loadIdentityWorkspace === 'function') await loadIdentityWorkspace();
-    } catch (err) {
-      alert(err.message || String(err));
-    } finally { publishing=false; b.textContent=old; updatePublish(); }
-  }
-  function bind() {
-    const starter = el('generateSelectedIdentityProfileButton'); if (starter) starter.addEventListener('click', generateSelected, true);
-    const save = el('saveIdentityButton'); if (save) save.addEventListener('click', e=>{e.preventDefault();e.stopImmediatePropagation();saveLocal(true);}, true);
-    const upload = el('uploadSymbolButton'); if (upload) upload.addEventListener('click', useLogo, true);
-    const clear = el('clearSymbolButton'); if (clear) clear.addEventListener('click', clearLogo, true);
-    const pub = el('publishIdentityButton'); if (pub) pub.addEventListener('click', publish, true);
-    const file = el('symbolFileInput'); if (file) file.addEventListener('change', handleLogoSelection, true);
-    ['identityLabelInput','identityStartHouseholdName','visionInput','missionInput','mottoInput','valuesEditor','commitmentsEditor'].forEach(id=>{
-      const n=el(id); if(n){ n.addEventListener('input', markDirty); n.addEventListener('change', markDirty); }
-    });
-    const name=el('identityStartHouseholdName'), label=el('identityLabelInput');
-    if(name&&label) name.addEventListener('input',()=>{label.value=name.value;updatePublish();});
-    let d=null; try{ d=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null'); }catch(_){ }
-    generated = localStorage.getItem(GENERATED_KEY)==='1';
-    if(d) restoreDraft(d); else updatePublish();
-    const note=document.createElement('p'); note.className='identity-local-save-note'; note.textContent='Save Draft keeps your work in this browser. Publish saves the approved identity and logo to your FamilyPD Google Drive workspace.';
-    save?.parentElement?.appendChild(note);
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', bind); else bind();
 })();
 </script>
