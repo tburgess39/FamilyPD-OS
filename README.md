@@ -1,2 +1,0 @@
-# FamilyPD-OS
-FamilyPD OS
